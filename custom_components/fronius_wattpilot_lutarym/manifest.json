@@ -1,0 +1,19 @@
+{
+  "domain": "fronius_wattpilot_lutarym",
+  "name": "Fronius Wattpilot by Lutarym",
+  "version": "1.0.0",
+  "documentation": "https://github.com/Lutarym/fronius-wattpilot-by-lutarym",
+  "issue_tracker": "https://github.com/Lutarym/fronius-wattpilot-by-lutarym/issues",
+  "codeowners": [
+    "@Lutarym"
+  ],
+  "config_flow": true,
+  "iot_class": "local_push",
+  "requirements": [
+    "wattpilot-api==1.4.0"
+  ],
+  "integration_type": "device",
+  "loggers": [
+    "wattpilot_api"
+  ]
+}

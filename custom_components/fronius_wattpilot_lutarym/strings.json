@@ -1,0 +1,21 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Fronius Wattpilot by Lutarym",
+        "description": "Direkte lokale Verbindung zum Wattpilot.",
+        "data": {
+          "host": "IP-Adresse",
+          "password": "Wattpilot-Passwort"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Verbindung zum Wattpilot fehlgeschlagen.",
+      "unknown": "Unbekannter Fehler."
+    },
+    "abort": {
+      "already_configured": "Dieser Wattpilot ist bereits eingerichtet."
+    }
+  }
+}

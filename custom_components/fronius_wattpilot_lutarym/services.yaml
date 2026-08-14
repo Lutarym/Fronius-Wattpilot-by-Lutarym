@@ -1,0 +1,24 @@
+set_charging_current:
+  name: Set charging current
+  description: Set the Wattpilot charging current in amperes.
+  fields:
+    amperage:
+      name: Amperage
+      description: Charging current in A.
+      required: true
+      selector:
+        number:
+          min: 6
+          max: 32
+          step: 1
+          mode: slider
+
+set_charging_mode:
+  name: Set charging mode
+  description: Set the Wattpilot load mode.
+  fields:
+    mode:
+      name: Mode
+      required: true
+      selector:
+        text:
