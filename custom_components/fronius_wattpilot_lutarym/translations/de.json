@@ -3,19 +3,51 @@
     "step": {
       "user": {
         "title": "Fronius Wattpilot by Lutarym",
-        "description": "Direkte lokale Verbindung zum Wattpilot.",
+        "description": "Direkte lokale Verbindung zum Wattpilot. Es wird kein Fronius-Konto benoetigt.",
         "data": {
           "host": "IP-Adresse",
+          "password": "Wattpilot-Passwort"
+        },
+        "data_description": {
+          "host": "Die lokale IP-Adresse des Wattpilot im Heimnetz.",
+          "password": "Das Passwort, das in der Wattpilot-App vergeben wurde."
+        }
+      },
+      "reauth_confirm": {
+        "title": "Passwort erneut eingeben",
+        "description": "Das gespeicherte Passwort wird vom Wattpilot nicht mehr angenommen.",
+        "data": {
           "password": "Wattpilot-Passwort"
         }
       }
     },
     "error": {
-      "cannot_connect": "Verbindung zum Wattpilot fehlgeschlagen.",
+      "cannot_connect": "Verbindung zum Wattpilot fehlgeschlagen. Bitte IP-Adresse und Passwort pruefen.",
       "unknown": "Unbekannter Fehler."
     },
     "abort": {
-      "already_configured": "Dieser Wattpilot ist bereits eingerichtet."
+      "already_configured": "Dieser Wattpilot ist bereits eingerichtet.",
+      "reauth_successful": "Die erneute Anmeldung war erfolgreich."
+    }
+  },
+  "services": {
+    "set_property": {
+      "name": "Parameter setzen",
+      "description": "Setzt eine beliebige Property auf dem Wattpilot.",
+      "fields": {
+        "device_id": {
+          "name": "Geraet",
+          "description": "Der Wattpilot, auf dem der Parameter gesetzt wird."
+        },
+        "property": {
+          "name": "Property",
+          "description": "Der Schluessel der Property, zum Beispiel amp oder frc."
+        },
+        "value": {
+          "name": "Wert",
+          "description": "Der neue Wert der Property."
+        }
+      }
     }
   }
 }

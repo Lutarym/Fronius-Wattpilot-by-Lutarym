@@ -1,24 +1,29 @@
-set_charging_current:
-  name: Set charging current
-  description: Set the Wattpilot charging current in amperes.
+set_property:
+  name: Parameter setzen
+  description: >-
+    Setzt eine beliebige Property auf dem Wattpilot. Damit sind auch
+    Parameter erreichbar, fuer die keine eigene Entitaet angelegt wurde.
   fields:
-    amperage:
-      name: Amperage
-      description: Charging current in A.
+    device_id:
+      name: Geraet
+      description: Der Wattpilot, auf dem der Parameter gesetzt wird.
       required: true
       selector:
-        number:
-          min: 6
-          max: 32
-          step: 1
-          mode: slider
-
-set_charging_mode:
-  name: Set charging mode
-  description: Set the Wattpilot load mode.
-  fields:
-    mode:
-      name: Mode
+        device:
+          integration: fronius_wattpilot_lutarym
+    property:
+      name: Property
+      description: >-
+        Der Schluessel der Property im Wattpilot-Protokoll, zum Beispiel
+        amp fuer den Ladestrom oder frc fuer den Force State.
       required: true
+      example: amp
+      selector:
+        text:
+    value:
+      name: Wert
+      description: Der neue Wert der Property.
+      required: true
+      example: 16
       selector:
         text:

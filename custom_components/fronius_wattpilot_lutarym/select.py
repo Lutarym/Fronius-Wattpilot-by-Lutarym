@@ -1,35 +1,49 @@
+"""Auswahllisten fuer Parameter mit festen Wertetabellen.
+
+Hier liegen unter anderem der Lademodus, der Force State zum sofortigen
+Starten und Stoppen sowie die Phasenumschaltung.
+"""
+
 from __future__ import annotations
 
 from homeassistant.components.select import SelectEntity
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
-from wattpilot_api import LoadMode
 
+from .const import SELECTS
 from .entity import WattpilotEntity
 
 
-async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback):
-    async_add_entities([WattpilotModeSelect(entry.runtime_data)])
+async def async_setup_entry(
+    hass: HomeAssistant,
+    entry: ConfigEntry,
+    async_add_entities: AddEntitiesCallback,
+) -> None:
+    coordinator = entry.runtime_data
+    async_add_entities(
+        WattpilotSelect(coordinator, description) for description in SELECTS
+    )
 
 
-class WattpilotModeSelect(WattpilotEntity, SelectEntity):
-    _attr_name = "Charging mode"
-    _attr_unique_id = "wattpilot_charging_mode"
+class WattpilotSelect(WattpilotEntity, SelectEntity):
+    """Eine Auswahlliste fuer genau eine setzbare Property."""
+
+    def __init__(self, coordinator, description) -> None:
+        super().__init__(coordinator, description)
+        self._value_map = description.value_map or {}
+        # Rueckwaerts-Zuordnung, um vom Klartext auf den Zahlenwert zu kommen
+        self._reverse_map = {v: int(k) for k, v in self._value_map.items()}
+        self._attr_options = list(self._value_map.values())
 
     @property
-    def options(self):
-        return [mode.name for mode in LoadMode]
-
-    @property
-    def current_option(self):
-        value = self.value("mode")
+    def current_option(self) -> str | None:
+        value = self.raw_value
         if value is None:
             return None
-        try:
-            return LoadMode(value).name
-        except (ValueError, TypeError):
-            return str(value)
+        return self._value_map.get(str(value))
 
-    async def async_select_option(self, option: str):
-        await self.coordinator.api.set_mode(LoadMode[option])
+    async def async_select_option(self, option: str) -> None:
+        if option not in self._reverse_map:
+            raise ValueError(f"Unbekannte Auswahl: {option}")
+        await self.async_write_value(self._reverse_map[option])

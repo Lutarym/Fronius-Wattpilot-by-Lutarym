@@ -3,19 +3,51 @@
     "step": {
       "user": {
         "title": "Fronius Wattpilot by Lutarym",
-        "description": "Direct local connection to the Wattpilot.",
+        "description": "Direct local connection to the Wattpilot. No Fronius account required.",
         "data": {
           "host": "IP address",
+          "password": "Wattpilot password"
+        },
+        "data_description": {
+          "host": "The local IP address of the Wattpilot on your home network.",
+          "password": "The password set in the Wattpilot app."
+        }
+      },
+      "reauth_confirm": {
+        "title": "Re-enter password",
+        "description": "The stored password is no longer accepted by the Wattpilot.",
+        "data": {
           "password": "Wattpilot password"
         }
       }
     },
     "error": {
-      "cannot_connect": "Could not connect to the Wattpilot.",
-      "unknown": "Unexpected error."
+      "cannot_connect": "Failed to connect to the Wattpilot. Please check IP address and password.",
+      "unknown": "Unknown error."
     },
     "abort": {
-      "already_configured": "This Wattpilot is already configured."
+      "already_configured": "This Wattpilot is already configured.",
+      "reauth_successful": "Re-authentication was successful."
+    }
+  },
+  "services": {
+    "set_property": {
+      "name": "Set property",
+      "description": "Sets any property on the Wattpilot.",
+      "fields": {
+        "device_id": {
+          "name": "Device",
+          "description": "The Wattpilot to write to."
+        },
+        "property": {
+          "name": "Property",
+          "description": "The property key, for example amp or frc."
+        },
+        "value": {
+          "name": "Value",
+          "description": "The new value of the property."
+        }
+      }
     }
   }
 }

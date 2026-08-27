@@ -1,32 +1,50 @@
+"""Binaersensoren fuer lesbare Ja-Nein-Properties."""
+
 from __future__ import annotations
 
-from homeassistant.components.binary_sensor import BinarySensorDeviceClass, BinarySensorEntity
+from homeassistant.components.binary_sensor import (
+    BinarySensorDeviceClass,
+    BinarySensorEntity,
+)
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
+from .const import BINARY_SENSORS
 from .entity import WattpilotEntity
 
+# Geraeteklassen fuer einzelne Properties
+DEVICE_CLASS_BY_KEY = {
+    "alw": BinarySensorDeviceClass.RUNNING,
+    "cwsc": BinarySensorDeviceClass.CONNECTIVITY,
+    "cws": BinarySensorDeviceClass.CONNECTIVITY,
+}
 
-async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback):
+
+async def async_setup_entry(
+    hass: HomeAssistant,
+    entry: ConfigEntry,
+    async_add_entities: AddEntitiesCallback,
+) -> None:
     coordinator = entry.runtime_data
-    async_add_entities([
-        WattpilotBinary(coordinator, "vehicle_connected", "Vehicle connected", ("car_connected", "carConnected"), BinarySensorDeviceClass.PLUG),
-        WattpilotBinary(coordinator, "charging", "Charging", ("charging", "car_charging"), BinarySensorDeviceClass.BATTERY_CHARGING),
-    ])
+    async_add_entities(
+        WattpilotBinarySensor(coordinator, description)
+        for description in BINARY_SENSORS
+    )
 
 
-class WattpilotBinary(WattpilotEntity, BinarySensorEntity):
-    def __init__(self, coordinator, uid, name, aliases, device_class):
-        super().__init__(coordinator)
-        self._attr_unique_id = f"wattpilot_{uid}"
-        self._attr_name = name
-        self._aliases = aliases
-        self._attr_device_class = device_class
+class WattpilotBinarySensor(WattpilotEntity, BinarySensorEntity):
+    """Ein Binaersensor fuer genau eine Property."""
+
+    def __init__(self, coordinator, description) -> None:
+        super().__init__(coordinator, description)
+        self._attr_device_class = DEVICE_CLASS_BY_KEY.get(description.key)
 
     @property
-    def is_on(self):
-        value = self.value(*self._aliases)
+    def is_on(self) -> bool | None:
+        value = self.raw_value
+        if value is None:
+            return None
         if isinstance(value, str):
-            return value.lower() in ("1", "true", "yes", "on")
+            return value.strip().lower() in ("1", "true", "yes", "on")
         return bool(value)
