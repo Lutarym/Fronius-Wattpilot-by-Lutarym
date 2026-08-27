@@ -173,6 +173,14 @@ Die Werte kommen per WebSocket-Push, also unmittelbar bei jeder Änderung im Ger
 
 Zusätzlich läuft alle 60 Sekunden eine Prüfung, ob die Verbindung noch steht. Bricht sie ab, wird automatisch neu verbunden, mit wachsender Wartezeit von 10 bis maximal 300 Sekunden.
 
+## Verhalten beim Start
+
+Die Bibliothek `wattpilot-api` liest beim ersten Zugriff eine Beschreibungsdatei von der Festplatte. Home Assistant meldet solche Zugriffe als Fehler, wenn sie den laufenden Betrieb kurzzeitig anhalten.
+
+Die Integration lädt diese Datei deshalb in einem Hintergrund-Thread und behält sie danach im Speicher. Sie wird nur einmal geladen, auch wenn mehrere Wattpilot eingerichtet sind.
+
+Eine Sache bleibt: Bei jeder Anmeldung berechnet die Bibliothek das Passwort neu, was etwa 300 Millisekunden dauert. Das geschieht innerhalb der Bibliothek und lässt sich von der Integration aus nicht verlagern. Es fällt nur beim Verbindungsaufbau an, nicht im laufenden Betrieb, und wird von Home Assistant nicht als Fehler gemeldet.
+
 ## Hinweis zu den Leistungswerten
 
 Die Leistungswerte je Phase stammen aus dem Messwerte-Array `nrg` und werden unverändert in Watt angezeigt. Bitte einmal mit der Anzeige in der Wattpilot-App vergleichen. Die Bibliothek `wattpilot-api` skaliert diese Werte für ihre eigenen Eigenschaften mit dem Faktor 0,001, was auf eine abweichende Einheit hindeuten könnte. Die API-Definition macht dazu keine eindeutige Angabe.

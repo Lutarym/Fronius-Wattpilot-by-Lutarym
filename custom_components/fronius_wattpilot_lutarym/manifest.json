@@ -1,7 +1,7 @@
 {
   "domain": "fronius_wattpilot_lutarym",
   "name": "Fronius Wattpilot by Lutarym",
-  "version": "2.3.0",
+  "version": "2.3.1",
   "documentation": "https://github.com/Lutarym/fronius-wattpilot-by-lutarym",
   "issue_tracker": "https://github.com/Lutarym/fronius-wattpilot-by-lutarym/issues",
   "codeowners": [

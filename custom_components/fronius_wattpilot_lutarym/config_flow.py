@@ -37,7 +37,7 @@ STEP_USER_SCHEMA = vol.Schema({
 
 async def validate_input(hass: HomeAssistant, data: dict) -> dict:
     """Prueft, ob eine Verbindung mit den Angaben moeglich ist."""
-    api = WattpilotAPI(data[CONF_HOST], data[CONF_PASSWORD])
+    api = WattpilotAPI(hass, data[CONF_HOST], data[CONF_PASSWORD])
     try:
         await api.connect()
         return {

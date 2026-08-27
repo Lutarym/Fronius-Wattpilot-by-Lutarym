@@ -43,7 +43,7 @@ SET_PROPERTY_SCHEMA = vol.Schema({
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Richtet einen Wattpilot aus einem Konfigurationseintrag ein."""
-    api = WattpilotAPI(entry.data[CONF_HOST], entry.data[CONF_PASSWORD])
+    api = WattpilotAPI(hass, entry.data[CONF_HOST], entry.data[CONF_PASSWORD])
     coordinator = WattpilotCoordinator(hass, api, entry)
     await coordinator.async_connect()
 
