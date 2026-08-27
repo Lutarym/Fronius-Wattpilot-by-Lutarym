@@ -30,6 +30,20 @@
       "reauth_successful": "Re-authentication was successful."
     }
   },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Options",
+        "description": "Controls which entities are created.",
+        "data": {
+          "only_available": "Only create available entities"
+        },
+        "data_description": {
+          "only_available": "On connect the integration checks which values the Wattpilot actually reports and creates entities only for those. Turn off to create every possible entity."
+        }
+      }
+    }
+  },
   "entity": {
     "sensor": {
       "acu": {

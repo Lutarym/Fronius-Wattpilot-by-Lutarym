@@ -12,7 +12,11 @@ from types import SimpleNamespace
 from typing import Any
 
 from wattpilot_api import Wattpilot
-from wattpilot_api.definition import get_all_properties, load_api_definition
+from wattpilot_api.definition import (
+    get_all_properties,
+    get_child_property_value,
+    load_api_definition,
+)
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -93,6 +97,48 @@ class WattpilotAPI:
             or getattr(self.client, "name", None)
             or "Fronius Wattpilot"
         )
+
+    def raw_properties(self) -> dict[str, Any]:
+        """Nur die Properties, die das Geraet selbst gemeldet hat.
+
+        Ohne die zusammengesetzten Unter-Werte, die aus Eltern-Werten
+        abgeleitet werden.
+        """
+        if not self.client:
+            return {}
+        return dict(getattr(self.client, "all_properties", {}))
+
+    def available_keys(self) -> set[str]:
+        """Alle Schluessel, die dieses Geraet tatsaechlich liefert.
+
+        Ein Schluessel gilt als vorhanden, wenn das Geraet ihn gemeldet
+        hat. Der Wert darf dabei leer sein, denn manche Properties sind
+        im Ruhezustand bewusst leer, zum Beispiel die Transaktion, wenn
+        gerade keine Karte aktiv ist.
+
+        Bei zusammengesetzten Werten wie dem Messwerte-Array nrg muss
+        zusaetzlich der abgeleitete Einzelwert vorhanden sein, denn nicht
+        jedes Geraet fuellt das Array vollstaendig.
+        """
+        raw = self.raw_properties()
+        if not raw:
+            return set()
+
+        verfuegbar = set(raw)
+
+        for child_key in self._api_def.split_properties:
+            definition = self._api_def.properties.get(child_key, {})
+            parent = definition.get("parentProperty")
+            if not parent or parent not in raw:
+                continue
+            try:
+                wert = get_child_property_value(self._api_def, raw, child_key)
+            except Exception:  # noqa: BLE001
+                continue
+            if wert is not None:
+                verfuegbar.add(child_key)
+
+        return verfuegbar
 
     def properties(self) -> dict[str, Any]:
         """Alle Properties einschliesslich der zusammengesetzten Unter-Werte.

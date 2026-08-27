@@ -27,7 +27,9 @@ async def async_setup_entry(
 ) -> None:
     coordinator = entry.runtime_data
     async_add_entities(
-        WattpilotNumber(coordinator, description) for description in NUMBERS
+        WattpilotNumber(coordinator, description)
+        for description in NUMBERS
+        if coordinator.is_available(description.key)
     )
 
 

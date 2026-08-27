@@ -30,6 +30,20 @@
       "reauth_successful": "La nouvelle authentification a réussi."
     }
   },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Options",
+        "description": "Détermine quelles entités sont créées.",
+        "data": {
+          "only_available": "Créer uniquement les entités disponibles"
+        },
+        "data_description": {
+          "only_available": "À la connexion, l'intégration vérifie les valeurs réellement fournies par le Wattpilot et ne crée que celles-ci. Désactivez pour créer toutes les entités possibles."
+        }
+      }
+    }
+  },
   "entity": {
     "sensor": {
       "acu": {

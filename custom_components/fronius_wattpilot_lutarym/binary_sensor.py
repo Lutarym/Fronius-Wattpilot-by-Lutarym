@@ -30,6 +30,7 @@ async def async_setup_entry(
     async_add_entities(
         WattpilotBinarySensor(coordinator, description)
         for description in BINARY_SENSORS
+        if coordinator.is_available(description.key)
     )
 
 

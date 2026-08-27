@@ -6,7 +6,9 @@ Es wird kein Fronius-Konto und keine Cloud-Verbindung benötigt.
 
 ## Funktionsumfang
 
-Die Integration legt **254 Entitäten** an. Davon sind **105 standardmäßig aktiv**, die übrigen 149 sind angelegt, aber deaktiviert. Sie lassen sich jederzeit unter Einstellungen, Geräte und Dienste, Entitäten einschalten.
+Die Integration kennt **254 Entitäten**. Angelegt werden davon nur diejenigen, die Ihr Gerät tatsächlich meldet. Siehe den Abschnitt zu den vorhandenen Entitäten weiter unten.
+
+Von den angelegten Entitäten sind die wichtigsten sofort aktiv, seltener benötigte sind angelegt aber deaktiviert. Sie lassen sich jederzeit unter Einstellungen, Geräte und Dienste, Entitäten einschalten.
 
 Grundlage ist die API-Definition der Bibliothek `wattpilot-api` in Version 1.4.0.
 
@@ -92,6 +94,34 @@ data:
   property: amp
   value: 16
 ```
+
+## Nur vorhandene Entitäten
+
+Beim Verbinden prüft die Integration, welche Werte Ihr Wattpilot tatsächlich meldet. Es werden nur dafür Entitäten angelegt.
+
+Das ist sinnvoll, weil nicht jedes Gerät alle Werte liefert. Ohne angeschlossenen Fronius-Wechselrichter gibt es keine PV-Werte, ohne eingerichtetes Lastmanagement keine Gruppenwerte, und je nach Firmware fehlen einzelne Angaben ganz.
+
+So bleibt die Entitätenliste auf das beschränkt, was bei Ihnen wirklich existiert.
+
+### Wie die Prüfung abläuft
+
+Der Wattpilot meldet seinen Zustand manchmal in mehreren Teilnachrichten. Die Integration wartet deshalb nach dem Verbinden, bis keine neuen Werte mehr eintreffen, längstens acht Sekunden. Erst danach wird entschieden, welche Entitäten angelegt werden.
+
+Bei zusammengesetzten Werten wird zusätzlich geprüft, ob der Einzelwert wirklich vorhanden ist. Meldet Ihr Gerät im Messwerte-Array nur die drei Spannungen, entstehen auch nur diese drei Entitäten und nicht die übrigen dreizehn.
+
+Werte, die gemeldet werden aber gerade leer sind, gelten als vorhanden. Die aktive Transaktion ist zum Beispiel leer, solange keine Karte verwendet wird. Die Entität wird trotzdem angelegt.
+
+Meldet das Gerät wider Erwarten gar nichts, werden vorsorglich alle Entitäten angelegt und eine Warnung ins Protokoll geschrieben.
+
+### Abschalten
+
+Unter Einstellungen, Geräte und Dienste, bei der Integration auf **Konfigurieren** lässt sich die Prüfung abschalten. Dann werden wieder alle 254 möglichen Entitäten angelegt.
+
+Nach dem Umschalten lädt die Integration automatisch neu.
+
+### Nach dem Umstieg
+
+Wenn Sie von einer früheren Fassung kommen, bleiben nicht mehr angelegte Entitäten zunächst als nicht verfügbar in der Liste stehen. Sie lassen sich unter Einstellungen, Geräte und Dienste, Entitäten löschen.
 
 ## Sprachen
 

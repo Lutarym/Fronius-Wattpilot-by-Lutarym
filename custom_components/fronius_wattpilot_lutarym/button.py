@@ -24,6 +24,8 @@ async def async_setup_entry(
     async_add_entities: AddEntitiesCallback,
 ) -> None:
     coordinator = entry.runtime_data
+    # Der Neustart wird ueber eine Schreib-Property ausgeloest. Das Geraet
+    # meldet sie nicht im Status, deshalb wird sie immer angelegt.
     async_add_entities([WattpilotRebootButton(coordinator, REBOOT_DESCRIPTION)])
 
 

@@ -7,16 +7,23 @@ from typing import Any
 import voluptuous as vol
 
 from homeassistant import config_entries
-from homeassistant.core import HomeAssistant
+from homeassistant.core import HomeAssistant, callback
 from homeassistant.exceptions import HomeAssistantError
 from homeassistant.helpers.selector import (
+    BooleanSelector,
     TextSelector,
     TextSelectorConfig,
     TextSelectorType,
 )
 
 from .api import WattpilotAPI
-from .const import CONF_HOST, CONF_PASSWORD, DOMAIN
+from .const import (
+    CONF_HOST,
+    CONF_PASSWORD,
+    DEFAULT_ONLY_AVAILABLE,
+    DOMAIN,
+    OPT_ONLY_AVAILABLE,
+)
 
 STEP_USER_SCHEMA = vol.Schema({
     vol.Required(CONF_HOST): TextSelector(
@@ -47,6 +54,14 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     """Fuehrt durch die Einrichtung."""
 
     VERSION = 1
+
+    @staticmethod
+    @callback
+    def async_get_options_flow(
+        config_entry: config_entries.ConfigEntry,
+    ) -> config_entries.OptionsFlow:
+        """Gibt die Einstellungsseite zurueck."""
+        return OptionsFlow()
 
     async def async_step_user(
         self, user_input: dict[str, Any] | None = None
@@ -112,3 +127,23 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
 class CannotConnect(HomeAssistantError):
     """Verbindung zum Wattpilot nicht moeglich."""
+
+
+class OptionsFlow(config_entries.OptionsFlow):
+    """Einstellungen, die nach der Einrichtung geaendert werden koennen."""
+
+    async def async_step_init(
+        self, user_input: dict[str, Any] | None = None
+    ) -> config_entries.ConfigFlowResult:
+        if user_input is not None:
+            return self.async_create_entry(data=user_input)
+
+        aktuell = self.config_entry.options.get(
+            OPT_ONLY_AVAILABLE, DEFAULT_ONLY_AVAILABLE
+        )
+        return self.async_show_form(
+            step_id="init",
+            data_schema=vol.Schema({
+                vol.Required(OPT_ONLY_AVAILABLE, default=aktuell): BooleanSelector(),
+            }),
+        )

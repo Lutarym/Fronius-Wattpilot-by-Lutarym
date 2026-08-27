@@ -50,6 +50,10 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     entry.runtime_data = coordinator
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
 
+    # Wird die Einstellung geaendert, muss neu geladen werden, damit die
+    # Entitaetenliste neu aufgebaut wird.
+    entry.async_on_unload(entry.add_update_listener(async_reload_entry))
+
     _register_services(hass)
     return True
 

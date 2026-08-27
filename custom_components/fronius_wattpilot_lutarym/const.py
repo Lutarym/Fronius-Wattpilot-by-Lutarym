@@ -45,6 +45,10 @@ PROP_CARDS = "cards"
 # Hoechstzahl an RFID-Karten, fuer die Entitaeten angelegt werden
 MAX_RFID_CARDS = 10
 
+# Einstellung: nur Entitaeten anlegen, die das Geraet auch liefert
+OPT_ONLY_AVAILABLE = "only_available"
+DEFAULT_ONLY_AVAILABLE = True
+
 
 @dataclass(frozen=True)
 class WattpilotDescription:

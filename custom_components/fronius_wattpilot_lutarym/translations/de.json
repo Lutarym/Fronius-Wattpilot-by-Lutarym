@@ -30,6 +30,20 @@
       "reauth_successful": "Die erneute Anmeldung war erfolgreich."
     }
   },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Einstellungen",
+        "description": "Legt fest, welche Entitäten angelegt werden.",
+        "data": {
+          "only_available": "Nur vorhandene Entitäten anlegen"
+        },
+        "data_description": {
+          "only_available": "Beim Verbinden wird geprüft, welche Werte der Wattpilot tatsächlich liefert. Nur dafür werden Entitäten angelegt. Ausschalten, wenn alle möglichen Entitäten angelegt werden sollen."
+        }
+      }
+    }
+  },
   "entity": {
     "sensor": {
       "acu": {

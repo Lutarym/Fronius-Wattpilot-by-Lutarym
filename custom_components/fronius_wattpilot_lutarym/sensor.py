@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import logging
 from typing import Any
 
 from homeassistant.components.sensor import (
@@ -20,6 +21,8 @@ from .const import (
     WattpilotDescription,
 )
 from .entity import WattpilotEntity
+
+_LOGGER = logging.getLogger(__name__)
 
 DEVICE_CLASSES = {
     "voltage": SensorDeviceClass.VOLTAGE,
@@ -49,7 +52,9 @@ async def async_setup_entry(
 ) -> None:
     coordinator = entry.runtime_data
     entities: list[SensorEntity] = [
-        WattpilotSensor(coordinator, description) for description in SENSORS
+        WattpilotSensor(coordinator, description)
+        for description in SENSORS
+        if coordinator.is_available(description.key)
     ]
 
     # Fuer jede registrierte RFID-Karte einen eigenen Energiezaehler anlegen.
@@ -59,6 +64,9 @@ async def async_setup_entry(
             entities.append(WattpilotCardEnergySensor(coordinator, index))
             entities.append(WattpilotCardNameSensor(coordinator, index))
 
+    _LOGGER.debug(
+        "%s von %s Sensoren angelegt", len(entities), len(SENSORS)
+    )
     async_add_entities(entities)
 
 
