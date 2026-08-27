@@ -91,6 +91,55 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             errors=errors,
         )
 
+    async def async_step_reconfigure(
+        self, user_input: dict[str, Any] | None = None
+    ) -> config_entries.ConfigFlowResult:
+        """Aendert IP-Adresse und Passwort eines bereits eingerichteten Geraets.
+
+        Wird gebraucht, wenn der Wattpilot eine neue IP-Adresse bekommen hat
+        oder das Passwort in der App geaendert wurde.
+        """
+        errors: dict[str, str] = {}
+        entry = self._get_reconfigure_entry()
+
+        if user_input is not None:
+            try:
+                info = await validate_input(self.hass, user_input)
+            except CannotConnect:
+                errors["base"] = "cannot_connect"
+            except Exception:  # noqa: BLE001
+                errors["base"] = "unknown"
+            else:
+                # Es muss dasselbe Geraet bleiben. Zeigt die neue Adresse auf
+                # einen anderen Wattpilot, wird abgebrochen, damit nicht die
+                # Verlaeufe zweier Geraete vermischt werden.
+                await self.async_set_unique_id(
+                    info["serial"] or user_input[CONF_HOST]
+                )
+                self._abort_if_unique_id_mismatch(reason="wrong_device")
+                return self.async_update_reload_and_abort(
+                    entry,
+                    data_updates=user_input,
+                )
+
+        # Die bisherige Adresse ist vorausgefuellt, das Passwort nicht.
+        schema = vol.Schema({
+            vol.Required(
+                CONF_HOST,
+                default=entry.data.get(CONF_HOST, ""),
+            ): TextSelector(TextSelectorConfig(type=TextSelectorType.TEXT)),
+            vol.Required(CONF_PASSWORD): TextSelector(
+                TextSelectorConfig(type=TextSelectorType.PASSWORD)
+            ),
+        })
+
+        return self.async_show_form(
+            step_id="reconfigure",
+            data_schema=schema,
+            errors=errors,
+            description_placeholders={"device": entry.title},
+        )
+
     async def async_step_reauth(
         self, entry_data: dict[str, Any]
     ) -> config_entries.ConfigFlowResult:
@@ -100,19 +149,23 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     async def async_step_reauth_confirm(
         self, user_input: dict[str, Any] | None = None
     ) -> config_entries.ConfigFlowResult:
+        """Fragt nur das Passwort erneut ab, die Adresse bleibt bestehen."""
         errors: dict[str, str] = {}
         entry = self._get_reauth_entry()
 
         if user_input is not None:
-            data = {**entry.data, CONF_PASSWORD: user_input[CONF_PASSWORD]}
+            daten = {**entry.data, CONF_PASSWORD: user_input[CONF_PASSWORD]}
             try:
-                await validate_input(self.hass, data)
+                await validate_input(self.hass, daten)
             except CannotConnect:
                 errors["base"] = "cannot_connect"
             except Exception:  # noqa: BLE001
                 errors["base"] = "unknown"
             else:
-                return self.async_update_reload_and_abort(entry, data=data)
+                return self.async_update_reload_and_abort(
+                    entry,
+                    data_updates={CONF_PASSWORD: user_input[CONF_PASSWORD]},
+                )
 
         return self.async_show_form(
             step_id="reauth_confirm",
@@ -122,6 +175,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 ),
             }),
             errors=errors,
+            description_placeholders={"device": entry.title},
         )
 
 

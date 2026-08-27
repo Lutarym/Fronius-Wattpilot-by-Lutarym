@@ -15,9 +15,21 @@
       },
       "reauth_confirm": {
         "title": "Passwort erneut eingeben",
-        "description": "Das gespeicherte Passwort wird vom Wattpilot nicht mehr angenommen.",
+        "description": "Das gespeicherte Passwort wird von {device} nicht mehr angenommen.",
         "data": {
           "password": "Wattpilot-Passwort"
+        }
+      },
+      "reconfigure": {
+        "title": "Verbindung ändern",
+        "description": "Ändert IP-Adresse und Passwort von {device}. Sinnvoll, wenn der Wattpilot eine neue IP-Adresse bekommen hat oder das Passwort in der App geändert wurde. Es muss dasselbe Gerät bleiben.",
+        "data": {
+          "host": "IP-Adresse",
+          "password": "Wattpilot-Passwort"
+        },
+        "data_description": {
+          "host": "Die lokale IP-Adresse des Wattpilot im Heimnetz.",
+          "password": "Das Passwort, das in der Wattpilot-App vergeben wurde."
         }
       }
     },
@@ -27,7 +39,9 @@
     },
     "abort": {
       "already_configured": "Dieser Wattpilot ist bereits eingerichtet.",
-      "reauth_successful": "Die erneute Anmeldung war erfolgreich."
+      "reauth_successful": "Die erneute Anmeldung war erfolgreich.",
+      "reconfigure_successful": "Die Verbindung wurde geändert.",
+      "wrong_device": "Unter dieser Adresse antwortet ein anderer Wattpilot. Bitte die Adresse prüfen oder das andere Gerät als eigene Integration hinzufügen."
     }
   },
   "options": {

@@ -15,9 +15,21 @@
       },
       "reauth_confirm": {
         "title": "Saisir à nouveau le mot de passe",
-        "description": "Le mot de passe enregistré n'est plus accepté par le Wattpilot.",
+        "description": "Le mot de passe enregistré n'est plus accepté par {device}.",
         "data": {
           "password": "Mot de passe Wattpilot"
+        }
+      },
+      "reconfigure": {
+        "title": "Modifier la connexion",
+        "description": "Modifie l'adresse IP et le mot de passe de {device}. Utile lorsque le Wattpilot a reçu une nouvelle adresse IP ou que le mot de passe a été modifié dans l'application. Il doit s'agir du même appareil.",
+        "data": {
+          "host": "Adresse IP",
+          "password": "Mot de passe Wattpilot"
+        },
+        "data_description": {
+          "host": "L'adresse IP locale du Wattpilot sur votre réseau domestique.",
+          "password": "Le mot de passe défini dans l'application Wattpilot."
         }
       }
     },
@@ -27,7 +39,9 @@
     },
     "abort": {
       "already_configured": "Ce Wattpilot est déjà configuré.",
-      "reauth_successful": "La nouvelle authentification a réussi."
+      "reauth_successful": "La nouvelle authentification a réussi.",
+      "reconfigure_successful": "La connexion a été modifiée.",
+      "wrong_device": "Un autre Wattpilot a répondu à cette adresse. Vérifiez l'adresse ou ajoutez l'autre appareil comme intégration distincte."
     }
   },
   "options": {

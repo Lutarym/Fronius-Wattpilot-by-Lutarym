@@ -151,6 +151,22 @@ Danach Home Assistant neu starten und unter Einstellungen, Geräte und Dienste d
 
 Benötigt werden nur die lokale IP-Adresse und das Wattpilot-Passwort. Das Passwort ist dasselbe, das in der Wattpilot-App vergeben wurde.
 
+### Verbindung nachträglich ändern
+
+Hat der Wattpilot eine neue IP-Adresse bekommen oder wurde das Passwort in der App geändert, muss die Integration nicht entfernt werden.
+
+Unter Einstellungen, Geräte und Dienste bei der Integration auf die drei Punkte klicken und **Neu konfigurieren** wählen. Dort lassen sich Adresse und Passwort ändern. Die bisherige Adresse ist bereits eingetragen.
+
+Die Integration prüft dabei, ob unter der neuen Adresse noch derselbe Wattpilot antwortet. Ist es ein anderes Gerät, wird abgebrochen. So bleiben Entitäten und Verläufe eindeutig einem Gerät zugeordnet. Ein zweiter Wattpilot wird stattdessen als eigene Integration hinzugefügt.
+
+### Passwort erneut abfragen
+
+Nimmt der Wattpilot das gespeicherte Passwort nicht mehr an, meldet Home Assistant das von selbst und fragt nur nach dem neuen Passwort. Die Adresse bleibt dabei unverändert.
+
+### Einstellungen
+
+Über **Konfigurieren** bei der Integration lässt sich einstellen, ob nur vorhandene Entitäten angelegt werden. Siehe den Abschnitt weiter oben.
+
 ## Aktualisierung der Werte
 
 Die Werte kommen per WebSocket-Push, also unmittelbar bei jeder Änderung im Gerät. Ein fester Abrufzyklus ist dafür nicht nötig.
