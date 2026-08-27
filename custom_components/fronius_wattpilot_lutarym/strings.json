@@ -3,49 +3,1122 @@
     "step": {
       "user": {
         "title": "Fronius Wattpilot by Lutarym",
-        "description": "Direkte lokale Verbindung zum Wattpilot. Es wird kein Fronius-Konto benoetigt.",
+        "description": "Direct local connection to the Wattpilot. No Fronius account required.",
         "data": {
-          "host": "IP-Adresse",
-          "password": "Wattpilot-Passwort"
+          "host": "IP address",
+          "password": "Wattpilot password"
         },
         "data_description": {
-          "host": "Die lokale IP-Adresse des Wattpilot im Heimnetz.",
-          "password": "Das Passwort, das in der Wattpilot-App vergeben wurde."
+          "host": "The local IP address of the Wattpilot on your home network.",
+          "password": "The password set in the Wattpilot app."
         }
       },
       "reauth_confirm": {
-        "title": "Passwort erneut eingeben",
-        "description": "Das gespeicherte Passwort wird vom Wattpilot nicht mehr angenommen.",
+        "title": "Re-enter password",
+        "description": "The stored password is no longer accepted by the Wattpilot.",
         "data": {
-          "password": "Wattpilot-Passwort"
+          "password": "Wattpilot password"
         }
       }
     },
     "error": {
-      "cannot_connect": "Verbindung zum Wattpilot fehlgeschlagen. Bitte IP-Adresse und Passwort pruefen.",
-      "unknown": "Unbekannter Fehler."
+      "cannot_connect": "Failed to connect to the Wattpilot. Please check IP address and password.",
+      "unknown": "Unknown error."
     },
     "abort": {
-      "already_configured": "Dieser Wattpilot ist bereits eingerichtet.",
-      "reauth_successful": "Die erneute Anmeldung war erfolgreich."
+      "already_configured": "This Wattpilot is already configured.",
+      "reauth_successful": "Re-authentication was successful."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "acu": {
+        "name": "Allowed Current"
+      },
+      "al1": {
+        "name": "Adapter Limit 1"
+      },
+      "al2": {
+        "name": "Adapter Limit 2"
+      },
+      "al3": {
+        "name": "Adapter Limit 3"
+      },
+      "al4": {
+        "name": "Adapter Limit 4"
+      },
+      "al5": {
+        "name": "Adapter Limit 5"
+      },
+      "amt": {
+        "name": "Temperature Current Limit"
+      },
+      "apd": {
+        "name": "Firmware Description"
+      },
+      "apd_project_name": {
+        "name": "Firmware Project Name"
+      },
+      "apd_version": {
+        "name": "Firmware Description Version"
+      },
+      "apd_secure_version": {
+        "name": "Firmware Secure Version"
+      },
+      "apd_timestamp": {
+        "name": "Firmware Timestamp"
+      },
+      "apd_idf_ver": {
+        "name": "Firmware IDF Version"
+      },
+      "apd_sha256": {
+        "name": "Firmware SHA256"
+      },
+      "arv": {
+        "name": "App Recommended Version"
+      },
+      "awcp": {
+        "name": "Awattar Current Price"
+      },
+      "awcp_start": {
+        "name": "Awattar Current Price Start"
+      },
+      "awcp_end": {
+        "name": "Awattar Current Price End"
+      },
+      "awcp_marketprice": {
+        "name": "Awattar Marketprice"
+      },
+      "awpl": {
+        "name": "Awattar Price List"
+      },
+      "car": {
+        "name": "Car State",
+        "state": {
+          "unknown_error": "Unknown or error",
+          "idle": "Idle",
+          "charging": "Charging",
+          "waitcar": "Waiting for car",
+          "complete": "Complete",
+          "error": "Error"
+        }
+      },
+      "cards": {
+        "name": "Registered Cards"
+      },
+      "cbl": {
+        "name": "Cable Current Limit"
+      },
+      "ccrv": {
+        "name": "Charge Controller Recommended Version"
+      },
+      "ccu": {
+        "name": "Charge Controller Update Progress"
+      },
+      "ccw": {
+        "name": "Currently Connected Wifi"
+      },
+      "cdi": {
+        "name": "Charging Duration Info"
+      },
+      "cdi_type": {
+        "name": "Charging Duration Type",
+        "state": {
+          "counter": "Counter",
+          "duration": "Duration"
+        }
+      },
+      "cdi_value": {
+        "name": "Charging Duration Value"
+      },
+      "clp": {
+        "name": "Current Limit Presets"
+      },
+      "cus": {
+        "name": "Cable Unlock Status",
+        "state": {
+          "unknown": "Unknown",
+          "unlocked": "Unlocked",
+          "unlockfailed": "Unlock failed",
+          "locked": "Locked",
+          "lockfailed": "Lock failed",
+          "lockunlockpowerout": "Lock or unlock during power outage"
+        }
+      },
+      "cwsca": {
+        "name": "Cloud WS Connected Age"
+      },
+      "deltaa": {
+        "name": "Delta Current"
+      },
+      "deltap": {
+        "name": "Delta Power"
+      },
+      "dns": {
+        "name": "DNS Server"
+      },
+      "ecf": {
+        "name": "ESP CPU Frequency"
+      },
+      "ecf_source": {
+        "name": "ESP CPU Frequency Source",
+        "state": {
+          "xtal": "XTAL",
+          "pll": "PLL",
+          "v8m": "8M",
+          "apll": "APLL"
+        }
+      },
+      "ecf_source_freq_mhz": {
+        "name": "ESP CPU Source Frequency"
+      },
+      "ecf_div": {
+        "name": "ESP CPU Frequency Divider"
+      },
+      "ecf_freq_mhz": {
+        "name": "ESP CPU Frequency MHz"
+      },
+      "eci": {
+        "name": "ESP Chip Info"
+      },
+      "eci_model": {
+        "name": "ESP Chip Model",
+        "state": {
+          "esp32": "ESP32",
+          "esp32s2": "ESP32S2",
+          "esp32s3": "ESP32S3",
+          "esp32c3": "ESP32C3"
+        }
+      },
+      "eci_features": {
+        "name": "ESP Chip Features"
+      },
+      "eci_cores": {
+        "name": "ESP Chip Cores"
+      },
+      "eci_revision": {
+        "name": "ESP Chip Revision"
+      },
+      "efh": {
+        "name": "ESP Free Heap"
+      },
+      "efh32": {
+        "name": "ESP Free Heap 32"
+      },
+      "efh8": {
+        "name": "ESP Free Heap 8"
+      },
+      "efi": {
+        "name": "ESP Flash Info"
+      },
+      "efi_spi_mode": {
+        "name": "ESP Flash SPI Mode",
+        "state": {
+          "qio": "QIO",
+          "qout": "QOUT",
+          "dio": "DIO",
+          "dout": "DOUT",
+          "fast_read": "FAST_READ",
+          "slow_read": "SLOW_READ"
+        }
+      },
+      "efi_spi_speed": {
+        "name": "ESP Flash SPI Speed",
+        "state": {
+          "v40m": "40M",
+          "v26m": "26M",
+          "v20m": "20M",
+          "v80m": "80M"
+        }
+      },
+      "efi_spi_size": {
+        "name": "ESP Flash SPI Size",
+        "state": {
+          "v1mb": "1MB",
+          "v2mb": "2MB",
+          "v4mb": "4MB",
+          "v8mb": "8MB",
+          "v16mb": "16MB",
+          "max": "Maximum"
+        }
+      },
+      "ehs": {
+        "name": "ESP Heap Size"
+      },
+      "emfh": {
+        "name": "ESP Min Free Heap"
+      },
+      "emhb": {
+        "name": "ESP Max Heap"
+      },
+      "err": {
+        "name": "Error State",
+        "state": {
+          "none": "No error",
+          "fiac": "Residual current AC",
+          "fidc": "Residual current DC",
+          "phase": "Phase error",
+          "overvolt": "Overvoltage",
+          "overamp": "Overcurrent",
+          "diode": "Diode error",
+          "ppinvalid": "Invalid cable coding",
+          "gndinvalid": "Invalid ground",
+          "contactorstuck": "Contactor stuck",
+          "contactormiss": "Contactor not engaging",
+          "fiunknown": "Residual current unknown",
+          "unknown": "Unknown",
+          "overtemp": "Overtemperature",
+          "nocomm": "No communication",
+          "statuslockstuckopen": "Lock stuck open",
+          "statuslockstucklocked": "Lock stuck closed",
+          "reserved20": "Reserved20",
+          "reserved21": "Reserved21",
+          "reserved22": "Reserved22",
+          "reserved23": "Reserved23",
+          "reserved24": "Reserved24"
+        }
+      },
+      "esr": {
+        "name": "RTC Reset Reasons",
+        "state": {
+          "no_mean": "Without averaging",
+          "poweron_reset": "POWERON_RESET",
+          "sw_reset": "SW_RESET",
+          "owdt_reset": "OWDT_RESET",
+          "deepsleep_reset": "DEEPSLEEP_RESET",
+          "sdio_reset": "SDIO_RESET",
+          "tg0wdt_sys_reset": "TG0WDT_SYS_RESET",
+          "tg1wdt_sys_reset": "TG1WDT_SYS_RESET",
+          "rtcwdt_sys_reset": "RTCWDT_SYS_RESET",
+          "intrusion_reset": "INTRUSION_RESET",
+          "tgwdt_cpu_reset": "TGWDT_CPU_RESET",
+          "sw_cpu_reset": "SW_CPU_RESET",
+          "rtcwdt_cpu_reset": "RTCWDT_CPU_RESET",
+          "ext_cpu_reset": "EXT_CPU_RESET",
+          "rtcwdt_brown_out_reset": "RTCWDT_BROWN_OUT_RESET",
+          "rtcwdt_rtc_reset": "RTCWDT_RTC_RESET"
+        }
+      },
+      "eto": {
+        "name": "Energy Counter Total"
+      },
+      "etop": {
+        "name": "Energy Total Persisted"
+      },
+      "fam": {
+        "name": "PV Battery Limit"
+      },
+      "fbuf_age": {
+        "name": "Fronius Age"
+      },
+      "fbuf_akkumode": {
+        "name": "Battery Mode"
+      },
+      "fbuf_akkusoc": {
+        "name": "Battery SoC"
+      },
+      "fbuf_ohmpilotstate": {
+        "name": "Ohmpilot State"
+      },
+      "fbuf_ohmpilottemperature": {
+        "name": "Ohmpilot Temperature"
+      },
+      "fbuf_pactotal": {
+        "name": "Power AC Total"
+      },
+      "fbuf_pakku": {
+        "name": "Power Akku"
+      },
+      "fbuf_pgrid": {
+        "name": "Power Grid"
+      },
+      "fbuf_ppv": {
+        "name": "Power PV"
+      },
+      "fem": {
+        "name": "Flash Encryption Mode",
+        "state": {
+          "disabled": "Disabled",
+          "development": "Development",
+          "release": "Release"
+        }
+      },
+      "ferm": {
+        "name": "Effective Rounding Mode"
+      },
+      "ffb": {
+        "name": "Lock Feedback",
+        "state": {
+          "noproblem": "No problem",
+          "problemlock": "Problem locking",
+          "problemunlock": "Problem unlocking"
+        }
+      },
+      "ffba": {
+        "name": "Lock Feedback Age"
+      },
+      "ffna": {
+        "name": "Factory Friendly Name"
+      },
+      "fhz": {
+        "name": "Frequency"
+      },
+      "fot": {
+        "name": "Ohmpilot Temperature Limit"
+      },
+      "frm": {
+        "name": "Rounding Mode",
+        "state": {
+          "preferpowerfromgrid": "Prefer power from grid",
+          "default": "Default",
+          "preferpowertogrid": "Prefer power to grid"
+        }
+      },
+      "fsptws": {
+        "name": "Force Single Phase Toggle Wished Since"
+      },
+      "fwan": {
+        "name": "Factory WiFi AP Name"
+      },
+      "fwc": {
+        "name": "Firmware Car Control"
+      },
+      "fwv": {
+        "name": "Firmware Version"
+      },
+      "host": {
+        "name": "Hostname"
+      },
+      "ido": {
+        "name": "Inverter Data Override"
+      },
+      "inva": {
+        "name": "Inverter Data Age"
+      },
+      "lbp": {
+        "name": "Last Button Press"
+      },
+      "lccfc": {
+        "name": "Last Car State Changed From Charging"
+      },
+      "lccfi": {
+        "name": "Last Car State Changed From Idle"
+      },
+      "lcctc": {
+        "name": "Last Car State Changed To Charging"
+      },
+      "lck": {
+        "name": "Effective Lock Setting",
+        "state": {
+          "normal": "Normal",
+          "autounlock": "Automatic unlock",
+          "alwayslock": "Always locked",
+          "forceunlock": "Force unlock"
+        }
+      },
+      "led": {
+        "name": "LED Info"
+      },
+      "lfspt": {
+        "name": "Last Force Single Phase Toggle"
+      },
+      "lmsc": {
+        "name": "Last Model Status Change"
+      },
+      "loa": {
+        "name": "Load Balancing Current"
+      },
+      "loc": {
+        "name": "Local Time"
+      },
+      "lom": {
+        "name": "Load Balancing Members"
+      },
+      "los": {
+        "name": "Load Balancing Status"
+      },
+      "lpsc": {
+        "name": "Last PV Surplus Calculation"
+      },
+      "lssfc": {
+        "name": "Last STA Switched From Connected"
+      },
+      "lsstc": {
+        "name": "Last STA Switched To Connected"
+      },
+      "map": {
+        "name": "Load Mapping"
+      },
+      "mcpea": {
+        "name": "Min Charge Pause End"
+      },
+      "mod": {
+        "name": "Module HW PCB Version"
+      },
+      "modelstatus": {
+        "name": "Model Status",
+        "state": {
+          "notchargingbecausenochargectrldata": "Not charging, no charge control data",
+          "notchargingbecauseovertemperature": "Not charging due to overtemperature",
+          "notchargingbecauseaccesscontrolwait": "Not charging, waiting for access",
+          "chargingbecauseforcestateon": "Charging, forced on",
+          "notchargingbecauseforcestateoff": "Not charging, forced off",
+          "notchargingbecausescheduler": "Not charging due to schedule",
+          "notchargingbecauseenergylimit": "Not charging, energy limit reached",
+          "chargingbecauseawattarpricelow": "Charging, low electricity price",
+          "chargingbecauseautomaticstoptestladung": "Charging, test charge",
+          "chargingbecauseautomaticstopnotenoughtime": "Charging, not enough time",
+          "chargingbecauseautomaticstop": "Charging until automatic stop",
+          "chargingbecauseautomaticstopnoclock": "Charging, no clock available",
+          "chargingbecausepvsurplus": "Charging on PV surplus",
+          "chargingbecausefallbackgoedefault": "Charging, fallback mode",
+          "chargingbecausefallbackgoescheduler": "Charging, fallback with schedule",
+          "chargingbecausefallbackdefault": "Charging, default fallback",
+          "notchargingbecausefallbackgoeawattar": "Not charging, price fallback",
+          "notchargingbecausefallbackawattar": "Not charging, price fallback",
+          "notchargingbecausefallbackautomaticstop": "Not charging, automatic stop fallback",
+          "chargingbecausecarcompatibilitykeepalive": "Charging for car compatibility",
+          "chargingbecausechargepausenotallowed": "Charging, pause not allowed",
+          "notchargingbecausesimulateunplugging": "Not charging, unplugging simulated",
+          "notchargingbecausephaseswitch": "Not charging, phase switching",
+          "notchargingbecauseminpauseduration": "Not charging, minimum pause active"
+        }
+      },
+      "msi": {
+        "name": "Model Status Internal",
+        "state": {
+          "notchargingbecausenochargectrldata": "Not charging, no charge control data",
+          "notchargingbecauseovertemperature": "Not charging due to overtemperature",
+          "notchargingbecauseaccesscontrolwait": "Not charging, waiting for access",
+          "chargingbecauseforcestateon": "Charging, forced on",
+          "notchargingbecauseforcestateoff": "Not charging, forced off",
+          "notchargingbecausescheduler": "Not charging due to schedule",
+          "notchargingbecauseenergylimit": "Not charging, energy limit reached",
+          "chargingbecauseawattarpricelow": "Charging, low electricity price",
+          "chargingbecauseautomaticstoptestladung": "Charging, test charge",
+          "chargingbecauseautomaticstopnotenoughtime": "Charging, not enough time",
+          "chargingbecauseautomaticstop": "Charging until automatic stop",
+          "chargingbecauseautomaticstopnoclock": "Charging, no clock available",
+          "chargingbecausepvsurplus": "Charging on PV surplus",
+          "chargingbecausefallbackgoedefault": "Charging, fallback mode",
+          "chargingbecausefallbackgoescheduler": "Charging, fallback with schedule",
+          "chargingbecausefallbackdefault": "Charging, default fallback",
+          "notchargingbecausefallbackgoeawattar": "Not charging, price fallback",
+          "notchargingbecausefallbackawattar": "Not charging, price fallback",
+          "notchargingbecausefallbackautomaticstop": "Not charging, automatic stop fallback",
+          "chargingbecausecarcompatibilitykeepalive": "Charging for car compatibility",
+          "chargingbecausechargepausenotallowed": "Charging, pause not allowed",
+          "notchargingbecausesimulateunplugging": "Not charging, unplugging simulated",
+          "notchargingbecausephaseswitch": "Not charging, phase switching",
+          "notchargingbecauseminpauseduration": "Not charging, minimum pause active"
+        }
+      },
+      "nif": {
+        "name": "Default Route"
+      },
+      "nrg": {
+        "name": "Charging Energy"
+      },
+      "nrg_ul1": {
+        "name": "Charging Voltage L1"
+      },
+      "nrg_ul2": {
+        "name": "Charging Voltage L2"
+      },
+      "nrg_ul3": {
+        "name": "Charging Voltage L3"
+      },
+      "nrg_un": {
+        "name": "Charging Voltage N"
+      },
+      "nrg_il1": {
+        "name": "Charging Current L1"
+      },
+      "nrg_il2": {
+        "name": "Charging Current L2"
+      },
+      "nrg_il3": {
+        "name": "Charging Current L3"
+      },
+      "nrg_pl1": {
+        "name": "Charging Power L1"
+      },
+      "nrg_pl2": {
+        "name": "Charging Power L2"
+      },
+      "nrg_pl3": {
+        "name": "Charging Power L3"
+      },
+      "nrg_pn": {
+        "name": "Charging Power N"
+      },
+      "nrg_ptotal": {
+        "name": "Charging Power Total"
+      },
+      "nrg_pfl1": {
+        "name": "Charging Power Factor L1"
+      },
+      "nrg_pfl2": {
+        "name": "Charging Power Factor L2"
+      },
+      "nrg_pfl3": {
+        "name": "Charging Power Factor L3"
+      },
+      "nrg_pfn": {
+        "name": "Charging Power Factor N"
+      },
+      "oca": {
+        "name": "OTA Cloud App"
+      },
+      "ocl": {
+        "name": "OTA Cloud Length"
+      },
+      "ocm": {
+        "name": "OTA Cloud Message"
+      },
+      "ocp": {
+        "name": "OTA Cloud Progress"
+      },
+      "ocs": {
+        "name": "OTA Cloud Status",
+        "state": {
+          "idle": "Idle",
+          "updating": "Updating",
+          "failed": "Failed",
+          "succeeded": "Succeeded"
+        }
+      },
+      "ocu": {
+        "name": "OTA Cloud Branches"
+      },
+      "oem": {
+        "name": "OEM Manufacturer"
+      },
+      "onv": {
+        "name": "OTA Newest Version"
+      },
+      "otap": {
+        "name": "OTA Partition"
+      },
+      "pakku": {
+        "name": "Power Akku"
+      },
+      "part": {
+        "name": "Partition Table"
+      },
+      "pgrid": {
+        "name": "Power Grid"
+      },
+      "pha": {
+        "name": "Phases"
+      },
+      "pnp": {
+        "name": "Number of Phases"
+      },
+      "ppv": {
+        "name": "Power PV"
+      },
+      "pto": {
+        "name": "Partition Table Offset"
+      },
+      "pvopt_averagepakku": {
+        "name": "Average Power Akku"
+      },
+      "pvopt_averagepgrid": {
+        "name": "Average Power Grid"
+      },
+      "pvopt_averagepohmpilot": {
+        "name": "Average Power Ohmpilot"
+      },
+      "pvopt_averageppv": {
+        "name": "Average Power PV"
+      },
+      "pvopt_deltaa": {
+        "name": "Delta Current"
+      },
+      "pvopt_deltap": {
+        "name": "Delta Power"
+      },
+      "pvopt_specialcase": {
+        "name": "PVOpt Special Case"
+      },
+      "pwm": {
+        "name": "Phase Wish Mode",
+        "state": {
+          "force_3": "Three phase forced",
+          "wish_1": "Single phase wished",
+          "wish_3": "Three phase wished"
+        }
+      },
+      "qsc": {
+        "name": "Queue Size Cloud"
+      },
+      "qsw": {
+        "name": "Queue Size WS"
+      },
+      "rbc": {
+        "name": "Reboot Counter"
+      },
+      "rbt": {
+        "name": "Time Since Boot"
+      },
+      "rcd": {
+        "name": "Residual Current Detection"
+      },
+      "rfb": {
+        "name": "Relay Feedback"
+      },
+      "rr": {
+        "name": "ESP Reset Reason",
+        "state": {
+          "unknown": "Unknown",
+          "poweron": "POWERON",
+          "ext": "EXT",
+          "sw": "SW",
+          "panic": "PANIC",
+          "int_wdt": "INT_WDT",
+          "task_wdt": "TASK_WDT",
+          "wdt": "WDT",
+          "deepsleep": "DEEPSLEEP",
+          "brownout": "BROWNOUT",
+          "sdio": "SDIO"
+        }
+      },
+      "rssi": {
+        "name": "WIFI Signal Strength"
+      },
+      "scaa": {
+        "name": "WiFi Scan Age"
+      },
+      "scan": {
+        "name": "Scanned WIFI Hotspots"
+      },
+      "scas": {
+        "name": "WIFI Scan Status",
+        "state": {
+          "none": "No error",
+          "scanning": "Scanning",
+          "finished": "Finished",
+          "failed": "Failed"
+        }
+      },
+      "sch_satur": {
+        "name": "Charging Schedule Saturday"
+      },
+      "sch_satur_control": {
+        "name": "Charging Schedule Saturday Control",
+        "state": {
+          "disabled": "Disabled",
+          "inside": "Inside the time ranges",
+          "outside": "Outside the time ranges"
+        }
+      },
+      "sch_sund": {
+        "name": "Charging Schedule Sunday"
+      },
+      "sch_sund_control": {
+        "name": "Charging Schedule Sunday Control",
+        "state": {
+          "disabled": "Disabled",
+          "inside": "Inside the time ranges",
+          "outside": "Outside the time ranges"
+        }
+      },
+      "sch_week": {
+        "name": "Charging Schedule Weekday"
+      },
+      "sch_week_control": {
+        "name": "Charging Schedule Weekday Control",
+        "state": {
+          "disabled": "Disabled",
+          "inside": "Inside the time ranges",
+          "outside": "Outside the time ranges"
+        }
+      },
+      "sse": {
+        "name": "Serial Number"
+      },
+      "tma": {
+        "name": "Temperature Sensors"
+      },
+      "tma_1": {
+        "name": "Temperature Sensor 1"
+      },
+      "tma_2": {
+        "name": "Temperature Sensor 2"
+      },
+      "tpa": {
+        "name": "Total Power Average"
+      },
+      "ts": {
+        "name": "Time Server"
+      },
+      "tsom": {
+        "name": "Time Server Operating Mode",
+        "state": {
+          "poll": "POLL",
+          "listenonly": "LISTENONLY"
+        }
+      },
+      "tssi": {
+        "name": "Time Server Sync Interval"
+      },
+      "tssm": {
+        "name": "Time Server Sync Mode",
+        "state": {
+          "immed": "Immediate",
+          "smooth": "Smooth"
+        }
+      },
+      "tsss": {
+        "name": "Time Server Sync Status",
+        "state": {
+          "reset": "RESET",
+          "completed": "Completed",
+          "in_progress": "In progress"
+        }
+      },
+      "typ": {
+        "name": "Device Type"
+      },
+      "var": {
+        "name": "Variant",
+        "state": {
+          "v11kw_16a": "11kW/16A",
+          "v22kw_32a": "22kW/32A"
+        }
+      },
+      "wcb": {
+        "name": "WiFi Current MAC Address"
+      },
+      "wcch": {
+        "name": "HTTP Connected Clients"
+      },
+      "wccw": {
+        "name": "WS Connected Clients"
+      },
+      "wfb": {
+        "name": "WiFi Failed MAC Address"
+      },
+      "wh": {
+        "name": "Energy Counter Since Start"
+      },
+      "wpb": {
+        "name": "WiFi Planned MAC"
+      },
+      "wsc": {
+        "name": "WiFi STA Error Count"
+      },
+      "wsm": {
+        "name": "Wifi STA Error Message"
+      },
+      "wsms": {
+        "name": "WIFI State Machine State",
+        "state": {
+          "none": "No error",
+          "scanning": "Scanning",
+          "connecting": "Connecting",
+          "connected": "Connected"
+        }
+      },
+      "wss": {
+        "name": "WIFI SSID"
+      },
+      "wst": {
+        "name": "WIFI STA Status",
+        "state": {
+          "idle_status": "Idle",
+          "no_ssid_avail": "Network not found",
+          "scan_completed": "Scan completed",
+          "connected": "Connected",
+          "connect_failed": "Connection failed",
+          "connection_lost": "Connection lost",
+          "disconnected": "Disconnected",
+          "connecting": "Connecting",
+          "disconnecting": "Disconnecting",
+          "no_shield": "No network module"
+        }
+      },
+      "card_energy": {
+        "name": "RFID card {number} energy"
+      },
+      "card_name": {
+        "name": "RFID card {number} name"
+      }
+    },
+    "binary_sensor": {
+      "adi": {
+        "name": "Adapter (16A) Limit"
+      },
+      "alw": {
+        "name": "Allow Charging"
+      },
+      "cca": {
+        "name": "Cloud Client Auth"
+      },
+      "cpe": {
+        "name": "CP Enable"
+      },
+      "cpr": {
+        "name": "CP Enable Request"
+      },
+      "cws": {
+        "name": "Cloud WS Started"
+      },
+      "cwsc": {
+        "name": "Cloud WS Connected"
+      },
+      "ful": {
+        "name": "Use Dynamic Pricing"
+      },
+      "ocuca": {
+        "name": "OTA Cloud Use Client Auth"
+      },
+      "sbe": {
+        "name": "Secure Boot Enabled"
+      }
+    },
+    "number": {
+      "ama": {
+        "name": "Max Current Limit"
+      },
+      "amp": {
+        "name": "Charging Current"
+      },
+      "awp": {
+        "name": "Awattar Max Price"
+      },
+      "cco": {
+        "name": "Car Consumption"
+      },
+      "dwo": {
+        "name": "Charging Energy Limit"
+      },
+      "fmt": {
+        "name": "Min Charge Time"
+      },
+      "fst": {
+        "name": "Starting Power"
+      },
+      "lbr": {
+        "name": "LED Brightness"
+      },
+      "lof": {
+        "name": "Load Fallback"
+      },
+      "lop": {
+        "name": "Load Priority"
+      },
+      "lot": {
+        "name": "Load Balancing Current Total"
+      },
+      "mca": {
+        "name": "Min Charging Current"
+      },
+      "mci": {
+        "name": "Minimum Charging Interval"
+      },
+      "mcpd": {
+        "name": "Min Charge Pause Duration"
+      },
+      "mptwt": {
+        "name": "Min Phase Toggle Wait Time"
+      },
+      "mpwst": {
+        "name": "Min Phase Wish Switch Time"
+      },
+      "po": {
+        "name": "Prio Offset"
+      },
+      "psh": {
+        "name": "Phase Switch Hysteresis"
+      },
+      "psmd": {
+        "name": "Force Single Phase Duration"
+      },
+      "sh": {
+        "name": "Stop Hysteresis"
+      },
+      "spl3": {
+        "name": "Three Phase Switch Level"
+      },
+      "sumd": {
+        "name": "Simulate Unplugging Duration"
+      },
+      "tof": {
+        "name": "Timezone Offset"
+      },
+      "trx": {
+        "name": "Transaction"
+      },
+      "zfo": {
+        "name": "Zero Feedin Offset"
+      }
+    },
+    "select": {
+      "acs": {
+        "name": "Access State",
+        "state": {
+          "open": "Open",
+          "wait": "Waiting for release"
+        }
+      },
+      "awc": {
+        "name": "Awattar Country",
+        "state": {
+          "austria": "Austria",
+          "germany": "Germany"
+        }
+      },
+      "frc": {
+        "name": "Force State",
+        "state": {
+          "neutral": "Neutral",
+          "off": "Off",
+          "on": "On"
+        }
+      },
+      "lmo": {
+        "name": "Logic Mode",
+        "state": {
+          "default": "Default",
+          "awattar": "Awattar",
+          "automaticstop": "Automatic stop"
+        }
+      },
+      "loty": {
+        "name": "Load Balancing Type",
+        "state": {
+          "static": "Static",
+          "dynamic": "Dynamic"
+        }
+      },
+      "psm": {
+        "name": "Phase Switch Mode",
+        "state": {
+          "auto": "Automatic",
+          "force_1": "Single phase forced",
+          "force_3": "Three phase forced"
+        }
+      },
+      "tds": {
+        "name": "Timezone Daylight Saving Mode",
+        "state": {
+          "none": "No error",
+          "europeansummertime": "European summer time",
+          "usdaylighttime": "US daylight time"
+        }
+      },
+      "ust": {
+        "name": "Unlock Setting",
+        "state": {
+          "normal": "Normal",
+          "autounlock": "Automatic unlock",
+          "alwayslock": "Always locked"
+        }
+      }
+    },
+    "switch": {
+      "bac": {
+        "name": "Button Allow Current Change"
+      },
+      "cwe": {
+        "name": "Cloud WS Enabled"
+      },
+      "esk": {
+        "name": "Energy Set kWh"
+      },
+      "fsp": {
+        "name": "Force Single Phase"
+      },
+      "fup": {
+        "name": "PV Surplus"
+      },
+      "fzf": {
+        "name": "Zero Feedin"
+      },
+      "hsa": {
+        "name": "HTTP STA Authentication"
+      },
+      "hws": {
+        "name": "HTTP STA Reachable"
+      },
+      "loe": {
+        "name": "Load Balancing Enabled"
+      },
+      "lse": {
+        "name": "LED Save Energy"
+      },
+      "nmo": {
+        "name": "Norway Mode"
+      },
+      "su": {
+        "name": "Simulate Unplugging"
+      },
+      "sua": {
+        "name": "Simulate Unplugging Always"
+      },
+      "tse": {
+        "name": "Time Server Enabled"
+      },
+      "upo": {
+        "name": "Unlock Power Outage"
+      },
+      "wen": {
+        "name": "WiFi Enabled"
+      }
+    },
+    "text": {
+      "cch": {
+        "name": "Color Charging"
+      },
+      "cfi": {
+        "name": "Color Finished"
+      },
+      "cid": {
+        "name": "Color Idle"
+      },
+      "ct": {
+        "name": "Car Type"
+      },
+      "cwc": {
+        "name": "Color Wait Car"
+      },
+      "fna": {
+        "name": "Friendly Name"
+      },
+      "log": {
+        "name": "Load Group ID"
+      },
+      "utc": {
+        "name": "UTC Time"
+      },
+      "wan": {
+        "name": "WiFi AP Name"
+      }
+    },
+    "button": {
+      "reboot": {
+        "name": "Restart"
+      }
     }
   },
   "services": {
     "set_property": {
-      "name": "Parameter setzen",
-      "description": "Setzt eine beliebige Property auf dem Wattpilot.",
+      "name": "Set property",
+      "description": "Sets any property on the Wattpilot.",
       "fields": {
         "device_id": {
-          "name": "Geraet",
-          "description": "Der Wattpilot, auf dem der Parameter gesetzt wird."
+          "name": "Device",
+          "description": "The Wattpilot to write to."
         },
         "property": {
           "name": "Property",
-          "description": "Der Schluessel der Property, zum Beispiel amp oder frc."
+          "description": "The property key, for example amp or frc."
         },
         "value": {
-          "name": "Wert",
-          "description": "Der neue Wert der Property."
+          "name": "Value",
+          "description": "The new value of the property."
         }
       }
     }

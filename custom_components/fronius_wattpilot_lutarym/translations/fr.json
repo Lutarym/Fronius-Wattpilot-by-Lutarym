@@ -1,0 +1,1126 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Fronius Wattpilot by Lutarym",
+        "description": "Connexion locale directe au Wattpilot. Aucun compte Fronius nécessaire.",
+        "data": {
+          "host": "Adresse IP",
+          "password": "Mot de passe Wattpilot"
+        },
+        "data_description": {
+          "host": "L'adresse IP locale du Wattpilot sur votre réseau domestique.",
+          "password": "Le mot de passe défini dans l'application Wattpilot."
+        }
+      },
+      "reauth_confirm": {
+        "title": "Saisir à nouveau le mot de passe",
+        "description": "Le mot de passe enregistré n'est plus accepté par le Wattpilot.",
+        "data": {
+          "password": "Mot de passe Wattpilot"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Échec de la connexion au Wattpilot. Vérifiez l'adresse IP et le mot de passe.",
+      "unknown": "Erreur inconnue."
+    },
+    "abort": {
+      "already_configured": "Ce Wattpilot est déjà configuré.",
+      "reauth_successful": "La nouvelle authentification a réussi."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "acu": {
+        "name": "Courant autorisé"
+      },
+      "al1": {
+        "name": "Limite adaptateur 1"
+      },
+      "al2": {
+        "name": "Limite adaptateur 2"
+      },
+      "al3": {
+        "name": "Limite adaptateur 3"
+      },
+      "al4": {
+        "name": "Limite adaptateur 4"
+      },
+      "al5": {
+        "name": "Limite adaptateur 5"
+      },
+      "amt": {
+        "name": "Limite de courant par température"
+      },
+      "apd": {
+        "name": "Description du micrologiciel"
+      },
+      "apd_project_name": {
+        "name": "Nom du projet"
+      },
+      "apd_version": {
+        "name": "Version de description"
+      },
+      "apd_secure_version": {
+        "name": "Version sécurisée"
+      },
+      "apd_timestamp": {
+        "name": "Horodatage du micrologiciel"
+      },
+      "apd_idf_ver": {
+        "name": "Version IDF"
+      },
+      "apd_sha256": {
+        "name": "Somme de contrôle SHA256"
+      },
+      "arv": {
+        "name": "Version d'application recommandée"
+      },
+      "awcp": {
+        "name": "Prix Awattar actuel"
+      },
+      "awcp_start": {
+        "name": "Début de la période tarifaire"
+      },
+      "awcp_end": {
+        "name": "Fin de la période tarifaire"
+      },
+      "awcp_marketprice": {
+        "name": "Prix du marché"
+      },
+      "awpl": {
+        "name": "Liste des prix Awattar"
+      },
+      "car": {
+        "name": "État du véhicule",
+        "state": {
+          "unknown_error": "Inconnu ou erreur",
+          "idle": "Prêt",
+          "charging": "En charge",
+          "waitcar": "Attente du véhicule",
+          "complete": "Terminé",
+          "error": "Erreur"
+        }
+      },
+      "cards": {
+        "name": "Cartes RFID enregistrées"
+      },
+      "cbl": {
+        "name": "Courant admissible du câble"
+      },
+      "ccrv": {
+        "name": "Version recommandée du contrôleur"
+      },
+      "ccu": {
+        "name": "Progression de mise à jour du contrôleur"
+      },
+      "ccw": {
+        "name": "Wi-Fi connecté"
+      },
+      "cdi": {
+        "name": "Informations de durée de charge"
+      },
+      "cdi_type": {
+        "name": "Type de durée de charge",
+        "state": {
+          "counter": "Compteur",
+          "duration": "Durée"
+        }
+      },
+      "cdi_value": {
+        "name": "Valeur de durée de charge"
+      },
+      "clp": {
+        "name": "Préréglages de limite de courant"
+      },
+      "cus": {
+        "name": "État de déverrouillage du câble",
+        "state": {
+          "unknown": "Inconnu",
+          "unlocked": "Déverrouillé",
+          "unlockfailed": "Échec du déverrouillage",
+          "locked": "Verrouillé",
+          "lockfailed": "Échec du verrouillage",
+          "lockunlockpowerout": "Verrouillage lors d'une coupure"
+        }
+      },
+      "cwsca": {
+        "name": "Durée de connexion au cloud"
+      },
+      "deltaa": {
+        "name": "Écart de courant"
+      },
+      "deltap": {
+        "name": "Écart de puissance"
+      },
+      "dns": {
+        "name": "Serveur DNS"
+      },
+      "ecf": {
+        "name": "Fréquence du processeur ESP"
+      },
+      "ecf_source": {
+        "name": "Source d'horloge",
+        "state": {
+          "xtal": "XTAL",
+          "pll": "PLL",
+          "v8m": "8M",
+          "apll": "APLL"
+        }
+      },
+      "ecf_source_freq_mhz": {
+        "name": "Fréquence de la source"
+      },
+      "ecf_div": {
+        "name": "Diviseur d'horloge"
+      },
+      "ecf_freq_mhz": {
+        "name": "Fréquence du processeur"
+      },
+      "eci": {
+        "name": "Informations sur la puce ESP"
+      },
+      "eci_model": {
+        "name": "Modèle de puce ESP",
+        "state": {
+          "esp32": "ESP32",
+          "esp32s2": "ESP32S2",
+          "esp32s3": "ESP32S3",
+          "esp32c3": "ESP32C3"
+        }
+      },
+      "eci_features": {
+        "name": "Fonctions de la puce ESP"
+      },
+      "eci_cores": {
+        "name": "Cœurs de la puce ESP"
+      },
+      "eci_revision": {
+        "name": "Révision de la puce ESP"
+      },
+      "efh": {
+        "name": "Mémoire libre"
+      },
+      "efh32": {
+        "name": "Mémoire libre 32 bits"
+      },
+      "efh8": {
+        "name": "Mémoire libre 8 bits"
+      },
+      "efi": {
+        "name": "Informations mémoire flash"
+      },
+      "efi_spi_mode": {
+        "name": "Mode SPI de la flash",
+        "state": {
+          "qio": "QIO",
+          "qout": "QOUT",
+          "dio": "DIO",
+          "dout": "DOUT",
+          "fast_read": "FAST_READ",
+          "slow_read": "SLOW_READ"
+        }
+      },
+      "efi_spi_speed": {
+        "name": "Vitesse SPI de la flash",
+        "state": {
+          "v40m": "40M",
+          "v26m": "26M",
+          "v20m": "20M",
+          "v80m": "80M"
+        }
+      },
+      "efi_spi_size": {
+        "name": "Taille de la flash",
+        "state": {
+          "v1mb": "1MB",
+          "v2mb": "2MB",
+          "v4mb": "4MB",
+          "v8mb": "8MB",
+          "v16mb": "16MB",
+          "max": "Maximum"
+        }
+      },
+      "ehs": {
+        "name": "Taille de la mémoire"
+      },
+      "emfh": {
+        "name": "Mémoire libre minimale"
+      },
+      "emhb": {
+        "name": "Plus grand bloc mémoire"
+      },
+      "err": {
+        "name": "État d'erreur",
+        "state": {
+          "none": "Aucune erreur",
+          "fiac": "Courant de défaut CA",
+          "fidc": "Courant de défaut CC",
+          "phase": "Erreur de phase",
+          "overvolt": "Surtension",
+          "overamp": "Surintensité",
+          "diode": "Erreur de diode",
+          "ppinvalid": "Codage de câble invalide",
+          "gndinvalid": "Mise à la terre incorrecte",
+          "contactorstuck": "Contacteur bloqué",
+          "contactormiss": "Contacteur non enclenché",
+          "fiunknown": "Courant de défaut inconnu",
+          "unknown": "Inconnu",
+          "overtemp": "Surchauffe",
+          "nocomm": "Pas de communication",
+          "statuslockstuckopen": "Verrou bloqué ouvert",
+          "statuslockstucklocked": "Verrou bloqué fermé",
+          "reserved20": "Reserved20",
+          "reserved21": "Reserved21",
+          "reserved22": "Reserved22",
+          "reserved23": "Reserved23",
+          "reserved24": "Reserved24"
+        }
+      },
+      "esr": {
+        "name": "Motifs de redémarrage RTC",
+        "state": {
+          "no_mean": "Sans moyennage",
+          "poweron_reset": "POWERON_RESET",
+          "sw_reset": "SW_RESET",
+          "owdt_reset": "OWDT_RESET",
+          "deepsleep_reset": "DEEPSLEEP_RESET",
+          "sdio_reset": "SDIO_RESET",
+          "tg0wdt_sys_reset": "TG0WDT_SYS_RESET",
+          "tg1wdt_sys_reset": "TG1WDT_SYS_RESET",
+          "rtcwdt_sys_reset": "RTCWDT_SYS_RESET",
+          "intrusion_reset": "INTRUSION_RESET",
+          "tgwdt_cpu_reset": "TGWDT_CPU_RESET",
+          "sw_cpu_reset": "SW_CPU_RESET",
+          "rtcwdt_cpu_reset": "RTCWDT_CPU_RESET",
+          "ext_cpu_reset": "EXT_CPU_RESET",
+          "rtcwdt_brown_out_reset": "RTCWDT_BROWN_OUT_RESET",
+          "rtcwdt_rtc_reset": "RTCWDT_RTC_RESET"
+        }
+      },
+      "eto": {
+        "name": "Énergie totale"
+      },
+      "etop": {
+        "name": "Énergie totale enregistrée"
+      },
+      "fam": {
+        "name": "Limite de batterie PV"
+      },
+      "fbuf_age": {
+        "name": "Ancienneté des données onduleur"
+      },
+      "fbuf_akkumode": {
+        "name": "Mode de la batterie domestique"
+      },
+      "fbuf_akkusoc": {
+        "name": "Charge de la batterie domestique"
+      },
+      "fbuf_ohmpilotstate": {
+        "name": "État de l'Ohmpilot"
+      },
+      "fbuf_ohmpilottemperature": {
+        "name": "Température de l'Ohmpilot"
+      },
+      "fbuf_pactotal": {
+        "name": "Puissance CA totale"
+      },
+      "fbuf_pakku": {
+        "name": "Puissance de la batterie domestique"
+      },
+      "fbuf_pgrid": {
+        "name": "Puissance du réseau"
+      },
+      "fbuf_ppv": {
+        "name": "Puissance photovoltaïque"
+      },
+      "fem": {
+        "name": "Chiffrement de la flash",
+        "state": {
+          "disabled": "Désactivé",
+          "development": "Développement",
+          "release": "Version publiée"
+        }
+      },
+      "ferm": {
+        "name": "Mode d'arrondi effectif"
+      },
+      "ffb": {
+        "name": "Retour de verrouillage",
+        "state": {
+          "noproblem": "Aucun problème",
+          "problemlock": "Problème de verrouillage",
+          "problemunlock": "Problème de déverrouillage"
+        }
+      },
+      "ffba": {
+        "name": "Ancienneté du retour de verrouillage"
+      },
+      "ffna": {
+        "name": "Nom d'affichage d'usine"
+      },
+      "fhz": {
+        "name": "Fréquence du réseau"
+      },
+      "fot": {
+        "name": "Limite de température Ohmpilot"
+      },
+      "frm": {
+        "name": "Mode d'arrondi",
+        "state": {
+          "preferpowerfromgrid": "Préférer le soutirage réseau",
+          "default": "Standard",
+          "preferpowertogrid": "Préférer l'injection réseau"
+        }
+      },
+      "fsptws": {
+        "name": "Monophasé souhaité depuis"
+      },
+      "fwan": {
+        "name": "Nom Wi-Fi d'usine"
+      },
+      "fwc": {
+        "name": "Micrologiciel du contrôleur de charge"
+      },
+      "fwv": {
+        "name": "Version du micrologiciel"
+      },
+      "host": {
+        "name": "Nom d'hôte"
+      },
+      "ido": {
+        "name": "Substitution des données onduleur"
+      },
+      "inva": {
+        "name": "Ancienneté des données onduleur"
+      },
+      "lbp": {
+        "name": "Dernier appui sur le bouton"
+      },
+      "lccfc": {
+        "name": "Dernier passage hors charge"
+      },
+      "lccfi": {
+        "name": "Dernier passage hors repos"
+      },
+      "lcctc": {
+        "name": "Dernier passage en charge"
+      },
+      "lck": {
+        "name": "Réglage de verrouillage effectif",
+        "state": {
+          "normal": "Normal",
+          "autounlock": "Déverrouillage automatique",
+          "alwayslock": "Toujours verrouillé",
+          "forceunlock": "Déverrouillage forcé"
+        }
+      },
+      "led": {
+        "name": "Informations LED"
+      },
+      "lfspt": {
+        "name": "Dernier passage en monophasé"
+      },
+      "lmsc": {
+        "name": "Dernier changement de motif"
+      },
+      "loa": {
+        "name": "Courant de gestion de charge"
+      },
+      "loc": {
+        "name": "Heure locale"
+      },
+      "lom": {
+        "name": "Participants à la gestion de charge"
+      },
+      "los": {
+        "name": "État de la gestion de charge"
+      },
+      "lpsc": {
+        "name": "Dernier calcul de surplus PV"
+      },
+      "lssfc": {
+        "name": "Dernière perte de connexion"
+      },
+      "lsstc": {
+        "name": "Dernière connexion établie"
+      },
+      "map": {
+        "name": "Affectation des charges"
+      },
+      "mcpea": {
+        "name": "Fin de la pause de charge"
+      },
+      "mod": {
+        "name": "Version de la carte électronique"
+      },
+      "modelstatus": {
+        "name": "Motif de charge",
+        "state": {
+          "notchargingbecausenochargectrldata": "Pas de charge, données de contrôle absentes",
+          "notchargingbecauseovertemperature": "Pas de charge, surchauffe",
+          "notchargingbecauseaccesscontrolwait": "Pas de charge, autorisation manquante",
+          "chargingbecauseforcestateon": "Charge forcée",
+          "notchargingbecauseforcestateoff": "Charge bloquée",
+          "notchargingbecausescheduler": "Pas de charge, programme horaire",
+          "notchargingbecauseenergylimit": "Pas de charge, limite d'énergie atteinte",
+          "chargingbecauseawattarpricelow": "Charge, prix bas de l'électricité",
+          "chargingbecauseautomaticstoptestladung": "Charge d'essai",
+          "chargingbecauseautomaticstopnotenoughtime": "Charge, temps insuffisant",
+          "chargingbecauseautomaticstop": "Charge jusqu'à l'arrêt automatique",
+          "chargingbecauseautomaticstopnoclock": "Charge, heure indisponible",
+          "chargingbecausepvsurplus": "Charge sur surplus PV",
+          "chargingbecausefallbackgoedefault": "Charge en mode de repli",
+          "chargingbecausefallbackgoescheduler": "Charge en repli avec programme",
+          "chargingbecausefallbackdefault": "Charge en repli par défaut",
+          "notchargingbecausefallbackgoeawattar": "Pas de charge, repli tarifaire",
+          "notchargingbecausefallbackawattar": "Pas de charge, repli tarifaire",
+          "notchargingbecausefallbackautomaticstop": "Pas de charge, repli arrêt automatique",
+          "chargingbecausecarcompatibilitykeepalive": "Charge pour compatibilité véhicule",
+          "chargingbecausechargepausenotallowed": "Charge, pause non autorisée",
+          "notchargingbecausesimulateunplugging": "Pas de charge, débranchement simulé",
+          "notchargingbecausephaseswitch": "Pas de charge, commutation de phase",
+          "notchargingbecauseminpauseduration": "Pas de charge, pause minimale en cours"
+        }
+      },
+      "msi": {
+        "name": "État interne du modèle",
+        "state": {
+          "notchargingbecausenochargectrldata": "Pas de charge, données de contrôle absentes",
+          "notchargingbecauseovertemperature": "Pas de charge, surchauffe",
+          "notchargingbecauseaccesscontrolwait": "Pas de charge, autorisation manquante",
+          "chargingbecauseforcestateon": "Charge forcée",
+          "notchargingbecauseforcestateoff": "Charge bloquée",
+          "notchargingbecausescheduler": "Pas de charge, programme horaire",
+          "notchargingbecauseenergylimit": "Pas de charge, limite d'énergie atteinte",
+          "chargingbecauseawattarpricelow": "Charge, prix bas de l'électricité",
+          "chargingbecauseautomaticstoptestladung": "Charge d'essai",
+          "chargingbecauseautomaticstopnotenoughtime": "Charge, temps insuffisant",
+          "chargingbecauseautomaticstop": "Charge jusqu'à l'arrêt automatique",
+          "chargingbecauseautomaticstopnoclock": "Charge, heure indisponible",
+          "chargingbecausepvsurplus": "Charge sur surplus PV",
+          "chargingbecausefallbackgoedefault": "Charge en mode de repli",
+          "chargingbecausefallbackgoescheduler": "Charge en repli avec programme",
+          "chargingbecausefallbackdefault": "Charge en repli par défaut",
+          "notchargingbecausefallbackgoeawattar": "Pas de charge, repli tarifaire",
+          "notchargingbecausefallbackawattar": "Pas de charge, repli tarifaire",
+          "notchargingbecausefallbackautomaticstop": "Pas de charge, repli arrêt automatique",
+          "chargingbecausecarcompatibilitykeepalive": "Charge pour compatibilité véhicule",
+          "chargingbecausechargepausenotallowed": "Charge, pause non autorisée",
+          "notchargingbecausesimulateunplugging": "Pas de charge, débranchement simulé",
+          "notchargingbecausephaseswitch": "Pas de charge, commutation de phase",
+          "notchargingbecauseminpauseduration": "Pas de charge, pause minimale en cours"
+        }
+      },
+      "nif": {
+        "name": "Route par défaut"
+      },
+      "nrg": {
+        "name": "Valeurs de mesure"
+      },
+      "nrg_ul1": {
+        "name": "Tension L1"
+      },
+      "nrg_ul2": {
+        "name": "Tension L2"
+      },
+      "nrg_ul3": {
+        "name": "Tension L3"
+      },
+      "nrg_un": {
+        "name": "Tension N"
+      },
+      "nrg_il1": {
+        "name": "Courant L1"
+      },
+      "nrg_il2": {
+        "name": "Courant L2"
+      },
+      "nrg_il3": {
+        "name": "Courant L3"
+      },
+      "nrg_pl1": {
+        "name": "Puissance L1"
+      },
+      "nrg_pl2": {
+        "name": "Puissance L2"
+      },
+      "nrg_pl3": {
+        "name": "Puissance L3"
+      },
+      "nrg_pn": {
+        "name": "Puissance N"
+      },
+      "nrg_ptotal": {
+        "name": "Puissance totale"
+      },
+      "nrg_pfl1": {
+        "name": "Facteur de puissance L1"
+      },
+      "nrg_pfl2": {
+        "name": "Facteur de puissance L2"
+      },
+      "nrg_pfl3": {
+        "name": "Facteur de puissance L3"
+      },
+      "nrg_pfn": {
+        "name": "Facteur de puissance N"
+      },
+      "oca": {
+        "name": "Application de mise à jour cloud"
+      },
+      "ocl": {
+        "name": "Taille de la mise à jour cloud"
+      },
+      "ocm": {
+        "name": "Message de mise à jour cloud"
+      },
+      "ocp": {
+        "name": "Progression de la mise à jour"
+      },
+      "ocs": {
+        "name": "État de la mise à jour cloud",
+        "state": {
+          "idle": "Prêt",
+          "updating": "Mise à jour en cours",
+          "failed": "Échec",
+          "succeeded": "Réussi"
+        }
+      },
+      "ocu": {
+        "name": "Branches de micrologiciel"
+      },
+      "oem": {
+        "name": "Fabricant"
+      },
+      "onv": {
+        "name": "Version la plus récente"
+      },
+      "otap": {
+        "name": "Partition de mise à jour"
+      },
+      "pakku": {
+        "name": "Puissance de la batterie domestique"
+      },
+      "part": {
+        "name": "Table de partitions"
+      },
+      "pgrid": {
+        "name": "Puissance du réseau"
+      },
+      "pha": {
+        "name": "Phases"
+      },
+      "pnp": {
+        "name": "Nombre de phases"
+      },
+      "ppv": {
+        "name": "Puissance photovoltaïque"
+      },
+      "pto": {
+        "name": "Décalage de la table de partitions"
+      },
+      "pvopt_averagepakku": {
+        "name": "Puissance moyenne batterie"
+      },
+      "pvopt_averagepgrid": {
+        "name": "Puissance moyenne réseau"
+      },
+      "pvopt_averagepohmpilot": {
+        "name": "Puissance moyenne Ohmpilot"
+      },
+      "pvopt_averageppv": {
+        "name": "Puissance moyenne PV"
+      },
+      "pvopt_deltaa": {
+        "name": "Écart de courant"
+      },
+      "pvopt_deltap": {
+        "name": "Écart de puissance"
+      },
+      "pvopt_specialcase": {
+        "name": "Cas particulier de régulation PV"
+      },
+      "pwm": {
+        "name": "Nombre de phases souhaité",
+        "state": {
+          "force_3": "Triphasé forcé",
+          "wish_1": "Monophasé souhaité",
+          "wish_3": "Triphasé souhaité"
+        }
+      },
+      "qsc": {
+        "name": "File d'attente vers le cloud"
+      },
+      "qsw": {
+        "name": "File d'attente WebSocket"
+      },
+      "rbc": {
+        "name": "Nombre de redémarrages"
+      },
+      "rbt": {
+        "name": "Durée depuis le démarrage"
+      },
+      "rcd": {
+        "name": "Détection de courant résiduel"
+      },
+      "rfb": {
+        "name": "Retour du relais"
+      },
+      "rr": {
+        "name": "Motif du dernier redémarrage",
+        "state": {
+          "unknown": "Inconnu",
+          "poweron": "POWERON",
+          "ext": "EXT",
+          "sw": "SW",
+          "panic": "PANIC",
+          "int_wdt": "INT_WDT",
+          "task_wdt": "TASK_WDT",
+          "wdt": "WDT",
+          "deepsleep": "DEEPSLEEP",
+          "brownout": "BROWNOUT",
+          "sdio": "SDIO"
+        }
+      },
+      "rssi": {
+        "name": "Puissance du signal Wi-Fi"
+      },
+      "scaa": {
+        "name": "Ancienneté de la recherche Wi-Fi"
+      },
+      "scan": {
+        "name": "Réseaux Wi-Fi détectés"
+      },
+      "scas": {
+        "name": "État de la recherche Wi-Fi",
+        "state": {
+          "none": "Aucune erreur",
+          "scanning": "Recherche en cours",
+          "finished": "Terminé",
+          "failed": "Échec"
+        }
+      },
+      "sch_satur": {
+        "name": "Programme de charge samedi"
+      },
+      "sch_satur_control": {
+        "name": "Commande du programme samedi",
+        "state": {
+          "disabled": "Désactivé",
+          "inside": "Dans les plages horaires",
+          "outside": "Hors des plages horaires"
+        }
+      },
+      "sch_sund": {
+        "name": "Programme de charge dimanche"
+      },
+      "sch_sund_control": {
+        "name": "Commande du programme dimanche",
+        "state": {
+          "disabled": "Désactivé",
+          "inside": "Dans les plages horaires",
+          "outside": "Hors des plages horaires"
+        }
+      },
+      "sch_week": {
+        "name": "Programme de charge en semaine"
+      },
+      "sch_week_control": {
+        "name": "Commande du programme en semaine",
+        "state": {
+          "disabled": "Désactivé",
+          "inside": "Dans les plages horaires",
+          "outside": "Hors des plages horaires"
+        }
+      },
+      "sse": {
+        "name": "Numéro de série"
+      },
+      "tma": {
+        "name": "Capteurs de température"
+      },
+      "tma_1": {
+        "name": "Capteur de température 1"
+      },
+      "tma_2": {
+        "name": "Capteur de température 2"
+      },
+      "tpa": {
+        "name": "Puissance totale moyenne"
+      },
+      "ts": {
+        "name": "Serveur de temps"
+      },
+      "tsom": {
+        "name": "Mode du serveur de temps",
+        "state": {
+          "poll": "POLL",
+          "listenonly": "LISTENONLY"
+        }
+      },
+      "tssi": {
+        "name": "Intervalle de synchronisation"
+      },
+      "tssm": {
+        "name": "Mode de synchronisation",
+        "state": {
+          "immed": "Immédiat",
+          "smooth": "Lissé"
+        }
+      },
+      "tsss": {
+        "name": "État de synchronisation",
+        "state": {
+          "reset": "RESET",
+          "completed": "Terminé",
+          "in_progress": "En cours"
+        }
+      },
+      "typ": {
+        "name": "Type d'appareil"
+      },
+      "var": {
+        "name": "Variante de puissance",
+        "state": {
+          "v11kw_16a": "11kW/16A",
+          "v22kw_32a": "22kW/32A"
+        }
+      },
+      "wcb": {
+        "name": "Adresse MAC Wi-Fi actuelle"
+      },
+      "wcch": {
+        "name": "Clients HTTP connectés"
+      },
+      "wccw": {
+        "name": "Clients WebSocket connectés"
+      },
+      "wfb": {
+        "name": "Adresse MAC Wi-Fi en échec"
+      },
+      "wh": {
+        "name": "Énergie depuis le branchement"
+      },
+      "wpb": {
+        "name": "Adresse MAC Wi-Fi prévue"
+      },
+      "wsc": {
+        "name": "Nombre d'erreurs Wi-Fi"
+      },
+      "wsm": {
+        "name": "Message d'erreur Wi-Fi"
+      },
+      "wsms": {
+        "name": "État de la machine Wi-Fi",
+        "state": {
+          "none": "Aucune erreur",
+          "scanning": "Recherche en cours",
+          "connecting": "Connexion en cours",
+          "connected": "Connecté"
+        }
+      },
+      "wss": {
+        "name": "SSID du Wi-Fi"
+      },
+      "wst": {
+        "name": "État de connexion Wi-Fi",
+        "state": {
+          "idle_status": "Inactif",
+          "no_ssid_avail": "Réseau introuvable",
+          "scan_completed": "Recherche terminée",
+          "connected": "Connecté",
+          "connect_failed": "Échec de la connexion",
+          "connection_lost": "Connexion perdue",
+          "disconnected": "Déconnecté",
+          "connecting": "Connexion en cours",
+          "disconnecting": "Déconnexion en cours",
+          "no_shield": "Aucun module réseau"
+        }
+      },
+      "card_energy": {
+        "name": "Carte RFID {number} énergie"
+      },
+      "card_name": {
+        "name": "Carte RFID {number} nom"
+      }
+    },
+    "binary_sensor": {
+      "adi": {
+        "name": "Limite adaptateur 16 A"
+      },
+      "alw": {
+        "name": "Charge autorisée"
+      },
+      "cca": {
+        "name": "Authentification par certificat"
+      },
+      "cpe": {
+        "name": "Signal CP actif"
+      },
+      "cpr": {
+        "name": "Demande de signal CP"
+      },
+      "cws": {
+        "name": "Connexion cloud démarrée"
+      },
+      "cwsc": {
+        "name": "Cloud connecté"
+      },
+      "ful": {
+        "name": "Tarification dynamique"
+      },
+      "ocuca": {
+        "name": "Authentification par certificat OTA"
+      },
+      "sbe": {
+        "name": "Démarrage sécurisé"
+      }
+    },
+    "number": {
+      "ama": {
+        "name": "Limite de courant maximale"
+      },
+      "amp": {
+        "name": "Courant de charge"
+      },
+      "awp": {
+        "name": "Prix maximal Awattar"
+      },
+      "cco": {
+        "name": "Consommation du véhicule"
+      },
+      "dwo": {
+        "name": "Limite d'énergie de charge"
+      },
+      "fmt": {
+        "name": "Durée de charge minimale"
+      },
+      "fst": {
+        "name": "Puissance de démarrage"
+      },
+      "lbr": {
+        "name": "Luminosité des LED"
+      },
+      "lof": {
+        "name": "Courant de repli"
+      },
+      "lop": {
+        "name": "Priorité"
+      },
+      "lot": {
+        "name": "Courant total du groupe"
+      },
+      "mca": {
+        "name": "Courant de charge minimal"
+      },
+      "mci": {
+        "name": "Intervalle minimal entre charges"
+      },
+      "mcpd": {
+        "name": "Durée minimale de pause de charge"
+      },
+      "mptwt": {
+        "name": "Délai avant commutation de phase"
+      },
+      "mpwst": {
+        "name": "Délai de souhait de phase"
+      },
+      "po": {
+        "name": "Décalage de priorité"
+      },
+      "psh": {
+        "name": "Hystérésis de commutation de phase"
+      },
+      "psmd": {
+        "name": "Durée du mode monophasé"
+      },
+      "sh": {
+        "name": "Hystérésis d'arrêt"
+      },
+      "spl3": {
+        "name": "Seuil de passage en triphasé"
+      },
+      "sumd": {
+        "name": "Durée de simulation de débranchement"
+      },
+      "tof": {
+        "name": "Décalage de fuseau horaire"
+      },
+      "trx": {
+        "name": "Transaction active"
+      },
+      "zfo": {
+        "name": "Décalage d'injection zéro"
+      }
+    },
+    "select": {
+      "acs": {
+        "name": "Contrôle d'accès",
+        "state": {
+          "open": "Ouvert",
+          "wait": "En attente d'autorisation"
+        }
+      },
+      "awc": {
+        "name": "Pays Awattar",
+        "state": {
+          "austria": "Autriche",
+          "germany": "Allemagne"
+        }
+      },
+      "frc": {
+        "name": "Forçage de la charge",
+        "state": {
+          "neutral": "Neutre",
+          "off": "Arrêt",
+          "on": "Marche"
+        }
+      },
+      "lmo": {
+        "name": "Mode de charge",
+        "state": {
+          "default": "Standard",
+          "awattar": "Awattar",
+          "automaticstop": "Arrêt automatique"
+        }
+      },
+      "loty": {
+        "name": "Type de gestion de charge",
+        "state": {
+          "static": "Statique",
+          "dynamic": "Dynamique"
+        }
+      },
+      "psm": {
+        "name": "Mode de commutation de phase",
+        "state": {
+          "auto": "Automatique",
+          "force_1": "Monophasé forcé",
+          "force_3": "Triphasé forcé"
+        }
+      },
+      "tds": {
+        "name": "Mode heure d'été",
+        "state": {
+          "none": "Aucune erreur",
+          "europeansummertime": "Heure d'été européenne",
+          "usdaylighttime": "Heure d'été américaine"
+        }
+      },
+      "ust": {
+        "name": "Réglage de verrouillage",
+        "state": {
+          "normal": "Normal",
+          "autounlock": "Déverrouillage automatique",
+          "alwayslock": "Toujours verrouillé"
+        }
+      }
+    },
+    "switch": {
+      "bac": {
+        "name": "Changement de courant par bouton"
+      },
+      "cwe": {
+        "name": "Connexion cloud activée"
+      },
+      "esk": {
+        "name": "Énergie exprimée en kWh"
+      },
+      "fsp": {
+        "name": "Forcer monophasé"
+      },
+      "fup": {
+        "name": "Charge sur surplus PV"
+      },
+      "fzf": {
+        "name": "Injection zéro"
+      },
+      "hsa": {
+        "name": "Authentification du serveur web"
+      },
+      "hws": {
+        "name": "Serveur web accessible"
+      },
+      "loe": {
+        "name": "Gestion de charge activée"
+      },
+      "lse": {
+        "name": "Économie d'énergie des LED"
+      },
+      "nmo": {
+        "name": "Mode Norvège"
+      },
+      "su": {
+        "name": "Simuler le débranchement"
+      },
+      "sua": {
+        "name": "Toujours simuler le débranchement"
+      },
+      "tse": {
+        "name": "Serveur de temps activé"
+      },
+      "upo": {
+        "name": "Déverrouiller en cas de coupure"
+      },
+      "wen": {
+        "name": "Wi-Fi activé"
+      }
+    },
+    "text": {
+      "cch": {
+        "name": "Couleur pendant la charge"
+      },
+      "cfi": {
+        "name": "Couleur à la fin"
+      },
+      "cid": {
+        "name": "Couleur au repos"
+      },
+      "ct": {
+        "name": "Type de véhicule"
+      },
+      "cwc": {
+        "name": "Couleur en attente du véhicule"
+      },
+      "fna": {
+        "name": "Nom d'affichage"
+      },
+      "log": {
+        "name": "Identifiant du groupe"
+      },
+      "utc": {
+        "name": "Heure UTC"
+      },
+      "wan": {
+        "name": "Nom du point d'accès Wi-Fi"
+      }
+    },
+    "button": {
+      "reboot": {
+        "name": "Redémarrer"
+      }
+    }
+  },
+  "services": {
+    "set_property": {
+      "name": "Définir un paramètre",
+      "description": "Définit n'importe quel paramètre sur le Wattpilot.",
+      "fields": {
+        "device_id": {
+          "name": "Appareil",
+          "description": "Le Wattpilot sur lequel écrire."
+        },
+        "property": {
+          "name": "Paramètre",
+          "description": "La clé du paramètre, par exemple amp ou frc."
+        },
+        "value": {
+          "name": "Valeur",
+          "description": "La nouvelle valeur du paramètre."
+        }
+      }
+    }
+  }
+}

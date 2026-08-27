@@ -93,6 +93,18 @@ data:
   value: 16
 ```
 
+## Sprachen
+
+Die Integration ist vollständig übersetzt in **Deutsch, Englisch und Französisch**.
+
+Übersetzt sind alle 254 Entitätsnamen, die Zustandswerte der Auswahllisten und Statussensoren, der Einrichtungsdialog und die Beschreibung des Dienstes.
+
+Die Sprache richtet sich nach der Spracheinstellung Ihres Home-Assistant-Benutzerkontos. Sie lässt sich unter dem Benutzerprofil unten links ändern.
+
+Rein technische Kennungen bleiben unübersetzt, etwa die Neustartgründe des Mikrocontrollers oder die Flash-Betriebsarten. Diese stehen ausschließlich auf Diagnose-Entitäten, die standardmäßig deaktiviert sind.
+
+Die Übersetzungen liegen in `custom_components/fronius_wattpilot_lutarym/translations/` und können dort angepasst werden.
+
 ## Installation
 
 ### HACS

@@ -117,14 +117,22 @@ class WattpilotSensor(WattpilotEntity, SensorEntity):
 class WattpilotCardEntity(WattpilotEntity, SensorEntity):
     """Basis fuer Sensoren, die sich auf eine einzelne RFID-Karte beziehen."""
 
-    def __init__(self, coordinator, index: int, suffix: str, label: str) -> None:
+    def __init__(
+        self,
+        coordinator,
+        index: int,
+        suffix: str,
+        translation_key: str,
+    ) -> None:
         description = WattpilotDescription(
             key=f"{PROP_CARDS}_{index}_{suffix}",
-            name=f"RFID-Karte {index + 1} {label}",
+            translation_key=translation_key,
             enabled=True,
         )
         super().__init__(coordinator, description)
         self._index = index
+        # Die Kartennummer wird in den uebersetzten Namen eingesetzt
+        self._attr_translation_placeholders = {"number": str(index + 1)}
 
     @property
     def card(self) -> dict[str, Any] | None:
@@ -144,7 +152,7 @@ class WattpilotCardEnergySensor(WattpilotCardEntity):
     _attr_state_class = SensorStateClass.TOTAL_INCREASING
 
     def __init__(self, coordinator, index: int) -> None:
-        super().__init__(coordinator, index, "energy", "Energie")
+        super().__init__(coordinator, index, "energy", "card_energy")
 
     @property
     def native_value(self) -> float | None:
@@ -162,7 +170,7 @@ class WattpilotCardNameSensor(WattpilotCardEntity):
     """Name einer einzelnen RFID-Karte."""
 
     def __init__(self, coordinator, index: int) -> None:
-        super().__init__(coordinator, index, "name", "Name")
+        super().__init__(coordinator, index, "name", "card_name")
 
     @property
     def native_value(self) -> str | None:

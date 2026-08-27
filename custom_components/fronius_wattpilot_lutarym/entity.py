@@ -32,7 +32,8 @@ class WattpilotEntity(CoordinatorEntity[WattpilotCoordinator]):
 
         serial = coordinator.api.serial or coordinator.entry.entry_id
         self._attr_unique_id = f"{serial}_{description.key}"
-        self._attr_name = description.name
+        # Der Anzeigename kommt aus den Sprachdateien unter translations/
+        self._attr_translation_key = description.translation_key
         self._attr_entity_registry_enabled_default = description.enabled
 
         if description.category:

@@ -3,7 +3,7 @@
     "step": {
       "user": {
         "title": "Fronius Wattpilot by Lutarym",
-        "description": "Direkte lokale Verbindung zum Wattpilot. Es wird kein Fronius-Konto benoetigt.",
+        "description": "Direkte lokale Verbindung zum Wattpilot. Es wird kein Fronius-Konto benötigt.",
         "data": {
           "host": "IP-Adresse",
           "password": "Wattpilot-Passwort"
@@ -22,12 +22,1085 @@
       }
     },
     "error": {
-      "cannot_connect": "Verbindung zum Wattpilot fehlgeschlagen. Bitte IP-Adresse und Passwort pruefen.",
+      "cannot_connect": "Verbindung zum Wattpilot fehlgeschlagen. Bitte IP-Adresse und Passwort prüfen.",
       "unknown": "Unbekannter Fehler."
     },
     "abort": {
       "already_configured": "Dieser Wattpilot ist bereits eingerichtet.",
       "reauth_successful": "Die erneute Anmeldung war erfolgreich."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "acu": {
+        "name": "Erlaubter Strom"
+      },
+      "al1": {
+        "name": "Adapterbegrenzung 1"
+      },
+      "al2": {
+        "name": "Adapterbegrenzung 2"
+      },
+      "al3": {
+        "name": "Adapterbegrenzung 3"
+      },
+      "al4": {
+        "name": "Adapterbegrenzung 4"
+      },
+      "al5": {
+        "name": "Adapterbegrenzung 5"
+      },
+      "amt": {
+        "name": "Strombegrenzung durch Temperatur"
+      },
+      "apd": {
+        "name": "Firmware-Beschreibung"
+      },
+      "apd_project_name": {
+        "name": "Firmware-Projektname"
+      },
+      "apd_version": {
+        "name": "Firmware-Fassung"
+      },
+      "apd_secure_version": {
+        "name": "Sichere Firmware-Fassung"
+      },
+      "apd_timestamp": {
+        "name": "Firmware-Zeitstempel"
+      },
+      "apd_idf_ver": {
+        "name": "IDF-Fassung"
+      },
+      "apd_sha256": {
+        "name": "Firmware-Prüfsumme"
+      },
+      "arv": {
+        "name": "Empfohlene App-Version"
+      },
+      "awcp": {
+        "name": "Aktueller Awattar-Preis"
+      },
+      "awcp_start": {
+        "name": "Beginn des Preiszeitraums"
+      },
+      "awcp_end": {
+        "name": "Ende des Preiszeitraums"
+      },
+      "awcp_marketprice": {
+        "name": "Marktpreis"
+      },
+      "awpl": {
+        "name": "Awattar-Preisliste"
+      },
+      "car": {
+        "name": "Fahrzeugstatus",
+        "state": {
+          "unknown_error": "Unbekannt oder Fehler",
+          "idle": "Bereit",
+          "charging": "Lädt",
+          "waitcar": "Warten auf Fahrzeug",
+          "complete": "Abgeschlossen",
+          "error": "Fehler"
+        }
+      },
+      "cards": {
+        "name": "Registrierte RFID-Karten"
+      },
+      "cbl": {
+        "name": "Strombelastbarkeit des Kabels"
+      },
+      "ccrv": {
+        "name": "Empfohlene Ladesteuerungs-Version"
+      },
+      "ccu": {
+        "name": "Fortschritt der Ladesteuerungs-Aktualisierung"
+      },
+      "ccw": {
+        "name": "Verbundenes WLAN"
+      },
+      "cdi": {
+        "name": "Angaben zur Ladedauer"
+      },
+      "cdi_type": {
+        "name": "Art der Ladedauer",
+        "state": {
+          "counter": "Zähler",
+          "duration": "Dauer"
+        }
+      },
+      "cdi_value": {
+        "name": "Wert der Ladedauer"
+      },
+      "clp": {
+        "name": "Voreinstellungen für Stromgrenzen"
+      },
+      "cus": {
+        "name": "Status der Kabelentriegelung",
+        "state": {
+          "unknown": "Unbekannt",
+          "unlocked": "Entriegelt",
+          "unlockfailed": "Entriegeln fehlgeschlagen",
+          "locked": "Verriegelt",
+          "lockfailed": "Verriegeln fehlgeschlagen",
+          "lockunlockpowerout": "Verriegelung bei Stromausfall"
+        }
+      },
+      "cwsca": {
+        "name": "Dauer der Cloud-Verbindung"
+      },
+      "deltaa": {
+        "name": "Stromabweichung"
+      },
+      "deltap": {
+        "name": "Leistungsabweichung"
+      },
+      "dns": {
+        "name": "DNS-Server"
+      },
+      "ecf": {
+        "name": "ESP-Taktfrequenz"
+      },
+      "ecf_source": {
+        "name": "Taktquelle",
+        "state": {
+          "xtal": "XTAL",
+          "pll": "PLL",
+          "v8m": "8M",
+          "apll": "APLL"
+        }
+      },
+      "ecf_source_freq_mhz": {
+        "name": "Frequenz der Taktquelle"
+      },
+      "ecf_div": {
+        "name": "Taktteiler"
+      },
+      "ecf_freq_mhz": {
+        "name": "Prozessortakt"
+      },
+      "eci": {
+        "name": "ESP-Chipangaben"
+      },
+      "eci_model": {
+        "name": "ESP-Chipmodell",
+        "state": {
+          "esp32": "ESP32",
+          "esp32s2": "ESP32S2",
+          "esp32s3": "ESP32S3",
+          "esp32c3": "ESP32C3"
+        }
+      },
+      "eci_features": {
+        "name": "ESP-Chipfunktionen"
+      },
+      "eci_cores": {
+        "name": "ESP-Rechenkerne"
+      },
+      "eci_revision": {
+        "name": "ESP-Chipfassung"
+      },
+      "efh": {
+        "name": "Freier Arbeitsspeicher"
+      },
+      "efh32": {
+        "name": "Freier Arbeitsspeicher 32 Bit"
+      },
+      "efh8": {
+        "name": "Freier Arbeitsspeicher 8 Bit"
+      },
+      "efi": {
+        "name": "ESP-Flashangaben"
+      },
+      "efi_spi_mode": {
+        "name": "Flash-Betriebsart",
+        "state": {
+          "qio": "QIO",
+          "qout": "QOUT",
+          "dio": "DIO",
+          "dout": "DOUT",
+          "fast_read": "FAST_READ",
+          "slow_read": "SLOW_READ"
+        }
+      },
+      "efi_spi_speed": {
+        "name": "Flash-Geschwindigkeit",
+        "state": {
+          "v40m": "40M",
+          "v26m": "26M",
+          "v20m": "20M",
+          "v80m": "80M"
+        }
+      },
+      "efi_spi_size": {
+        "name": "Flash-Größe",
+        "state": {
+          "v1mb": "1MB",
+          "v2mb": "2MB",
+          "v4mb": "4MB",
+          "v8mb": "8MB",
+          "v16mb": "16MB",
+          "max": "Maximum"
+        }
+      },
+      "ehs": {
+        "name": "Größe des Arbeitsspeichers"
+      },
+      "emfh": {
+        "name": "Geringster freier Speicher"
+      },
+      "emhb": {
+        "name": "Größter zusammenhängender Speicher"
+      },
+      "err": {
+        "name": "Fehlerstatus",
+        "state": {
+          "none": "Kein Fehler",
+          "fiac": "Fehlerstrom Wechselstrom",
+          "fidc": "Fehlerstrom Gleichstrom",
+          "phase": "Phasenfehler",
+          "overvolt": "Überspannung",
+          "overamp": "Überstrom",
+          "diode": "Diodenfehler",
+          "ppinvalid": "Ungültige Kabelkennung",
+          "gndinvalid": "Erdung fehlerhaft",
+          "contactorstuck": "Schütz klemmt",
+          "contactormiss": "Schütz zieht nicht an",
+          "fiunknown": "Fehlerstrom unbekannt",
+          "unknown": "Unbekannt",
+          "overtemp": "Übertemperatur",
+          "nocomm": "Keine Kommunikation",
+          "statuslockstuckopen": "Verriegelung klemmt offen",
+          "statuslockstucklocked": "Verriegelung klemmt geschlossen",
+          "reserved20": "Reserved20",
+          "reserved21": "Reserved21",
+          "reserved22": "Reserved22",
+          "reserved23": "Reserved23",
+          "reserved24": "Reserved24"
+        }
+      },
+      "esr": {
+        "name": "Neustartgründe der Echtzeituhr",
+        "state": {
+          "no_mean": "Ohne Mittelwertbildung",
+          "poweron_reset": "POWERON_RESET",
+          "sw_reset": "SW_RESET",
+          "owdt_reset": "OWDT_RESET",
+          "deepsleep_reset": "DEEPSLEEP_RESET",
+          "sdio_reset": "SDIO_RESET",
+          "tg0wdt_sys_reset": "TG0WDT_SYS_RESET",
+          "tg1wdt_sys_reset": "TG1WDT_SYS_RESET",
+          "rtcwdt_sys_reset": "RTCWDT_SYS_RESET",
+          "intrusion_reset": "INTRUSION_RESET",
+          "tgwdt_cpu_reset": "TGWDT_CPU_RESET",
+          "sw_cpu_reset": "SW_CPU_RESET",
+          "rtcwdt_cpu_reset": "RTCWDT_CPU_RESET",
+          "ext_cpu_reset": "EXT_CPU_RESET",
+          "rtcwdt_brown_out_reset": "RTCWDT_BROWN_OUT_RESET",
+          "rtcwdt_rtc_reset": "RTCWDT_RTC_RESET"
+        }
+      },
+      "eto": {
+        "name": "Gesamtenergie"
+      },
+      "etop": {
+        "name": "Gesamtenergie gespeichert"
+      },
+      "fam": {
+        "name": "Speichergrenze für Überschuss"
+      },
+      "fbuf_age": {
+        "name": "Alter der Wechselrichterdaten"
+      },
+      "fbuf_akkumode": {
+        "name": "Betriebsart des Hausspeichers"
+      },
+      "fbuf_akkusoc": {
+        "name": "Ladestand des Hausspeichers"
+      },
+      "fbuf_ohmpilotstate": {
+        "name": "Status des Ohmpilot"
+      },
+      "fbuf_ohmpilottemperature": {
+        "name": "Temperatur des Ohmpilot"
+      },
+      "fbuf_pactotal": {
+        "name": "Wechselstromleistung gesamt"
+      },
+      "fbuf_pakku": {
+        "name": "Leistung des Hausspeichers"
+      },
+      "fbuf_pgrid": {
+        "name": "Netzleistung"
+      },
+      "fbuf_ppv": {
+        "name": "PV-Leistung"
+      },
+      "fem": {
+        "name": "Flash-Verschlüsselung",
+        "state": {
+          "disabled": "Deaktiviert",
+          "development": "Entwicklung",
+          "release": "Freigegeben"
+        }
+      },
+      "ferm": {
+        "name": "Wirksamer Rundungsmodus"
+      },
+      "ffb": {
+        "name": "Rückmeldung der Verriegelung",
+        "state": {
+          "noproblem": "Kein Problem",
+          "problemlock": "Problem beim Verriegeln",
+          "problemunlock": "Problem beim Entriegeln"
+        }
+      },
+      "ffba": {
+        "name": "Alter der Verriegelungsrückmeldung"
+      },
+      "ffna": {
+        "name": "Werkseitiger Anzeigename"
+      },
+      "fhz": {
+        "name": "Netzfrequenz"
+      },
+      "fot": {
+        "name": "Temperaturgrenze des Ohmpilot"
+      },
+      "frm": {
+        "name": "Rundungsmodus",
+        "state": {
+          "preferpowerfromgrid": "Bezug aus dem Netz bevorzugen",
+          "default": "Standard",
+          "preferpowertogrid": "Einspeisung ins Netz bevorzugen"
+        }
+      },
+      "fsptws": {
+        "name": "Einphasig gewünscht seit"
+      },
+      "fwan": {
+        "name": "Werkseitiger WLAN-Name"
+      },
+      "fwc": {
+        "name": "Firmware der Ladesteuerung"
+      },
+      "fwv": {
+        "name": "Firmware-Version"
+      },
+      "host": {
+        "name": "Hostname"
+      },
+      "ido": {
+        "name": "Überschreibung der Wechselrichterdaten"
+      },
+      "inva": {
+        "name": "Alter der Wechselrichterdaten"
+      },
+      "lbp": {
+        "name": "Letzter Tastendruck"
+      },
+      "lccfc": {
+        "name": "Letzter Wechsel weg vom Laden"
+      },
+      "lccfi": {
+        "name": "Letzter Wechsel weg vom Ruhezustand"
+      },
+      "lcctc": {
+        "name": "Letzter Wechsel hin zum Laden"
+      },
+      "lck": {
+        "name": "Wirksame Verriegelungseinstellung",
+        "state": {
+          "normal": "Normal",
+          "autounlock": "Automatisch entriegeln",
+          "alwayslock": "Immer verriegeln",
+          "forceunlock": "Entriegeln erzwingen"
+        }
+      },
+      "led": {
+        "name": "LED-Angaben"
+      },
+      "lfspt": {
+        "name": "Letzte Umschaltung auf einphasig"
+      },
+      "lmsc": {
+        "name": "Letzte Änderung des Ladegrunds"
+      },
+      "loa": {
+        "name": "Strom im Lastmanagement"
+      },
+      "loc": {
+        "name": "Ortszeit"
+      },
+      "lom": {
+        "name": "Teilnehmer im Lastmanagement"
+      },
+      "los": {
+        "name": "Status des Lastmanagements"
+      },
+      "lpsc": {
+        "name": "Letzte Überschussberechnung"
+      },
+      "lssfc": {
+        "name": "Letzter Verbindungsabbruch"
+      },
+      "lsstc": {
+        "name": "Letzter Verbindungsaufbau"
+      },
+      "map": {
+        "name": "Lastzuordnung"
+      },
+      "mcpea": {
+        "name": "Ende der Ladepause"
+      },
+      "mod": {
+        "name": "Platinenversion"
+      },
+      "modelstatus": {
+        "name": "Ladegrund",
+        "state": {
+          "notchargingbecausenochargectrldata": "Kein Laden, keine Ladesteuerungsdaten",
+          "notchargingbecauseovertemperature": "Kein Laden wegen Übertemperatur",
+          "notchargingbecauseaccesscontrolwait": "Kein Laden, Freigabe fehlt",
+          "chargingbecauseforcestateon": "Laden erzwungen",
+          "notchargingbecauseforcestateoff": "Laden unterbunden",
+          "notchargingbecausescheduler": "Kein Laden wegen Zeitplan",
+          "notchargingbecauseenergylimit": "Kein Laden, Energiegrenze erreicht",
+          "chargingbecauseawattarpricelow": "Laden wegen niedrigem Strompreis",
+          "chargingbecauseautomaticstoptestladung": "Laden, Testladung",
+          "chargingbecauseautomaticstopnotenoughtime": "Laden, Zeit reicht nicht",
+          "chargingbecauseautomaticstop": "Laden bis zum automatischen Stopp",
+          "chargingbecauseautomaticstopnoclock": "Laden, keine Uhrzeit vorhanden",
+          "chargingbecausepvsurplus": "Laden mit PV-Überschuss",
+          "chargingbecausefallbackgoedefault": "Laden im Rückfallbetrieb",
+          "chargingbecausefallbackgoescheduler": "Laden im Rückfallbetrieb mit Zeitplan",
+          "chargingbecausefallbackdefault": "Laden im Standard-Rückfallbetrieb",
+          "notchargingbecausefallbackgoeawattar": "Kein Laden, Rückfallbetrieb Strompreis",
+          "notchargingbecausefallbackawattar": "Kein Laden, Rückfall auf Strompreis",
+          "notchargingbecausefallbackautomaticstop": "Kein Laden, Rückfall auf automatischen Stopp",
+          "chargingbecausecarcompatibilitykeepalive": "Laden zur Fahrzeugkompatibilität",
+          "chargingbecausechargepausenotallowed": "Laden, Pause nicht erlaubt",
+          "notchargingbecausesimulateunplugging": "Kein Laden, Abstecken wird simuliert",
+          "notchargingbecausephaseswitch": "Kein Laden wegen Phasenumschaltung",
+          "notchargingbecauseminpauseduration": "Kein Laden, Mindestpause läuft"
+        }
+      },
+      "msi": {
+        "name": "Interner Modellstatus",
+        "state": {
+          "notchargingbecausenochargectrldata": "Kein Laden, keine Ladesteuerungsdaten",
+          "notchargingbecauseovertemperature": "Kein Laden wegen Übertemperatur",
+          "notchargingbecauseaccesscontrolwait": "Kein Laden, Freigabe fehlt",
+          "chargingbecauseforcestateon": "Laden erzwungen",
+          "notchargingbecauseforcestateoff": "Laden unterbunden",
+          "notchargingbecausescheduler": "Kein Laden wegen Zeitplan",
+          "notchargingbecauseenergylimit": "Kein Laden, Energiegrenze erreicht",
+          "chargingbecauseawattarpricelow": "Laden wegen niedrigem Strompreis",
+          "chargingbecauseautomaticstoptestladung": "Laden, Testladung",
+          "chargingbecauseautomaticstopnotenoughtime": "Laden, Zeit reicht nicht",
+          "chargingbecauseautomaticstop": "Laden bis zum automatischen Stopp",
+          "chargingbecauseautomaticstopnoclock": "Laden, keine Uhrzeit vorhanden",
+          "chargingbecausepvsurplus": "Laden mit PV-Überschuss",
+          "chargingbecausefallbackgoedefault": "Laden im Rückfallbetrieb",
+          "chargingbecausefallbackgoescheduler": "Laden im Rückfallbetrieb mit Zeitplan",
+          "chargingbecausefallbackdefault": "Laden im Standard-Rückfallbetrieb",
+          "notchargingbecausefallbackgoeawattar": "Kein Laden, Rückfallbetrieb Strompreis",
+          "notchargingbecausefallbackawattar": "Kein Laden, Rückfall auf Strompreis",
+          "notchargingbecausefallbackautomaticstop": "Kein Laden, Rückfall auf automatischen Stopp",
+          "chargingbecausecarcompatibilitykeepalive": "Laden zur Fahrzeugkompatibilität",
+          "chargingbecausechargepausenotallowed": "Laden, Pause nicht erlaubt",
+          "notchargingbecausesimulateunplugging": "Kein Laden, Abstecken wird simuliert",
+          "notchargingbecausephaseswitch": "Kein Laden wegen Phasenumschaltung",
+          "notchargingbecauseminpauseduration": "Kein Laden, Mindestpause läuft"
+        }
+      },
+      "nif": {
+        "name": "Standardroute"
+      },
+      "nrg": {
+        "name": "Messwerte"
+      },
+      "nrg_ul1": {
+        "name": "Spannung L1"
+      },
+      "nrg_ul2": {
+        "name": "Spannung L2"
+      },
+      "nrg_ul3": {
+        "name": "Spannung L3"
+      },
+      "nrg_un": {
+        "name": "Spannung N"
+      },
+      "nrg_il1": {
+        "name": "Strom L1"
+      },
+      "nrg_il2": {
+        "name": "Strom L2"
+      },
+      "nrg_il3": {
+        "name": "Strom L3"
+      },
+      "nrg_pl1": {
+        "name": "Leistung L1"
+      },
+      "nrg_pl2": {
+        "name": "Leistung L2"
+      },
+      "nrg_pl3": {
+        "name": "Leistung L3"
+      },
+      "nrg_pn": {
+        "name": "Leistung N"
+      },
+      "nrg_ptotal": {
+        "name": "Gesamtleistung"
+      },
+      "nrg_pfl1": {
+        "name": "Leistungsfaktor L1"
+      },
+      "nrg_pfl2": {
+        "name": "Leistungsfaktor L2"
+      },
+      "nrg_pfl3": {
+        "name": "Leistungsfaktor L3"
+      },
+      "nrg_pfn": {
+        "name": "Leistungsfaktor N"
+      },
+      "oca": {
+        "name": "Anwendung der Cloud-Aktualisierung"
+      },
+      "ocl": {
+        "name": "Größe der Cloud-Aktualisierung"
+      },
+      "ocm": {
+        "name": "Meldung der Cloud-Aktualisierung"
+      },
+      "ocp": {
+        "name": "Fortschritt der Cloud-Aktualisierung"
+      },
+      "ocs": {
+        "name": "Status der Cloud-Aktualisierung",
+        "state": {
+          "idle": "Bereit",
+          "updating": "Wird aktualisiert",
+          "failed": "Fehlgeschlagen",
+          "succeeded": "Erfolgreich"
+        }
+      },
+      "ocu": {
+        "name": "Verfügbare Firmware-Zweige"
+      },
+      "oem": {
+        "name": "Hersteller"
+      },
+      "onv": {
+        "name": "Neueste Firmware-Version"
+      },
+      "otap": {
+        "name": "Aktualisierungsbereich"
+      },
+      "pakku": {
+        "name": "Leistung des Hausspeichers"
+      },
+      "part": {
+        "name": "Speicheraufteilung"
+      },
+      "pgrid": {
+        "name": "Netzleistung"
+      },
+      "pha": {
+        "name": "Phasen"
+      },
+      "pnp": {
+        "name": "Anzahl der Phasen"
+      },
+      "ppv": {
+        "name": "PV-Leistung"
+      },
+      "pto": {
+        "name": "Versatz der Speicheraufteilung"
+      },
+      "pvopt_averagepakku": {
+        "name": "Mittlere Speicherleistung"
+      },
+      "pvopt_averagepgrid": {
+        "name": "Mittlere Netzleistung"
+      },
+      "pvopt_averagepohmpilot": {
+        "name": "Mittlere Ohmpilot-Leistung"
+      },
+      "pvopt_averageppv": {
+        "name": "Mittlere PV-Leistung"
+      },
+      "pvopt_deltaa": {
+        "name": "Stromabweichung"
+      },
+      "pvopt_deltap": {
+        "name": "Leistungsabweichung"
+      },
+      "pvopt_specialcase": {
+        "name": "Sonderfall der PV-Regelung"
+      },
+      "pwm": {
+        "name": "Gewünschte Phasenzahl",
+        "state": {
+          "force_3": "Dreiphasig erzwungen",
+          "wish_1": "Einphasig gewünscht",
+          "wish_3": "Dreiphasig gewünscht"
+        }
+      },
+      "qsc": {
+        "name": "Warteschlange zur Cloud"
+      },
+      "qsw": {
+        "name": "Warteschlange des WebSocket"
+      },
+      "rbc": {
+        "name": "Anzahl der Neustarts"
+      },
+      "rbt": {
+        "name": "Betriebsdauer seit Start"
+      },
+      "rcd": {
+        "name": "Fehlerstromerkennung"
+      },
+      "rfb": {
+        "name": "Relais-Rückmeldung"
+      },
+      "rr": {
+        "name": "Grund des letzten Neustarts",
+        "state": {
+          "unknown": "Unbekannt",
+          "poweron": "POWERON",
+          "ext": "EXT",
+          "sw": "SW",
+          "panic": "PANIC",
+          "int_wdt": "INT_WDT",
+          "task_wdt": "TASK_WDT",
+          "wdt": "WDT",
+          "deepsleep": "DEEPSLEEP",
+          "brownout": "BROWNOUT",
+          "sdio": "SDIO"
+        }
+      },
+      "rssi": {
+        "name": "WLAN-Signalstärke"
+      },
+      "scaa": {
+        "name": "Alter der WLAN-Suche"
+      },
+      "scan": {
+        "name": "Gefundene WLAN-Netze"
+      },
+      "scas": {
+        "name": "Status der WLAN-Suche",
+        "state": {
+          "none": "Kein Fehler",
+          "scanning": "Sucht",
+          "finished": "Abgeschlossen",
+          "failed": "Fehlgeschlagen"
+        }
+      },
+      "sch_satur": {
+        "name": "Ladezeitplan Samstag"
+      },
+      "sch_satur_control": {
+        "name": "Steuerung Zeitplan Samstag",
+        "state": {
+          "disabled": "Deaktiviert",
+          "inside": "Innerhalb der Zeiträume",
+          "outside": "Außerhalb der Zeiträume"
+        }
+      },
+      "sch_sund": {
+        "name": "Ladezeitplan Sonntag"
+      },
+      "sch_sund_control": {
+        "name": "Steuerung Zeitplan Sonntag",
+        "state": {
+          "disabled": "Deaktiviert",
+          "inside": "Innerhalb der Zeiträume",
+          "outside": "Außerhalb der Zeiträume"
+        }
+      },
+      "sch_week": {
+        "name": "Ladezeitplan Wochentag"
+      },
+      "sch_week_control": {
+        "name": "Steuerung Zeitplan Wochentag",
+        "state": {
+          "disabled": "Deaktiviert",
+          "inside": "Innerhalb der Zeiträume",
+          "outside": "Außerhalb der Zeiträume"
+        }
+      },
+      "sse": {
+        "name": "Seriennummer"
+      },
+      "tma": {
+        "name": "Temperatursensoren"
+      },
+      "tma_1": {
+        "name": "Temperatursensor 1"
+      },
+      "tma_2": {
+        "name": "Temperatursensor 2"
+      },
+      "tpa": {
+        "name": "Mittlere Gesamtleistung"
+      },
+      "ts": {
+        "name": "Zeitserver"
+      },
+      "tsom": {
+        "name": "Betriebsart des Zeitservers",
+        "state": {
+          "poll": "POLL",
+          "listenonly": "LISTENONLY"
+        }
+      },
+      "tssi": {
+        "name": "Abgleichintervall des Zeitservers"
+      },
+      "tssm": {
+        "name": "Abgleichmodus des Zeitservers",
+        "state": {
+          "immed": "Sofort",
+          "smooth": "Geglättet"
+        }
+      },
+      "tsss": {
+        "name": "Abgleichstatus des Zeitservers",
+        "state": {
+          "reset": "RESET",
+          "completed": "Abgeschlossen",
+          "in_progress": "Läuft"
+        }
+      },
+      "typ": {
+        "name": "Gerätetyp"
+      },
+      "var": {
+        "name": "Leistungsvariante",
+        "state": {
+          "v11kw_16a": "11kW/16A",
+          "v22kw_32a": "22kW/32A"
+        }
+      },
+      "wcb": {
+        "name": "Aktuelle WLAN-MAC-Adresse"
+      },
+      "wcch": {
+        "name": "Verbundene HTTP-Clients"
+      },
+      "wccw": {
+        "name": "Verbundene WebSocket-Clients"
+      },
+      "wfb": {
+        "name": "Fehlgeschlagene WLAN-MAC-Adresse"
+      },
+      "wh": {
+        "name": "Energie seit Anstecken"
+      },
+      "wpb": {
+        "name": "Geplante WLAN-MAC-Adresse"
+      },
+      "wsc": {
+        "name": "Anzahl der WLAN-Fehler"
+      },
+      "wsm": {
+        "name": "WLAN-Fehlermeldung"
+      },
+      "wsms": {
+        "name": "Zustand der WLAN-Steuerung",
+        "state": {
+          "none": "Kein Fehler",
+          "scanning": "Sucht",
+          "connecting": "Verbindet",
+          "connected": "Verbunden"
+        }
+      },
+      "wss": {
+        "name": "WLAN-Netzname"
+      },
+      "wst": {
+        "name": "WLAN-Verbindungsstatus",
+        "state": {
+          "idle_status": "Untätig",
+          "no_ssid_avail": "Netz nicht gefunden",
+          "scan_completed": "Suche abgeschlossen",
+          "connected": "Verbunden",
+          "connect_failed": "Verbindung fehlgeschlagen",
+          "connection_lost": "Verbindung verloren",
+          "disconnected": "Getrennt",
+          "connecting": "Verbindet",
+          "disconnecting": "Trennt",
+          "no_shield": "Kein Netzwerkmodul"
+        }
+      },
+      "card_energy": {
+        "name": "RFID-Karte {number} Energie"
+      },
+      "card_name": {
+        "name": "RFID-Karte {number} Name"
+      }
+    },
+    "binary_sensor": {
+      "adi": {
+        "name": "Adapterbegrenzung 16 A"
+      },
+      "alw": {
+        "name": "Laden erlaubt"
+      },
+      "cca": {
+        "name": "Cloud-Zertifikatsanmeldung"
+      },
+      "cpe": {
+        "name": "CP-Signal aktiv"
+      },
+      "cpr": {
+        "name": "Anforderung des CP-Signals"
+      },
+      "cws": {
+        "name": "Cloud-Verbindung gestartet"
+      },
+      "cwsc": {
+        "name": "Cloud verbunden"
+      },
+      "ful": {
+        "name": "Dynamische Strompreise"
+      },
+      "ocuca": {
+        "name": "Zertifikatsanmeldung bei Aktualisierung"
+      },
+      "sbe": {
+        "name": "Sicherer Systemstart"
+      }
+    },
+    "number": {
+      "ama": {
+        "name": "Maximaler Stromgrenzwert"
+      },
+      "amp": {
+        "name": "Ladestrom"
+      },
+      "awp": {
+        "name": "Awattar-Höchstpreis"
+      },
+      "cco": {
+        "name": "Fahrzeugverbrauch"
+      },
+      "dwo": {
+        "name": "Ladeenergie-Grenze"
+      },
+      "fmt": {
+        "name": "Mindestladedauer"
+      },
+      "fst": {
+        "name": "Startleistung"
+      },
+      "lbr": {
+        "name": "LED-Helligkeit"
+      },
+      "lof": {
+        "name": "Rückfallstrom"
+      },
+      "lop": {
+        "name": "Priorität"
+      },
+      "lot": {
+        "name": "Gesamtstrom der Gruppe"
+      },
+      "mca": {
+        "name": "Minimaler Ladestrom"
+      },
+      "mci": {
+        "name": "Mindestabstand zwischen Ladungen"
+      },
+      "mcpd": {
+        "name": "Mindestdauer der Ladepause"
+      },
+      "mptwt": {
+        "name": "Wartezeit vor Phasenumschaltung"
+      },
+      "mpwst": {
+        "name": "Wartezeit für Phasenwunsch"
+      },
+      "po": {
+        "name": "Prioritäts-Offset"
+      },
+      "psh": {
+        "name": "Hysterese der Phasenumschaltung"
+      },
+      "psmd": {
+        "name": "Dauer des Einphasenbetriebs"
+      },
+      "sh": {
+        "name": "Stopp-Hysterese"
+      },
+      "spl3": {
+        "name": "Schwelle für Dreiphasenbetrieb"
+      },
+      "sumd": {
+        "name": "Dauer der Absteck-Simulation"
+      },
+      "tof": {
+        "name": "Zeitzonen-Versatz"
+      },
+      "trx": {
+        "name": "Aktive Transaktion"
+      },
+      "zfo": {
+        "name": "Offset der Nulleinspeisung"
+      }
+    },
+    "select": {
+      "acs": {
+        "name": "Zugriffsfreigabe",
+        "state": {
+          "open": "Offen",
+          "wait": "Freigabe abwarten"
+        }
+      },
+      "awc": {
+        "name": "Awattar-Land",
+        "state": {
+          "austria": "Österreich",
+          "germany": "Deutschland"
+        }
+      },
+      "frc": {
+        "name": "Ladefreigabe erzwingen",
+        "state": {
+          "neutral": "Neutral",
+          "off": "Aus",
+          "on": "Ein"
+        }
+      },
+      "lmo": {
+        "name": "Lademodus",
+        "state": {
+          "default": "Standard",
+          "awattar": "Awattar",
+          "automaticstop": "Automatischer Stopp"
+        }
+      },
+      "loty": {
+        "name": "Art des Lastmanagements",
+        "state": {
+          "static": "Statisch",
+          "dynamic": "Dynamisch"
+        }
+      },
+      "psm": {
+        "name": "Phasenumschaltung",
+        "state": {
+          "auto": "Automatisch",
+          "force_1": "Einphasig erzwungen",
+          "force_3": "Dreiphasig erzwungen"
+        }
+      },
+      "tds": {
+        "name": "Sommerzeit-Modus",
+        "state": {
+          "none": "Kein Fehler",
+          "europeansummertime": "Mitteleuropäische Sommerzeit",
+          "usdaylighttime": "US-Sommerzeit"
+        }
+      },
+      "ust": {
+        "name": "Kabelverriegelung",
+        "state": {
+          "normal": "Normal",
+          "autounlock": "Automatisch entriegeln",
+          "alwayslock": "Immer verriegeln"
+        }
+      }
+    },
+    "switch": {
+      "bac": {
+        "name": "Stromänderung per Taste erlaubt"
+      },
+      "cwe": {
+        "name": "Cloud-Verbindung aktiv"
+      },
+      "esk": {
+        "name": "Energieangabe in kWh"
+      },
+      "fsp": {
+        "name": "Einphasig erzwingen"
+      },
+      "fup": {
+        "name": "PV-Überschussladen"
+      },
+      "fzf": {
+        "name": "Nulleinspeisung"
+      },
+      "hsa": {
+        "name": "Anmeldung am Webserver"
+      },
+      "hws": {
+        "name": "Webserver erreichbar"
+      },
+      "loe": {
+        "name": "Lastmanagement"
+      },
+      "lse": {
+        "name": "LED-Energiesparmodus"
+      },
+      "nmo": {
+        "name": "Norwegen-Modus"
+      },
+      "su": {
+        "name": "Abstecken simulieren"
+      },
+      "sua": {
+        "name": "Abstecken immer simulieren"
+      },
+      "tse": {
+        "name": "Zeitserver aktiv"
+      },
+      "upo": {
+        "name": "Entriegeln bei Stromausfall"
+      },
+      "wen": {
+        "name": "WLAN aktiv"
+      }
+    },
+    "text": {
+      "cch": {
+        "name": "Farbe beim Laden"
+      },
+      "cfi": {
+        "name": "Farbe bei Abschluss"
+      },
+      "cid": {
+        "name": "Farbe im Ruhezustand"
+      },
+      "ct": {
+        "name": "Fahrzeugtyp"
+      },
+      "cwc": {
+        "name": "Farbe beim Warten auf Fahrzeug"
+      },
+      "fna": {
+        "name": "Anzeigename"
+      },
+      "log": {
+        "name": "Kennung der Lastgruppe"
+      },
+      "utc": {
+        "name": "UTC-Zeit"
+      },
+      "wan": {
+        "name": "Name des WLAN-Zugangspunkts"
+      }
+    },
+    "button": {
+      "reboot": {
+        "name": "Neustart"
+      }
     }
   },
   "services": {
@@ -36,12 +1109,12 @@
       "description": "Setzt eine beliebige Property auf dem Wattpilot.",
       "fields": {
         "device_id": {
-          "name": "Geraet",
+          "name": "Gerät",
           "description": "Der Wattpilot, auf dem der Parameter gesetzt wird."
         },
         "property": {
           "name": "Property",
-          "description": "Der Schluessel der Property, zum Beispiel amp oder frc."
+          "description": "Der Schlüssel der Property, zum Beispiel amp oder frc."
         },
         "value": {
           "name": "Wert",

@@ -12,7 +12,7 @@ from .entity import WattpilotEntity
 
 REBOOT_DESCRIPTION = WattpilotDescription(
     key=PROP_REBOOT,
-    name="Neustart",
+    translation_key="reboot",
     enabled=False,
     category="config",
 )

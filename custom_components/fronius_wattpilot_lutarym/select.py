@@ -32,7 +32,9 @@ class WattpilotSelect(WattpilotEntity, SelectEntity):
     def __init__(self, coordinator, description) -> None:
         super().__init__(coordinator, description)
         self._value_map = description.value_map or {}
-        # Rueckwaerts-Zuordnung, um vom Klartext auf den Zahlenwert zu kommen
+        # Rueckwaerts-Zuordnung vom Zustandsschluessel auf den Zahlenwert.
+        # Die Anzeige der Schluessel uebernimmt Home Assistant anhand der
+        # Sprachdateien unter translations/.
         self._reverse_map = {v: int(k) for k, v in self._value_map.items()}
         self._attr_options = list(self._value_map.values())
 
