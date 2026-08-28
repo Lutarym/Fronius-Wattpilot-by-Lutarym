@@ -63,6 +63,24 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         """Gibt die Einstellungsseite zurueck."""
         return OptionsFlow()
 
+    def _speichern_und_beenden(
+        self, entry: config_entries.ConfigEntry, **kwargs: Any
+    ) -> config_entries.ConfigFlowResult:
+        """Speichert die Aenderung und beendet den Dialog.
+
+        Seit Home Assistant 2026.6 darf eine Integration nicht gleichzeitig
+        einen Update-Listener haben und im Dialog selbst neu laden. Sonst
+        wird zweimal neu geladen. Diese Integration braucht den Listener
+        fuer die Einstellungsseite, deshalb wird hier nur gespeichert.
+        Das Neuladen uebernimmt der Listener.
+
+        Aeltere Home-Assistant-Fassungen kennen die neue Methode noch
+        nicht. Fuer die wird auf die bisherige zurueckgegriffen.
+        """
+        if hasattr(self, "async_update_and_abort"):
+            return self.async_update_and_abort(entry, **kwargs)
+        return self.async_update_reload_and_abort(entry, **kwargs)
+
     async def async_step_user(
         self, user_input: dict[str, Any] | None = None
     ) -> config_entries.ConfigFlowResult:
@@ -79,7 +97,9 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 await self.async_set_unique_id(
                     info["serial"] or user_input[CONF_HOST]
                 )
-                self._abort_if_unique_id_configured()
+                # reload_on_update abschalten, weil das Neuladen
+                # bereits der Update-Listener uebernimmt.
+                self._abort_if_unique_id_configured(reload_on_update=False)
                 return self.async_create_entry(
                     title=info["title"],
                     data=user_input,
@@ -117,7 +137,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                     info["serial"] or user_input[CONF_HOST]
                 )
                 self._abort_if_unique_id_mismatch(reason="wrong_device")
-                return self.async_update_reload_and_abort(
+                return self._speichern_und_beenden(
                     entry,
                     data_updates=user_input,
                 )
@@ -162,7 +182,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             except Exception:  # noqa: BLE001
                 errors["base"] = "unknown"
             else:
-                return self.async_update_reload_and_abort(
+                return self._speichern_und_beenden(
                     entry,
                     data_updates={CONF_PASSWORD: user_input[CONF_PASSWORD]},
                 )

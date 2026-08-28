@@ -124,10 +124,10 @@
         "name": "État du véhicule",
         "state": {
           "unknown_error": "Inconnu ou erreur",
-          "idle": "Prêt",
+          "idle": "Aucun véhicule",
           "charging": "En charge",
-          "waitcar": "Attente du véhicule",
-          "complete": "Terminé",
+          "waitcar": "Branché, en attente",
+          "complete": "Charge terminée",
           "error": "Erreur"
         }
       },
@@ -152,8 +152,8 @@
       "cdi_type": {
         "name": "Type de durée de charge",
         "state": {
-          "counter": "Compteur",
-          "duration": "Durée"
+          "duration": "Durée",
+          "energy": "Energy"
         }
       },
       "cdi_value": {
@@ -610,7 +610,7 @@
       "ocs": {
         "name": "État de la mise à jour cloud",
         "state": {
-          "idle": "Prêt",
+          "idle": "Aucun véhicule",
           "updating": "Mise à jour en cours",
           "failed": "Échec",
           "succeeded": "Réussi"
@@ -904,6 +904,9 @@
       },
       "sbe": {
         "name": "Démarrage sécurisé"
+      },
+      "car_connected": {
+        "name": "Véhicule branché"
       }
     },
     "number": {
@@ -1009,9 +1012,9 @@
       "lmo": {
         "name": "Mode de charge",
         "state": {
-          "default": "Standard",
-          "awattar": "Awattar",
-          "automaticstop": "Arrêt automatique"
+          "standard": "Standard",
+          "eco": "Mode Eco",
+          "nexttrip": "Mode Next Trip"
         }
       },
       "loty": {

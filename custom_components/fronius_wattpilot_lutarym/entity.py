@@ -36,6 +36,11 @@ class WattpilotEntity(CoordinatorEntity[WattpilotCoordinator]):
         self._attr_translation_key = description.translation_key
         self._attr_entity_registry_enabled_default = description.enabled
 
+        # Vermerken, dass diese Entitaet angelegt wurde. Damit weiss die
+        # Integration hinterher, welche Eintraege im Register noch von
+        # frueheren Fassungen stammen und aufgeraeumt werden koennen.
+        coordinator.angelegte_kennungen.add(self._attr_unique_id)
+
         if description.category:
             self._attr_entity_category = CATEGORY_MAP.get(description.category)
 

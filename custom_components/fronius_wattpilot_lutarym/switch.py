@@ -19,11 +19,14 @@ async def async_setup_entry(
     async_add_entities: AddEntitiesCallback,
 ) -> None:
     coordinator = entry.runtime_data
-    async_add_entities(
+    # Bewusst eine Liste statt eines Generators: Die Entitaeten muessen
+    # sofort erzeugt werden, damit sie sich beim Coordinator anmelden
+    # koennen, bevor das Register aufgeraeumt wird.
+    async_add_entities([
         WattpilotSwitch(coordinator, description)
         for description in SWITCHS
         if coordinator.is_available(description.key)
-    )
+    ])
 
 
 class WattpilotSwitch(WattpilotEntity, SwitchEntity):

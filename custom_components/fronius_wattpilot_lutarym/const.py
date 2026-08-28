@@ -42,6 +42,9 @@ PROP_REBOOT = "rst"
 # Property mit der Liste der registrierten RFID-Karten
 PROP_CARDS = "cards"
 
+# Property mit dem Fahrzeugstatus
+PROP_CAR_STATE = "car"
+
 # Hoechstzahl an RFID-Karten, fuer die Entitaeten angelegt werden
 MAX_RFID_CARDS = 10
 
@@ -72,7 +75,7 @@ SENSORS: tuple[WattpilotDescription, ...] = (
         translation_key="acu",
         unit="A",
         device_class="current",
-        enabled=True,
+        category="diagnostic",
         state_class="measurement",
     ),
     WattpilotDescription(
@@ -120,7 +123,7 @@ SENSORS: tuple[WattpilotDescription, ...] = (
         translation_key="amt",
         unit="A",
         device_class="current",
-        enabled=True,
+        category="diagnostic",
         state_class="measurement",
     ),
     WattpilotDescription(
@@ -171,22 +174,22 @@ SENSORS: tuple[WattpilotDescription, ...] = (
     WattpilotDescription(
         key="awcp_end",
         translation_key="awcp_end",
-        enabled=True,
+        category="diagnostic",
     ),
     WattpilotDescription(
         key="awcp_marketprice",
         translation_key="awcp_marketprice",
-        enabled=True,
+        category="diagnostic",
     ),
     WattpilotDescription(
         key="awcp_start",
         translation_key="awcp_start",
-        enabled=True,
+        category="diagnostic",
     ),
     WattpilotDescription(
         key="awpl",
         translation_key="awpl",
-        enabled=True,
+        category="diagnostic",
     ),
     WattpilotDescription(
         key="car",
@@ -197,14 +200,14 @@ SENSORS: tuple[WattpilotDescription, ...] = (
     WattpilotDescription(
         key="cards",
         translation_key="cards",
-        enabled=True,
+        category="diagnostic",
     ),
     WattpilotDescription(
         key="cbl",
         translation_key="cbl",
         unit="A",
         device_class="current",
-        enabled=True,
+        category="diagnostic",
         state_class="measurement",
     ),
     WattpilotDescription(
@@ -230,13 +233,13 @@ SENSORS: tuple[WattpilotDescription, ...] = (
     WattpilotDescription(
         key="cdi_type",
         translation_key="cdi_type",
-        value_map={"0": "counter", "1": "duration"},
-        enabled=True,
+        value_map={"0": "duration", "1": "energy"},
+        category="diagnostic",
     ),
     WattpilotDescription(
         key="cdi_value",
         translation_key="cdi_value",
-        enabled=True,
+        category="diagnostic",
     ),
     WattpilotDescription(
         key="clp",
@@ -247,7 +250,7 @@ SENSORS: tuple[WattpilotDescription, ...] = (
         key="cus",
         translation_key="cus",
         value_map={"0": "unknown", "1": "unlocked", "2": "unlockfailed", "3": "locked", "4": "lockfailed", "5": "lockunlockpowerout"},
-        enabled=True,
+        category="diagnostic",
     ),
     WattpilotDescription(
         key="cwsca",
@@ -258,14 +261,14 @@ SENSORS: tuple[WattpilotDescription, ...] = (
     WattpilotDescription(
         key="deltaa",
         translation_key="deltaa",
-        enabled=True,
+        category="diagnostic",
     ),
     WattpilotDescription(
         key="deltap",
         translation_key="deltap",
         unit="W",
         device_class="power",
-        enabled=True,
+        category="diagnostic",
         state_class="measurement",
     ),
     WattpilotDescription(
@@ -421,30 +424,30 @@ SENSORS: tuple[WattpilotDescription, ...] = (
         translation_key="etop",
         unit="Wh",
         device_class="energy",
-        enabled=True,
+        category="diagnostic",
         state_class="total_increasing",
     ),
     WattpilotDescription(
         key="fam",
         translation_key="fam",
-        enabled=True,
+        category="diagnostic",
         range=(0, 100, 1),
     ),
     WattpilotDescription(
         key="fbuf_age",
         translation_key="fbuf_age",
-        enabled=True,
+        category="diagnostic",
     ),
     WattpilotDescription(
         key="fbuf_akkuMode",
         translation_key="fbuf_akkumode",
-        enabled=True,
+        category="diagnostic",
     ),
     WattpilotDescription(
         key="fbuf_akkuSOC",
         translation_key="fbuf_akkusoc",
         unit="%",
-        enabled=True,
+        category="diagnostic",
     ),
     WattpilotDescription(
         key="fbuf_ohmpilotState",
@@ -461,7 +464,7 @@ SENSORS: tuple[WattpilotDescription, ...] = (
         translation_key="fbuf_pactotal",
         unit="W",
         device_class="power",
-        enabled=True,
+        category="diagnostic",
         state_class="measurement",
     ),
     WattpilotDescription(
@@ -469,7 +472,7 @@ SENSORS: tuple[WattpilotDescription, ...] = (
         translation_key="fbuf_pakku",
         unit="W",
         device_class="power",
-        enabled=True,
+        category="diagnostic",
         state_class="measurement",
     ),
     WattpilotDescription(
@@ -477,7 +480,7 @@ SENSORS: tuple[WattpilotDescription, ...] = (
         translation_key="fbuf_pgrid",
         unit="W",
         device_class="power",
-        enabled=True,
+        category="diagnostic",
         state_class="measurement",
     ),
     WattpilotDescription(
@@ -485,7 +488,7 @@ SENSORS: tuple[WattpilotDescription, ...] = (
         translation_key="fbuf_ppv",
         unit="W",
         device_class="power",
-        enabled=True,
+        category="diagnostic",
         state_class="measurement",
     ),
     WattpilotDescription(
@@ -503,7 +506,7 @@ SENSORS: tuple[WattpilotDescription, ...] = (
         key="ffb",
         translation_key="ffb",
         value_map={"0": "noproblem", "1": "problemlock", "2": "problemunlock"},
-        enabled=True,
+        category="diagnostic",
     ),
     WattpilotDescription(
         key="ffba",
@@ -521,7 +524,7 @@ SENSORS: tuple[WattpilotDescription, ...] = (
         translation_key="fhz",
         unit="Hz",
         device_class="frequency",
-        enabled=True,
+        category="diagnostic",
         state_class="measurement",
     ),
     WattpilotDescription(
@@ -558,7 +561,7 @@ SENSORS: tuple[WattpilotDescription, ...] = (
     WattpilotDescription(
         key="fwv",
         translation_key="fwv",
-        enabled=True,
+        category="diagnostic",
     ),
     WattpilotDescription(
         key="host",
@@ -574,7 +577,7 @@ SENSORS: tuple[WattpilotDescription, ...] = (
         key="inva",
         translation_key="inva",
         unit="ms",
-        enabled=True,
+        category="diagnostic",
     ),
     WattpilotDescription(
         key="lbp",
@@ -631,7 +634,7 @@ SENSORS: tuple[WattpilotDescription, ...] = (
     WattpilotDescription(
         key="loc",
         translation_key="loc",
-        enabled=True,
+        category="diagnostic",
     ),
     WattpilotDescription(
         key="lom",
@@ -664,7 +667,7 @@ SENSORS: tuple[WattpilotDescription, ...] = (
     WattpilotDescription(
         key="map",
         translation_key="map",
-        enabled=True,
+        category="diagnostic",
     ),
     WattpilotDescription(
         key="mcpea",
@@ -681,7 +684,7 @@ SENSORS: tuple[WattpilotDescription, ...] = (
         key="modelStatus",
         translation_key="modelstatus",
         value_map={"0": "notchargingbecausenochargectrldata", "1": "notchargingbecauseovertemperature", "2": "notchargingbecauseaccesscontrolwait", "3": "chargingbecauseforcestateon", "4": "notchargingbecauseforcestateoff", "5": "notchargingbecausescheduler", "6": "notchargingbecauseenergylimit", "7": "chargingbecauseawattarpricelow", "8": "chargingbecauseautomaticstoptestladung", "9": "chargingbecauseautomaticstopnotenoughtime", "10": "chargingbecauseautomaticstop", "11": "chargingbecauseautomaticstopnoclock", "12": "chargingbecausepvsurplus", "13": "chargingbecausefallbackgoedefault", "14": "chargingbecausefallbackgoescheduler", "15": "chargingbecausefallbackdefault", "16": "notchargingbecausefallbackgoeawattar", "17": "notchargingbecausefallbackawattar", "18": "notchargingbecausefallbackautomaticstop", "19": "chargingbecausecarcompatibilitykeepalive", "20": "chargingbecausechargepausenotallowed", "22": "notchargingbecausesimulateunplugging", "23": "notchargingbecausephaseswitch", "24": "notchargingbecauseminpauseduration"},
-        enabled=True,
+        category="diagnostic",
     ),
     WattpilotDescription(
         key="msi",
@@ -704,7 +707,7 @@ SENSORS: tuple[WattpilotDescription, ...] = (
         translation_key="nrg_il1",
         unit="A",
         device_class="current",
-        enabled=True,
+        category="diagnostic",
         state_class="measurement",
     ),
     WattpilotDescription(
@@ -712,7 +715,7 @@ SENSORS: tuple[WattpilotDescription, ...] = (
         translation_key="nrg_il2",
         unit="A",
         device_class="current",
-        enabled=True,
+        category="diagnostic",
         state_class="measurement",
     ),
     WattpilotDescription(
@@ -720,39 +723,39 @@ SENSORS: tuple[WattpilotDescription, ...] = (
         translation_key="nrg_il3",
         unit="A",
         device_class="current",
-        enabled=True,
+        category="diagnostic",
         state_class="measurement",
     ),
     WattpilotDescription(
         key="nrg_pfl1",
         translation_key="nrg_pfl1",
         unit="%",
-        enabled=True,
+        category="diagnostic",
     ),
     WattpilotDescription(
         key="nrg_pfl2",
         translation_key="nrg_pfl2",
         unit="%",
-        enabled=True,
+        category="diagnostic",
     ),
     WattpilotDescription(
         key="nrg_pfl3",
         translation_key="nrg_pfl3",
         unit="%",
-        enabled=True,
+        category="diagnostic",
     ),
     WattpilotDescription(
         key="nrg_pfn",
         translation_key="nrg_pfn",
         unit="%",
-        enabled=True,
+        category="diagnostic",
     ),
     WattpilotDescription(
         key="nrg_pl1",
         translation_key="nrg_pl1",
         unit="W",
         device_class="power",
-        enabled=True,
+        category="diagnostic",
         state_class="measurement",
     ),
     WattpilotDescription(
@@ -760,7 +763,7 @@ SENSORS: tuple[WattpilotDescription, ...] = (
         translation_key="nrg_pl2",
         unit="W",
         device_class="power",
-        enabled=True,
+        category="diagnostic",
         state_class="measurement",
     ),
     WattpilotDescription(
@@ -768,7 +771,7 @@ SENSORS: tuple[WattpilotDescription, ...] = (
         translation_key="nrg_pl3",
         unit="W",
         device_class="power",
-        enabled=True,
+        category="diagnostic",
         state_class="measurement",
     ),
     WattpilotDescription(
@@ -776,7 +779,7 @@ SENSORS: tuple[WattpilotDescription, ...] = (
         translation_key="nrg_pn",
         unit="W",
         device_class="power",
-        enabled=True,
+        category="diagnostic",
         state_class="measurement",
     ),
     WattpilotDescription(
@@ -792,7 +795,7 @@ SENSORS: tuple[WattpilotDescription, ...] = (
         translation_key="nrg_ul1",
         unit="V",
         device_class="voltage",
-        enabled=True,
+        category="diagnostic",
         state_class="measurement",
     ),
     WattpilotDescription(
@@ -800,7 +803,7 @@ SENSORS: tuple[WattpilotDescription, ...] = (
         translation_key="nrg_ul2",
         unit="V",
         device_class="voltage",
-        enabled=True,
+        category="diagnostic",
         state_class="measurement",
     ),
     WattpilotDescription(
@@ -808,7 +811,7 @@ SENSORS: tuple[WattpilotDescription, ...] = (
         translation_key="nrg_ul3",
         unit="V",
         device_class="voltage",
-        enabled=True,
+        category="diagnostic",
         state_class="measurement",
     ),
     WattpilotDescription(
@@ -816,7 +819,7 @@ SENSORS: tuple[WattpilotDescription, ...] = (
         translation_key="nrg_un",
         unit="V",
         device_class="voltage",
-        enabled=True,
+        category="diagnostic",
         state_class="measurement",
     ),
     WattpilotDescription(
@@ -905,7 +908,7 @@ SENSORS: tuple[WattpilotDescription, ...] = (
         translation_key="pvopt_averagepakku",
         unit="W",
         device_class="power",
-        enabled=True,
+        category="diagnostic",
         state_class="measurement",
     ),
     WattpilotDescription(
@@ -913,7 +916,7 @@ SENSORS: tuple[WattpilotDescription, ...] = (
         translation_key="pvopt_averagepgrid",
         unit="W",
         device_class="power",
-        enabled=True,
+        category="diagnostic",
         state_class="measurement",
     ),
     WattpilotDescription(
@@ -929,7 +932,7 @@ SENSORS: tuple[WattpilotDescription, ...] = (
         translation_key="pvopt_averageppv",
         unit="W",
         device_class="power",
-        enabled=True,
+        category="diagnostic",
         state_class="measurement",
     ),
     WattpilotDescription(
@@ -937,7 +940,7 @@ SENSORS: tuple[WattpilotDescription, ...] = (
         translation_key="pvopt_deltaa",
         unit="A",
         device_class="current",
-        enabled=True,
+        category="diagnostic",
         state_class="measurement",
     ),
     WattpilotDescription(
@@ -945,7 +948,7 @@ SENSORS: tuple[WattpilotDescription, ...] = (
         translation_key="pvopt_deltap",
         unit="W",
         device_class="power",
-        enabled=True,
+        category="diagnostic",
         state_class="measurement",
     ),
     WattpilotDescription(
@@ -1002,7 +1005,7 @@ SENSORS: tuple[WattpilotDescription, ...] = (
         translation_key="rssi",
         unit="dBm",
         device_class="signal_strength",
-        enabled=True,
+        category="diagnostic",
         state_class="measurement",
     ),
     WattpilotDescription(
@@ -1025,40 +1028,40 @@ SENSORS: tuple[WattpilotDescription, ...] = (
     WattpilotDescription(
         key="sch_satur",
         translation_key="sch_satur",
-        enabled=True,
+        category="diagnostic",
     ),
     WattpilotDescription(
         key="sch_satur_control",
         translation_key="sch_satur_control",
         value_map={"0": "disabled", "1": "inside", "2": "outside"},
-        enabled=True,
+        category="diagnostic",
     ),
     WattpilotDescription(
         key="sch_sund",
         translation_key="sch_sund",
-        enabled=True,
+        category="diagnostic",
     ),
     WattpilotDescription(
         key="sch_sund_control",
         translation_key="sch_sund_control",
         value_map={"0": "disabled", "1": "inside", "2": "outside"},
-        enabled=True,
+        category="diagnostic",
     ),
     WattpilotDescription(
         key="sch_week",
         translation_key="sch_week",
-        enabled=True,
+        category="diagnostic",
     ),
     WattpilotDescription(
         key="sch_week_control",
         translation_key="sch_week_control",
         value_map={"0": "disabled", "1": "inside", "2": "outside"},
-        enabled=True,
+        category="diagnostic",
     ),
     WattpilotDescription(
         key="sse",
         translation_key="sse",
-        enabled=True,
+        category="diagnostic",
     ),
     WattpilotDescription(
         key="tma",
@@ -1070,7 +1073,7 @@ SENSORS: tuple[WattpilotDescription, ...] = (
         translation_key="tma_1",
         unit="°C",
         device_class="temperature",
-        enabled=True,
+        category="diagnostic",
         state_class="measurement",
     ),
     WattpilotDescription(
@@ -1078,7 +1081,7 @@ SENSORS: tuple[WattpilotDescription, ...] = (
         translation_key="tma_2",
         unit="°C",
         device_class="temperature",
-        enabled=True,
+        category="diagnostic",
         state_class="measurement",
     ),
     WattpilotDescription(
@@ -1118,13 +1121,13 @@ SENSORS: tuple[WattpilotDescription, ...] = (
     WattpilotDescription(
         key="typ",
         translation_key="typ",
-        enabled=True,
+        category="diagnostic",
     ),
     WattpilotDescription(
         key="var",
         translation_key="var",
         value_map={"11": "v11kw_16a", "22": "v22kw_32a"},
-        enabled=True,
+        category="diagnostic",
     ),
     WattpilotDescription(
         key="wcb",
@@ -1193,12 +1196,12 @@ BINARY_SENSORS: tuple[WattpilotDescription, ...] = (
     WattpilotDescription(
         key="adi",
         translation_key="adi",
-        enabled=True,
+        category="diagnostic",
     ),
     WattpilotDescription(
         key="alw",
         translation_key="alw",
-        enabled=True,
+        category="diagnostic",
     ),
     WattpilotDescription(
         key="cca",
@@ -1228,7 +1231,7 @@ BINARY_SENSORS: tuple[WattpilotDescription, ...] = (
     WattpilotDescription(
         key="ful",
         translation_key="ful",
-        enabled=True,
+        category="diagnostic",
     ),
     WattpilotDescription(
         key="ocuca",
@@ -1249,7 +1252,7 @@ NUMBERS: tuple[WattpilotDescription, ...] = (
         translation_key="ama",
         unit="A",
         device_class="current",
-        enabled=True,
+        category="diagnostic",
         range=(6, 32, 1),
     ),
     WattpilotDescription(
@@ -1263,13 +1266,12 @@ NUMBERS: tuple[WattpilotDescription, ...] = (
     WattpilotDescription(
         key="awp",
         translation_key="awp",
-        enabled=True,
+        category="diagnostic",
         range=(-100, 100, 0.1),
     ),
     WattpilotDescription(
         key="cco",
         translation_key="cco",
-        enabled=True,
         category="config",
         range=(0, 100, 0.1),
     ),
@@ -1278,14 +1280,14 @@ NUMBERS: tuple[WattpilotDescription, ...] = (
         translation_key="dwo",
         unit="Wh",
         device_class="energy",
-        enabled=True,
+        category="diagnostic",
         range=(0, 100000, 100),
     ),
     WattpilotDescription(
         key="fmt",
         translation_key="fmt",
         unit="ms",
-        enabled=True,
+        category="diagnostic",
         range=(0, 7200000, 60000),
     ),
     WattpilotDescription(
@@ -1293,13 +1295,12 @@ NUMBERS: tuple[WattpilotDescription, ...] = (
         translation_key="fst",
         unit="W",
         device_class="power",
-        enabled=True,
+        category="diagnostic",
         range=(-10000, 10000, 100),
     ),
     WattpilotDescription(
         key="lbr",
         translation_key="lbr",
-        enabled=True,
         category="config",
         range=(0, 255, 1),
     ),
@@ -1308,13 +1309,12 @@ NUMBERS: tuple[WattpilotDescription, ...] = (
         translation_key="lof",
         unit="A",
         device_class="current",
-        enabled=True,
+        category="diagnostic",
         range=(0, 32, 1),
     ),
     WattpilotDescription(
         key="lop",
         translation_key="lop",
-        enabled=True,
         category="config",
         range=(0, 100, 1),
     ),
@@ -1323,7 +1323,7 @@ NUMBERS: tuple[WattpilotDescription, ...] = (
         translation_key="lot",
         unit="A",
         device_class="current",
-        enabled=True,
+        category="diagnostic",
         range=(6, 200, 1),
     ),
     WattpilotDescription(
@@ -1331,14 +1331,14 @@ NUMBERS: tuple[WattpilotDescription, ...] = (
         translation_key="mca",
         unit="A",
         device_class="current",
-        enabled=True,
+        category="diagnostic",
         range=(6, 32, 1),
     ),
     WattpilotDescription(
         key="mci",
         translation_key="mci",
         unit="ms",
-        enabled=True,
+        category="diagnostic",
         range=(0, 3600000, 60000),
     ),
     WattpilotDescription(
@@ -1367,7 +1367,7 @@ NUMBERS: tuple[WattpilotDescription, ...] = (
         translation_key="po",
         unit="W",
         device_class="power",
-        enabled=True,
+        category="diagnostic",
         range=(-5000, 5000, 50),
     ),
     WattpilotDescription(
@@ -1375,7 +1375,7 @@ NUMBERS: tuple[WattpilotDescription, ...] = (
         translation_key="psh",
         unit="W",
         device_class="power",
-        enabled=True,
+        category="diagnostic",
         range=(0, 5000, 50),
     ),
     WattpilotDescription(
@@ -1390,7 +1390,7 @@ NUMBERS: tuple[WattpilotDescription, ...] = (
         translation_key="sh",
         unit="W",
         device_class="power",
-        enabled=True,
+        category="diagnostic",
         range=(0, 5000, 50),
     ),
     WattpilotDescription(
@@ -1398,7 +1398,7 @@ NUMBERS: tuple[WattpilotDescription, ...] = (
         translation_key="spl3",
         unit="W",
         device_class="power",
-        enabled=True,
+        category="diagnostic",
         range=(0, 20000, 100),
     ),
     WattpilotDescription(
@@ -1418,7 +1418,7 @@ NUMBERS: tuple[WattpilotDescription, ...] = (
     WattpilotDescription(
         key="trx",
         translation_key="trx",
-        enabled=True,
+        category="diagnostic",
         range=(0, 10, 1),
     ),
     WattpilotDescription(
@@ -1426,7 +1426,7 @@ NUMBERS: tuple[WattpilotDescription, ...] = (
         translation_key="zfo",
         unit="W",
         device_class="power",
-        enabled=True,
+        category="diagnostic",
         range=(-5000, 5000, 50),
     ),
 )
@@ -1437,40 +1437,36 @@ SELECTS: tuple[WattpilotDescription, ...] = (
         key="acs",
         translation_key="acs",
         value_map={"0": "open", "1": "wait"},
-        enabled=True,
         category="config",
     ),
     WattpilotDescription(
         key="awc",
         translation_key="awc",
         value_map={"0": "austria", "1": "germany"},
-        enabled=True,
         category="config",
     ),
     WattpilotDescription(
         key="frc",
         translation_key="frc",
         value_map={"0": "neutral", "1": "off", "2": "on"},
-        enabled=True,
+        category="diagnostic",
     ),
     WattpilotDescription(
         key="lmo",
         translation_key="lmo",
-        value_map={"3": "default", "4": "awattar", "5": "automaticstop"},
+        value_map={"3": "standard", "4": "eco", "5": "nexttrip"},
         enabled=True,
     ),
     WattpilotDescription(
         key="loty",
         translation_key="loty",
         value_map={"0": "static", "1": "dynamic"},
-        enabled=True,
         category="config",
     ),
     WattpilotDescription(
         key="psm",
         translation_key="psm",
         value_map={"0": "auto", "1": "force_1", "2": "force_3"},
-        enabled=True,
         category="config",
     ),
     WattpilotDescription(
@@ -1483,7 +1479,6 @@ SELECTS: tuple[WattpilotDescription, ...] = (
         key="ust",
         translation_key="ust",
         value_map={"0": "normal", "1": "autounlock", "2": "alwayslock"},
-        enabled=True,
         category="config",
     ),
 )
@@ -1493,7 +1488,6 @@ SWITCHS: tuple[WattpilotDescription, ...] = (
     WattpilotDescription(
         key="bac",
         translation_key="bac",
-        enabled=True,
         category="config",
     ),
     WattpilotDescription(
@@ -1504,23 +1498,22 @@ SWITCHS: tuple[WattpilotDescription, ...] = (
     WattpilotDescription(
         key="esk",
         translation_key="esk",
-        enabled=True,
         category="config",
     ),
     WattpilotDescription(
         key="fsp",
         translation_key="fsp",
-        enabled=True,
+        category="diagnostic",
     ),
     WattpilotDescription(
         key="fup",
         translation_key="fup",
-        enabled=True,
+        category="diagnostic",
     ),
     WattpilotDescription(
         key="fzf",
         translation_key="fzf",
-        enabled=True,
+        category="diagnostic",
     ),
     WattpilotDescription(
         key="hsa",
@@ -1535,7 +1528,7 @@ SWITCHS: tuple[WattpilotDescription, ...] = (
     WattpilotDescription(
         key="loe",
         translation_key="loe",
-        enabled=True,
+        category="diagnostic",
     ),
     WattpilotDescription(
         key="lse",
@@ -1594,7 +1587,6 @@ TEXTS: tuple[WattpilotDescription, ...] = (
     WattpilotDescription(
         key="ct",
         translation_key="ct",
-        enabled=True,
         category="config",
     ),
     WattpilotDescription(
@@ -1605,19 +1597,17 @@ TEXTS: tuple[WattpilotDescription, ...] = (
     WattpilotDescription(
         key="fna",
         translation_key="fna",
-        enabled=True,
         category="config",
     ),
     WattpilotDescription(
         key="log",
         translation_key="log",
-        enabled=True,
         category="config",
     ),
     WattpilotDescription(
         key="utc",
         translation_key="utc",
-        enabled=True,
+        category="diagnostic",
     ),
     WattpilotDescription(
         key="wan",

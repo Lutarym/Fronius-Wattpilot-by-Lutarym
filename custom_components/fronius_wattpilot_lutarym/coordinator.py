@@ -45,6 +45,9 @@ class WattpilotCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         # Die Schluessel, die dieses Geraet tatsaechlich liefert.
         # Wird beim Verbindungsaufbau einmal ermittelt.
         self.available_keys: set[str] = set()
+        # Kennungen aller Entitaeten, die tatsaechlich angelegt wurden.
+        # Wird beim Aufraeumen des Registers gebraucht.
+        self.angelegte_kennungen: set[str] = set()
         self._reconnect_task: asyncio.Task | None = None
         self._reconnect_delay = RECONNECT_DELAY
         super().__init__(

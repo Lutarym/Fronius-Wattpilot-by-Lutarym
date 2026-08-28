@@ -124,10 +124,10 @@
         "name": "Car State",
         "state": {
           "unknown_error": "Unknown or error",
-          "idle": "Idle",
+          "idle": "No car",
           "charging": "Charging",
-          "waitcar": "Waiting for car",
-          "complete": "Complete",
+          "waitcar": "Connected, waiting",
+          "complete": "Charging complete",
           "error": "Error"
         }
       },
@@ -152,8 +152,8 @@
       "cdi_type": {
         "name": "Charging Duration Type",
         "state": {
-          "counter": "Counter",
-          "duration": "Duration"
+          "duration": "Duration",
+          "energy": "Energy"
         }
       },
       "cdi_value": {
@@ -610,7 +610,7 @@
       "ocs": {
         "name": "OTA Cloud Status",
         "state": {
-          "idle": "Idle",
+          "idle": "No car",
           "updating": "Updating",
           "failed": "Failed",
           "succeeded": "Succeeded"
@@ -904,6 +904,9 @@
       },
       "sbe": {
         "name": "Secure Boot Enabled"
+      },
+      "car_connected": {
+        "name": "Car connected"
       }
     },
     "number": {
@@ -1009,9 +1012,9 @@
       "lmo": {
         "name": "Logic Mode",
         "state": {
-          "default": "Default",
-          "awattar": "Awattar",
-          "automaticstop": "Automatic stop"
+          "standard": "Standard",
+          "eco": "Eco Mode",
+          "nexttrip": "Next Trip Mode"
         }
       },
       "loty": {

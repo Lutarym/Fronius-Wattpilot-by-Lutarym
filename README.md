@@ -6,11 +6,26 @@ Es wird kein Fronius-Konto und keine Cloud-Verbindung benötigt.
 
 ## Funktionsumfang
 
-Die Integration kennt **254 Entitäten**. Angelegt werden davon nur diejenigen, die Ihr Gerät tatsächlich meldet. Siehe den Abschnitt zu den vorhandenen Entitäten weiter unten.
+Die Integration kennt **254 Entitäten**. Angelegt werden davon nur die, die Ihr Gerät tatsächlich meldet.
 
-Von den angelegten Entitäten sind die wichtigsten sofort aktiv, seltener benötigte sind angelegt aber deaktiviert. Sie lassen sich jederzeit unter Einstellungen, Geräte und Dienste, Entitäten einschalten.
+### Standardmäßig aktiv
 
-Grundlage ist die API-Definition der Bibliothek `wattpilot-api` in Version 1.4.0.
+Aktiv sind nur acht Entitäten, nämlich das, was man täglich braucht:
+
+| Entität | Art | Bedeutung |
+|---|---|---|
+| Fahrzeugstatus | Sensor | Kein Fahrzeug, Lädt, Angesteckt wartet, Ladung abgeschlossen |
+| Fahrzeug angesteckt | Ja/Nein | ob ein Auto am Kabel hängt |
+| Lademodus | Auswahl | Standard, Eco Mode, Next Trip Mode |
+| Ladestrom | Zahl | 6 bis 32 A |
+| Gesamtleistung | Sensor | aktuelle Ladeleistung in W |
+| Gesamtenergie | Sensor | Zählerstand, geeignet für das Energie-Dashboard |
+| Energie seit Anstecken | Sensor | Energie der laufenden Ladung |
+| Fehlerstatus | Sensor | Klartext, zum Beispiel Überstrom oder Übertemperatur |
+
+Alle übrigen Entitäten sind vorhanden, aber deaktiviert. Einschalten geht unter Einstellungen, Geräte und Dienste, Entitäten: Entität suchen, anklicken, Zahnrad, Aktiviert einschalten.
+
+### Verfügbar, aber deaktiviert
 
 ### Laden und Steuerung
 
@@ -73,6 +88,14 @@ Die Ladezeitpläne für Wochentag, Samstag und Sonntag werden mit ihrem Steuerun
 
 Firmware, Seriennummer, Modell, Anzeigename, WLAN-Signalstärke, Uhrzeit, Betriebsdauer, Neustartzähler und eine Schaltfläche zum Neustart.
 
+## Lademodi
+
+Fronius nennt die drei Lademodi in seiner Dokumentation **Standard**, **Eco Mode** und **Next Trip Mode**. Genau so heißen sie auch in dieser Integration.
+
+Die zugrunde liegende API-Definition verwendet dafür interne Bezeichnungen (Default, Awattar, AutomaticStop). Die werden hier auf die Namen aus der Fronius-App übersetzt, damit die Anzeige zu dem passt, was Sie vom Gerät kennen.
+
+Für das sofortige Starten oder Stoppen unabhängig vom Modus gibt es zusätzlich die Entität **Ladefreigabe erzwingen**. Sie ist standardmäßig deaktiviert.
+
 ## Was der Wattpilot nicht liefert
 
 Der Wattpilot liest **keine Daten aus dem Fahrzeug** aus. Es gibt keinen Ladestand und keine Reichweite des Autos.
@@ -119,9 +142,21 @@ Unter Einstellungen, Geräte und Dienste, bei der Integration auf **Konfiguriere
 
 Nach dem Umschalten lädt die Integration automatisch neu.
 
-### Nach dem Umstieg
+### Aufräumen alter Entitäten
 
-Wenn Sie von einer früheren Fassung kommen, bleiben nicht mehr angelegte Entitäten zunächst als nicht verfügbar in der Liste stehen. Sie lassen sich unter Einstellungen, Geräte und Dienste, Entitäten löschen.
+Home Assistant löscht Entitäten nicht von selbst, wenn eine Integration sie nicht mehr anlegt. Sie bleiben als **Nicht verfügbar** in der Liste stehen.
+
+Die Integration räumt diese Reste beim Start automatisch weg. Betroffen sind zwei Fälle: Entitäten aus älteren Fassungen dieser Integration und Werte, die Ihr Gerät nicht liefert.
+
+Aus Vorsicht wird nichts gelöscht, wenn die Verfügbarkeitsprüfung abgeschaltet ist, wenn das Gerät beim Verbinden gar nichts gemeldet hat oder wenn überhaupt keine Entität angelegt wurde. Ein einmaliger Aussetzer beim Verbinden soll nicht den Verlauf einer Entität vernichten.
+
+Was entfernt wurde, steht im Protokoll.
+
+### Warum manche Werte fehlen
+
+Nicht jeder Wert existiert auf jedem Gerät. Drei Beispiele, die die API-Definition ausdrücklich als gerätespezifisch führt: Stromabweichung, Leistungsabweichung und Alter der Wechselrichterdaten gibt es nur bei einer anderen Gerätevariante, nicht beim Fronius Wattpilot.
+
+Welche Werte Ihr Gerät meldet, zeigt das Protokoll bei eingeschalteter Fehlersuche.
 
 ## Sprachen
 
@@ -180,6 +215,12 @@ Die Bibliothek `wattpilot-api` liest beim ersten Zugriff eine Beschreibungsdatei
 Die Integration lädt diese Datei deshalb in einem Hintergrund-Thread und behält sie danach im Speicher. Sie wird nur einmal geladen, auch wenn mehrere Wattpilot eingerichtet sind.
 
 Eine Sache bleibt: Bei jeder Anmeldung berechnet die Bibliothek das Passwort neu, was etwa 300 Millisekunden dauert. Das geschieht innerhalb der Bibliothek und lässt sich von der Integration aus nicht verlagern. Es fällt nur beim Verbindungsaufbau an, nicht im laufenden Betrieb, und wird von Home Assistant nicht als Fehler gemeldet.
+
+## Neuladen der Integration
+
+Ändert sich etwas an der Konfiguration, muss die Integration neu geladen werden. Das geschieht an genau einer Stelle, nämlich über den Update-Listener.
+
+Die Dialoge selbst laden bewusst nicht zusätzlich neu. Seit Home Assistant 2026.6 wird die Kombination aus beidem beanstandet, weil sonst zweimal hintereinander neu geladen wird. Ab Fassung 2026.12 wäre das ein Fehler.
 
 ## Hinweis zu den Leistungswerten
 

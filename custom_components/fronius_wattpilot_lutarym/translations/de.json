@@ -124,10 +124,10 @@
         "name": "Fahrzeugstatus",
         "state": {
           "unknown_error": "Unbekannt oder Fehler",
-          "idle": "Bereit",
+          "idle": "Kein Fahrzeug",
           "charging": "Lädt",
-          "waitcar": "Warten auf Fahrzeug",
-          "complete": "Abgeschlossen",
+          "waitcar": "Angesteckt, wartet",
+          "complete": "Ladung abgeschlossen",
           "error": "Fehler"
         }
       },
@@ -152,8 +152,8 @@
       "cdi_type": {
         "name": "Art der Ladedauer",
         "state": {
-          "counter": "Zähler",
-          "duration": "Dauer"
+          "duration": "Dauer",
+          "energy": "Energy"
         }
       },
       "cdi_value": {
@@ -610,7 +610,7 @@
       "ocs": {
         "name": "Status der Cloud-Aktualisierung",
         "state": {
-          "idle": "Bereit",
+          "idle": "Kein Fahrzeug",
           "updating": "Wird aktualisiert",
           "failed": "Fehlgeschlagen",
           "succeeded": "Erfolgreich"
@@ -904,6 +904,9 @@
       },
       "sbe": {
         "name": "Sicherer Systemstart"
+      },
+      "car_connected": {
+        "name": "Fahrzeug angesteckt"
       }
     },
     "number": {
@@ -1009,9 +1012,9 @@
       "lmo": {
         "name": "Lademodus",
         "state": {
-          "default": "Standard",
-          "awattar": "Awattar",
-          "automaticstop": "Automatischer Stopp"
+          "standard": "Standard",
+          "eco": "Eco Mode",
+          "nexttrip": "Next Trip Mode"
         }
       },
       "loty": {
