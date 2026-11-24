@@ -23,7 +23,7 @@ Aktiv ist nur, was man täglich braucht. Acht feste Entitäten:
 | Energie seit Anstecken | Sensor | Energie der laufenden Ladung |
 | Fehlerstatus | Sensor | Klartext, zum Beispiel Überstrom oder Übertemperatur |
 
-Dazu kommen die Entitäten für die RFID-Chips: eine je Chip für den Gesamtzähler, die letzte Ladung und den Ladevorgang, sowie einmalig die aktive Karte. Diese entstehen nur, wenn Chips im Gerät hinterlegt sind. Einzelheiten im Abschnitt zu den RFID-Chips.
+Dazu kommen die Entitäten für die RFID-Chips: eine je Chip für den Gesamtzähler, die letzte Ladung und den Ladevorgang, sowie einmalig die aktive Karte. Diese entstehen nur, wenn Chips im Gerät hinterlegt sind. Ebenfalls ab Werk aktiv sind **Registrierte RFID-Karten** und **Aktive Transaktion**. Einzelheiten im Abschnitt zu den RFID-Chips.
 
 Alle übrigen Entitäten sind vorhanden, aber deaktiviert. Einschalten geht unter Einstellungen, Geräte und Dienste, Entitäten: Entität suchen, anklicken, Zahnrad, Aktiviert einschalten.
 
@@ -59,10 +59,9 @@ Spannung, Strom, Leistung und Leistungsfaktor für alle drei Phasen und den Neut
 
 | Funktion | Typ | Property |
 |---|---|---|
-| Registrierte Karten | Sensor, Anzahl mit Liste in den Attributen | `cards` |
-| Aktive Transaktion | Zahl, setzbar | `trx` |
-| Energie je Karte | Ein Sensor pro Karte | aus `cards` |
-| Name je Karte | Ein Sensor pro Karte | aus `cards` |
+| Registrierte Karten | Sensor, Anzahl mit Liste in den Attributen, ab Werk aktiv. Nur bei Geräten, die die Liste `cards` melden | `cards` |
+| Aktive Transaktion | Zahl, setzbar, ab Werk aktiv | `trx` |
+| Chip-Entitäten | Je Chip Energie gesamt, Energie letzte Ladung und lädt | aus `cards` oder aus `c0n` bis `c9n`, `c0e` bis `c9e`, `c0i` bis `c9i` |
 
 Über `trx` lässt sich eine Ladung auch ohne physisches Vorhalten der Karte freigeben. `0` bedeutet ohne Karte, `1` steht für die erste Karte, `2` für die zweite und so weiter.
 
@@ -122,6 +121,19 @@ Geeignet ist **Energie gesamt** je Chip. Das ist der Zähler des Wattpilot selbs
 
 **Energie letzte Ladung** bekommt bewusst keine Zustandsklasse und taucht daher nicht im Energie-Dashboard auf. Der Wert fällt zu Beginn jeder Ladung auf null zurück und taugt deshalb nicht als Zählerstand für die Langzeitstatistik.
 
+### Zwei Meldeformen der Chips
+
+Je nach Firmware meldet der Wattpilot die Chips auf zwei Arten:
+
+| Form | Schlüssel | Inhalt |
+|---|---|---|
+| Liste | `cards` | eine Liste mit Name, Energie und Kennung je Chip |
+| Einzelschlüssel | `c0n` bis `c9n`, `c0e` bis `c9e`, `c0i` bis `c9i` | Name, Energie in Wh und ob eine Kennung hinterlegt ist, je Chip ein eigener Schlüssel |
+
+Die Schlüsselliste der go-e-API v2 führt die Einzelschlüssel ab Firmware 60.0 und vermerkt `cards` dort als entfernt. Die Integration liest ab Version 2.9.0 beide Formen. Bis 2.8.0 wurde nur die Liste gelesen. Bei einem Gerät mit Einzelschlüsseln entstanden deshalb keine Chip-Entitäten.
+
+Bei Geräten mit Einzelschlüsseln gibt es den Sensor **Registrierte RFID-Karten** nicht, weil das Gerät die Liste nicht meldet. Die Chips erscheinen dann direkt als eigene Entitäten.
+
 ### Wie die Zuordnung funktioniert
 
 Der Wattpilot meldet nur zwei Dinge: die Liste der gespeicherten Chips und welcher davon gerade die Transaktion hält. Einen Zähler je Chip und Ladung gibt es nicht.
@@ -138,7 +150,7 @@ Die Integration wartet deshalb, bis sich die Liste der gemeldeten Werte über me
 
 Meldet der Wattpilot einen Wert erst später, etwa weil eine Funktion gerade erst eingeschaltet wurde, gilt er ab dann dauerhaft als vorhanden.
 
-Falls dennoch Entitäten fehlen, hilft die Diagnose weiter: Unter Einstellungen, Geräte und Dienste beim Gerät auf **Diagnose herunterladen**. Die Datei zeigt, welche Werte das Gerät gemeldet hat, wie die Chipliste aussieht und welche Entitäten mangels Meldung übersprungen wurden.
+Falls dennoch Entitäten fehlen, hilft die Diagnose weiter: Unter Einstellungen, Geräte und Dienste beim Gerät auf **Diagnose herunterladen**. Die Datei zeigt, welche Werte das Gerät gemeldet hat, wie die Chipliste aussieht und welche Entitäten mangels Meldung übersprungen wurden. Unter `rfid` steht bei `kartenformat`, in welcher Form das Gerät die Chips meldet: `cards` für die Liste, `einzelschluessel` für `c0n` und folgende. Steht dort nichts, meldet das Gerät keine Chips.
 
 ### Neue Chips anlernen
 
@@ -150,11 +162,15 @@ Beim Umbenennen ändert sich nur der Anzeigename. Die eindeutige Kennung richtet
 
 ### Freigeben ohne Chip
 
-Die Entität **Aktive Transaktion** kann die Transaktion auch ohne physisches Vorhalten setzen. Null bedeutet ohne Chip, eins steht für den ersten Chip, zwei für den zweiten. Sie ist standardmäßig deaktiviert und lässt sich in den Entitäten-Einstellungen einschalten.
+Die Entität **Aktive Transaktion** kann die Transaktion auch ohne physisches Vorhalten setzen. Null bedeutet ohne Chip, eins steht für den ersten Chip, zwei für den zweiten. Sie ist ab Werk aktiv.
+
+### Ab Werk aktiv
+
+**Aktive Transaktion** und **Registrierte RFID-Karten** sind ab Version 2.9.0 ab Werk aktiv. Waren sie aus einer früheren Fassung noch deaktiviert, schaltet die Integration sie beim ersten Start ein. Home Assistant lädt die Integration danach einmal neu. Hat jemand eine der beiden Entitäten selbst deaktiviert, bleibt sie aus.
 
 ### Einheit der Chipzähler
 
-Die API-Definition nennt für den Zähler je Chip keine Einheit, und die Schlüsselliste der go-e-API, die dasselbe Protokoll beschreibt, ebenfalls nicht. Alle übrigen Energiewerte dieser Schnittstelle sind in Wh angegeben, deshalb wird das hier angenommen.
+Die API-Definition nennt für den Zähler je Chip keine Einheit. Für die Einzelschlüssel `c0e` bis `c9e` nennt die Schlüsselliste der go-e-API v2 ausdrücklich Wh. Für die Liste `cards` wird dieselbe Einheit angenommen.
 
 Bitte einmal mit der Anzeige in der Wattpilot-App vergleichen. Falls es nicht passt, ist `CARD_ENERGY_UNIT` in `const.py` die Stelle zum Ändern.
 
@@ -310,6 +326,7 @@ Unter Einstellungen, Geräte und Dienste beim Gerät gibt es **Diagnose herunter
 
 - alle vom Wattpilot gemeldeten Werte samt der daraus abgeleiteten Einzelwerte
 - die vollständige Chipliste mit Namen, Zählerständen und der Angabe, ob eine Kennung hinterlegt ist
+- in welcher Form das Gerät die Chips meldet (`kartenformat`)
 - die laufende Transaktion und die Zugangsfreigabe
 - welche Entitäten mangels Meldung übersprungen wurden
 

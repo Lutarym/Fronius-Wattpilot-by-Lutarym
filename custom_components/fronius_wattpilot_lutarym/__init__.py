@@ -21,9 +21,11 @@ from .const import (
     CONF_HOST,
     CONF_PASSWORD,
     DOMAIN,
+    RFID_ALWAYS_ENABLED,
     SERVICE_SET_PROPERTY,
 )
 from .coordinator import WattpilotCoordinator
+from .entity import geraetekennung
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -51,6 +53,11 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     await coordinator.async_connect()
 
     entry.runtime_data = coordinator
+
+    # RFID-Entitaeten, die eine fruehere Fassung deaktiviert hat, vor dem
+    # Anlegen der Entitaeten wieder einschalten.
+    _rfid_entitaeten_einschalten(hass, entry, coordinator)
+
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
 
     # Eintraege aus frueheren Fassungen entfernen, die jetzt nicht mehr
@@ -68,6 +75,34 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
     _register_services(hass)
     return True
+
+
+def _rfid_entitaeten_einschalten(
+    hass: HomeAssistant,
+    entry: ConfigEntry,
+    coordinator: WattpilotCoordinator,
+) -> None:
+    """Schaltet die RFID-Entitaeten ein, die frueher ab Werk aus waren.
+
+    Gemeint sind die Kartenliste und die laufende Transaktion. Neue
+    Eintraege sind ab dieser Fassung ohnehin aktiv. Bestehende Eintraege
+    behalten in Home Assistant aber ihren alten Zustand, deshalb werden
+    sie hier einmalig eingeschaltet.
+
+    Eingeschaltet wird nur, was die Integration selbst deaktiviert hat.
+    Hat der Nutzer eine Entitaet von Hand deaktiviert, bleibt sie aus.
+    """
+    registry = er.async_get(hass)
+    kennung = geraetekennung(coordinator)
+    gesucht = {f"{kennung}_{schluessel}" for schluessel in RFID_ALWAYS_ENABLED}
+
+    for eintrag in er.async_entries_for_config_entry(registry, entry.entry_id):
+        if eintrag.unique_id not in gesucht:
+            continue
+        if eintrag.disabled_by is not er.RegistryEntryDisabler.INTEGRATION:
+            continue
+        _LOGGER.info("Schalte die Entitaet %s ein", eintrag.entity_id)
+        registry.async_update_entity(eintrag.entity_id, disabled_by=None)
 
 
 def _entfernte_altlasten(

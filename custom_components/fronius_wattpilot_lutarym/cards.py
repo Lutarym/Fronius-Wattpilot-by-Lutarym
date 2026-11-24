@@ -8,6 +8,12 @@ cards
     einen Namen, einen Energiezaehler und die Angabe, ob ueberhaupt
     eine Kartenkennung hinterlegt ist.
 
+c0n, c0e, c0i bis c9n, c9e, c9i
+    Neuere Firmware meldet statt der Liste je Karte eigene Schluessel
+    fuer Name, Energie und Kartenkennung. Die go-e-Schluesselliste
+    fuehrt sie ab Firmware 60.0 und vermerkt "cards" dort als entfernt.
+    Gelesen wird beides, je nachdem, was das Geraet liefert.
+
 trx
     Die laufende Transaktion. Leer bedeutet, dass keine Transaktion
     laeuft. Null bedeutet, dass ohne Karte geladen wird. Jeder andere
@@ -24,11 +30,18 @@ from dataclasses import dataclass
 from typing import Any
 
 from .const import (
+    CARD_KEY_ENERGY,
+    CARD_KEY_ID,
+    CARD_KEY_NAME,
     MAX_RFID_CARDS,
     PROP_CARDS,
     PROP_ENERGY_SESSION,
     PROP_TRANSACTION,
 )
+
+# Kennzeichnung, in welcher Form das Geraet die Karten meldet
+FORMAT_LIST = "cards"
+FORMAT_KEYS = "einzelschluessel"
 
 # Wert von trx, wenn ohne Karte geladen wird
 TRANSACTION_WITHOUT_CARD = 0
@@ -56,29 +69,78 @@ def _to_float(value: Any) -> float | None:
         return None
 
 
-def parse_cards(data: dict[str, Any] | None) -> list[CardInfo]:
-    """Liest die Kartenliste aus den Geraetedaten.
+def _ist_hinterlegt(value: Any) -> bool:
+    """Ob eine Kartenkennung hinterlegt ist.
 
-    Liefert alle Eintraege, auch die ungenutzten. Welche davon eine
-    Entitaet bekommen, entscheidet registered_cards.
+    Gemeldet wird true oder false. Ein Text wird vorsichtshalber auch
+    verstanden, eine echte Kennung als Text zaehlt als hinterlegt.
     """
-    roh = (data or {}).get(PROP_CARDS)
-    if not isinstance(roh, list):
-        return []
+    if isinstance(value, str):
+        return value.strip().lower() not in ("", "0", "false", "no", "off", "none", "null")
+    return bool(value)
+
+
+def _hat_einzelschluessel(daten: dict[str, Any], index: int) -> bool:
+    """Ob das Geraet fuer diese Karte eigene Schluessel meldet."""
+    return any(
+        vorlage.format(index) in daten
+        for vorlage in (CARD_KEY_NAME, CARD_KEY_ENERGY, CARD_KEY_ID)
+    )
+
+
+def card_format(data: dict[str, Any] | None) -> str | None:
+    """In welcher Form das Geraet die Karten meldet, oder None."""
+    daten = data or {}
+    roh = daten.get(PROP_CARDS)
+    if isinstance(roh, list) and roh:
+        return FORMAT_LIST
+    if any(_hat_einzelschluessel(daten, i) for i in range(MAX_RFID_CARDS)):
+        return FORMAT_KEYS
+    if isinstance(roh, list):
+        return FORMAT_LIST
+    return None
+
+
+def parse_cards(data: dict[str, Any] | None) -> list[CardInfo]:
+    """Liest die Karten aus den Geraetedaten.
+
+    Verstanden wird die Liste "cards" und die Einzelschluessel c0n bis
+    c9n, c0e bis c9e und c0i bis c9i. Liefert alle Eintraege, auch die
+    ungenutzten. Welche davon eine Entitaet bekommen, entscheidet
+    registered_cards.
+    """
+    daten = data or {}
+    format_ = card_format(daten)
 
     karten: list[CardInfo] = []
-    for index, eintrag in enumerate(roh[:MAX_RFID_CARDS]):
-        if not isinstance(eintrag, dict):
-            continue
-        name = eintrag.get("name")
-        karten.append(
-            CardInfo(
-                index=index,
-                name=str(name).strip() if name is not None else "",
-                energy=_to_float(eintrag.get("energy")),
-                registered=bool(eintrag.get("cardId")),
+    if format_ == FORMAT_LIST:
+        for index, eintrag in enumerate(daten[PROP_CARDS][:MAX_RFID_CARDS]):
+            if not isinstance(eintrag, dict):
+                continue
+            name = eintrag.get("name")
+            karten.append(
+                CardInfo(
+                    index=index,
+                    name=str(name).strip() if name is not None else "",
+                    energy=_to_float(eintrag.get("energy")),
+                    registered=_ist_hinterlegt(eintrag.get("cardId")),
+                )
             )
-        )
+        return karten
+
+    if format_ == FORMAT_KEYS:
+        for index in range(MAX_RFID_CARDS):
+            if not _hat_einzelschluessel(daten, index):
+                continue
+            name = daten.get(CARD_KEY_NAME.format(index))
+            karten.append(
+                CardInfo(
+                    index=index,
+                    name=str(name).strip() if name is not None else "",
+                    energy=_to_float(daten.get(CARD_KEY_ENERGY.format(index))),
+                    registered=_ist_hinterlegt(daten.get(CARD_KEY_ID.format(index))),
+                )
+            )
     return karten
 
 

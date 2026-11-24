@@ -17,6 +17,7 @@ from homeassistant.core import HomeAssistant
 
 from .cards import (
     active_card_index,
+    card_format,
     charging_without_card,
     parse_cards,
     registered_cards,
@@ -112,6 +113,9 @@ async def async_get_config_entry_diagnostics(
         },
         "rfid": {
             "kartenliste_gemeldet": "cards" in roh,
+            # "cards" fuer die Liste, "einzelschluessel" fuer c0n, c0e, c0i
+            # und so weiter, leer wenn das Geraet keine Karten meldet
+            "kartenformat": card_format(roh),
             "eintraege_gesamt": len(karten),
             "benutzte_karten": [
                 {

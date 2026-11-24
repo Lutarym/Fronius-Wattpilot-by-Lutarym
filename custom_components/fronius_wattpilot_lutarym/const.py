@@ -67,6 +67,21 @@ CARD_ENERGY_UNIT = "Wh"
 # Hoechstzahl an RFID-Karten, fuer die Entitaeten angelegt werden
 MAX_RFID_CARDS = 10
 
+# Neuere Firmware meldet die Karten nicht mehr als Liste "cards",
+# sondern mit eigenen Schluesseln je Karte. Die Schluesselliste der
+# go-e-API v2 fuehrt sie ab Firmware 60.0 und vermerkt "cards" dort als
+# entfernt:
+#   c0n bis c9n  Name der Karte
+#   c0e bis c9e  Energie der Karte in Wh
+#   c0i bis c9i  ob eine Kartenkennung hinterlegt ist (true/false)
+CARD_KEY_NAME = "c{}n"
+CARD_KEY_ENERGY = "c{}e"
+CARD_KEY_ID = "c{}i"
+
+# RFID-Entitaeten, die ab Werk aktiv sind. Hat eine fruehere Fassung
+# sie deaktiviert, werden sie beim Start wieder eingeschaltet.
+RFID_ALWAYS_ENABLED = (PROP_CARDS, PROP_TRANSACTION)
+
 # Einstellung: nur Entitaeten anlegen, die das Geraet auch liefert
 OPT_ONLY_AVAILABLE = "only_available"
 DEFAULT_ONLY_AVAILABLE = True
@@ -219,6 +234,7 @@ SENSORS: tuple[WattpilotDescription, ...] = (
     WattpilotDescription(
         key="cards",
         translation_key="cards",
+        enabled=True,
         category="diagnostic",
     ),
     WattpilotDescription(
@@ -1448,6 +1464,7 @@ NUMBERS: tuple[WattpilotDescription, ...] = (
     WattpilotDescription(
         key="trx",
         translation_key="trx",
+        enabled=True,
         category="diagnostic",
         range=(0, 10, 1),
     ),
