@@ -35,7 +35,8 @@
     },
     "error": {
       "cannot_connect": "Verbindung zum Wattpilot fehlgeschlagen. Bitte IP-Adresse und Passwort prüfen.",
-      "unknown": "Unbekannter Fehler."
+      "unknown": "Unbekannter Fehler.",
+      "invalid_auth": "Der Wattpilot hat das Passwort abgelehnt."
     },
     "abort": {
       "already_configured": "Dieser Wattpilot ist bereits eingerichtet.",
@@ -867,11 +868,14 @@
           "no_shield": "Kein Netzwerkmodul"
         }
       },
-      "card_energy": {
-        "name": "RFID-Karte {number} Energie"
+      "card_energy_total": {
+        "name": "{card} Energie gesamt"
       },
-      "card_name": {
-        "name": "RFID-Karte {number} Name"
+      "card_energy_session": {
+        "name": "{card} Energie letzte Ladung"
+      },
+      "active_card": {
+        "name": "Aktive RFID-Karte"
       }
     },
     "binary_sensor": {
@@ -907,6 +911,9 @@
       },
       "car_connected": {
         "name": "Fahrzeug angesteckt"
+      },
+      "card_active": {
+        "name": "{card} lädt"
       }
     },
     "number": {

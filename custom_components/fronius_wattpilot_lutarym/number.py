@@ -2,13 +2,26 @@
 
 from __future__ import annotations
 
-from homeassistant.components.number import NumberEntity, NumberMode
+from homeassistant.components.number import (
+    NumberDeviceClass,
+    NumberEntity,
+    NumberMode,
+)
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 from .const import NUMBERS
 from .entity import WattpilotEntity
+
+# Geraeteklassen, die bei Zahlen-Eingaben vorkommen koennen
+DEVICE_CLASSES = {
+    "energy": NumberDeviceClass.ENERGY,
+    "power": NumberDeviceClass.POWER,
+    "current": NumberDeviceClass.CURRENT,
+    "voltage": NumberDeviceClass.VOLTAGE,
+    "temperature": NumberDeviceClass.TEMPERATURE,
+}
 
 # Diese Parameter erwartet das Geraet als Ganzzahl
 INTEGER_KEYS = {
@@ -43,6 +56,7 @@ class WattpilotNumber(WattpilotEntity, NumberEntity):
         self._attr_native_max_value = maximum
         self._attr_native_step = step
         self._attr_native_unit_of_measurement = description.unit
+        self._attr_device_class = DEVICE_CLASSES.get(description.device_class or "")
         self._attr_mode = (
             NumberMode.SLIDER
             if description.key in SLIDER_KEYS

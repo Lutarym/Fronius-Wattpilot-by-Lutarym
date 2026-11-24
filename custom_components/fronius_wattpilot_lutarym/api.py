@@ -15,6 +15,8 @@ from __future__ import annotations
 
 import asyncio
 import logging
+from collections.abc import Callable
+from contextlib import suppress
 from types import SimpleNamespace
 from typing import Any
 
@@ -116,8 +118,18 @@ class WattpilotAPI:
             return
 
         await async_prepare_definitions(self.hass)
-        self.client = await self.hass.async_add_executor_job(self._create_client)
-        await self.client.connect()
+        client = await self.hass.async_add_executor_job(self._create_client)
+        try:
+            await client.connect()
+        except Exception:
+            # Der Client wird erst nach erfolgreichem Verbinden
+            # uebernommen. Sonst haelt ein gescheiterter Versuch einen
+            # unbrauchbaren Client fest, und der naechste Aufruf kehrt
+            # sofort zurueck, ohne etwas zu tun.
+            with suppress(Exception):
+                await client.disconnect()
+            raise
+        self.client = client
 
     async def disconnect(self) -> None:
         if self.client is None:
@@ -228,10 +240,11 @@ class WattpilotAPI:
             resolved = raw
         return {k: _plain(v) for k, v in resolved.items()}
 
-    def subscribe(self, callback) -> None:
+    def subscribe(self, callback) -> Callable[[], None]:
+        """Meldet einen Rueckruf an und liefert die Abmeldefunktion."""
         if self.client is None:
             raise RuntimeError("Wattpilot ist nicht verbunden")
-        self.client.on_property_change(callback)
+        return self.client.on_property_change(callback)
 
     async def set_property(self, name: str, value: Any) -> None:
         """Setzt eine beliebige Property auf dem Geraet."""

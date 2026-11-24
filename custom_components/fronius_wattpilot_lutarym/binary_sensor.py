@@ -10,7 +10,14 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
-from .const import BINARY_SENSORS, PROP_CAR_STATE, WattpilotDescription
+from .cards import CardInfo, active_card_index, registered_cards
+from .const import (
+    BINARY_SENSORS,
+    CAR_STATE_CHARGING,
+    PROP_CARDS,
+    PROP_CAR_STATE,
+    WattpilotDescription,
+)
 from .entity import WattpilotEntity
 
 # Geraeteklassen fuer einzelne Properties
@@ -51,6 +58,13 @@ async def async_setup_entry(
             WattpilotCarConnectedSensor(coordinator, CAR_CONNECTED_DESCRIPTION)
         )
 
+    # Je benutzter Karte eine Anzeige, ob gerade mit ihr geladen wird.
+    # Die laufende Transaktion meldet der Wattpilot erst, wenn zum ersten
+    # Mal eine Karte vorgehalten wurde, deshalb wird hier nur die
+    # Kartenliste herangezogen.
+    for karte in registered_cards(coordinator.data):
+        entities.append(WattpilotCardActiveSensor(coordinator, karte))
+
     async_add_entities(entities)
 
 
@@ -89,3 +103,50 @@ class WattpilotCarConnectedSensor(WattpilotEntity, BinarySensorEntity):
             return int(status) in CAR_CONNECTED_STATES
         except (TypeError, ValueError):
             return None
+
+
+class WattpilotCardActiveSensor(WattpilotEntity, BinarySensorEntity):
+    """Zeigt, ob gerade mit dieser RFID-Karte geladen wird.
+
+    Eingeschaltet ist der Sensor, sobald die Karte die laufende
+    Transaktion haelt und das Fahrzeug tatsaechlich laedt. Haelt die
+    Karte die Transaktion, ohne dass Strom fliesst, steht das in den
+    Attributen.
+    """
+
+    _attr_device_class = BinarySensorDeviceClass.BATTERY_CHARGING
+
+    def __init__(self, coordinator, karte: CardInfo) -> None:
+        super().__init__(
+            coordinator,
+            WattpilotDescription(
+                key=f"{PROP_CARDS}_{karte.index}_active",
+                translation_key="card_active",
+                enabled=True,
+            ),
+        )
+        self._index = karte.index
+        self._attr_translation_placeholders = {"card": karte.display_name}
+
+    @property
+    def _haelt_transaktion(self) -> bool:
+        return active_card_index(self.coordinator.data) == self._index
+
+    @property
+    def _laedt(self) -> bool:
+        status = (self.coordinator.data or {}).get(PROP_CAR_STATE)
+        try:
+            return int(status) == CAR_STATE_CHARGING
+        except (TypeError, ValueError):
+            return False
+
+    @property
+    def is_on(self) -> bool:
+        return self._haelt_transaktion and self._laedt
+
+    @property
+    def extra_state_attributes(self) -> dict[str, object]:
+        return {
+            "card_index": self._index,
+            "holds_transaction": self._haelt_transaktion,
+        }

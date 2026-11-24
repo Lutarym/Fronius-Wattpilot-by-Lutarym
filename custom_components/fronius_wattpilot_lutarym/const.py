@@ -45,6 +45,25 @@ PROP_CARDS = "cards"
 # Property mit dem Fahrzeugstatus
 PROP_CAR_STATE = "car"
 
+# Property mit der laufenden Transaktion. Leer heisst keine Transaktion,
+# 0 heisst ohne Karte, sonst Kartenindex plus eins.
+PROP_TRANSACTION = "trx"
+
+# Property mit der Energie seit dem Anstecken des Fahrzeugs
+PROP_ENERGY_SESSION = "wh"
+
+# Wert des Fahrzeugstatus, bei dem geladen wird
+CAR_STATE_CHARGING = 2
+
+# Einheit der Energiezaehler.
+#
+# Die API-Definition nennt fuer den Zaehler je Karte keine Einheit.
+# Alle uebrigen Energiewerte derselben Schnittstelle sind in Wh
+# angegeben, deshalb wird das hier ebenfalls angenommen. Sollte die
+# Anzeige nicht zur Wattpilot-App passen, ist dieser Wert die Stelle,
+# an der es zu aendern waere.
+CARD_ENERGY_UNIT = "Wh"
+
 # Hoechstzahl an RFID-Karten, fuer die Entitaeten angelegt werden
 MAX_RFID_CARDS = 10
 
@@ -417,7 +436,7 @@ SENSORS: tuple[WattpilotDescription, ...] = (
         unit="Wh",
         device_class="energy",
         enabled=True,
-        state_class="total_increasing",
+        state_class="total",
     ),
     WattpilotDescription(
         key="etop",
@@ -425,7 +444,7 @@ SENSORS: tuple[WattpilotDescription, ...] = (
         unit="Wh",
         device_class="energy",
         category="diagnostic",
-        state_class="total_increasing",
+        state_class="total",
     ),
     WattpilotDescription(
         key="fam",
@@ -447,7 +466,9 @@ SENSORS: tuple[WattpilotDescription, ...] = (
         key="fbuf_akkuSOC",
         translation_key="fbuf_akkusoc",
         unit="%",
+        device_class="battery",
         category="diagnostic",
+        state_class="measurement",
     ),
     WattpilotDescription(
         key="fbuf_ohmpilotState",
@@ -730,25 +751,33 @@ SENSORS: tuple[WattpilotDescription, ...] = (
         key="nrg_pfl1",
         translation_key="nrg_pfl1",
         unit="%",
+        device_class="power_factor",
         category="diagnostic",
+        state_class="measurement",
     ),
     WattpilotDescription(
         key="nrg_pfl2",
         translation_key="nrg_pfl2",
         unit="%",
+        device_class="power_factor",
         category="diagnostic",
+        state_class="measurement",
     ),
     WattpilotDescription(
         key="nrg_pfl3",
         translation_key="nrg_pfl3",
         unit="%",
+        device_class="power_factor",
         category="diagnostic",
+        state_class="measurement",
     ),
     WattpilotDescription(
         key="nrg_pfn",
         translation_key="nrg_pfn",
         unit="%",
+        device_class="power_factor",
         category="diagnostic",
+        state_class="measurement",
     ),
     WattpilotDescription(
         key="nrg_pl1",
@@ -1155,7 +1184,7 @@ SENSORS: tuple[WattpilotDescription, ...] = (
         unit="Wh",
         device_class="energy",
         enabled=True,
-        state_class="total_increasing",
+        state_class="total",
     ),
     WattpilotDescription(
         key="wpb",
@@ -1272,6 +1301,7 @@ NUMBERS: tuple[WattpilotDescription, ...] = (
     WattpilotDescription(
         key="cco",
         translation_key="cco",
+        unit="kWh/100km",
         category="config",
         range=(0, 100, 0.1),
     ),

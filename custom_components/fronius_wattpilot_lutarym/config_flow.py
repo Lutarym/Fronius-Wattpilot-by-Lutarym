@@ -16,6 +16,8 @@ from homeassistant.helpers.selector import (
     TextSelectorType,
 )
 
+from wattpilot_api.exceptions import AuthenticationError
+
 from .api import WattpilotAPI
 from .const import (
     CONF_HOST,
@@ -44,6 +46,11 @@ async def validate_input(hass: HomeAssistant, data: dict) -> dict:
             "title": api.name,
             "serial": api.serial,
         }
+    except AuthenticationError as err:
+        # Ein abgelehntes Passwort ist etwas anderes als ein nicht
+        # erreichbares Geraet. Sonst sucht der Nutzer an der falschen
+        # Stelle.
+        raise InvalidAuth from err
     except Exception as err:
         raise CannotConnect from err
     finally:
@@ -89,6 +96,8 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         if user_input is not None:
             try:
                 info = await validate_input(self.hass, user_input)
+            except InvalidAuth:
+                errors["base"] = "invalid_auth"
             except CannotConnect:
                 errors["base"] = "cannot_connect"
             except Exception:  # noqa: BLE001
@@ -125,6 +134,8 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         if user_input is not None:
             try:
                 info = await validate_input(self.hass, user_input)
+            except InvalidAuth:
+                errors["base"] = "invalid_auth"
             except CannotConnect:
                 errors["base"] = "cannot_connect"
             except Exception:  # noqa: BLE001
@@ -177,6 +188,8 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             daten = {**entry.data, CONF_PASSWORD: user_input[CONF_PASSWORD]}
             try:
                 await validate_input(self.hass, daten)
+            except InvalidAuth:
+                errors["base"] = "invalid_auth"
             except CannotConnect:
                 errors["base"] = "cannot_connect"
             except Exception:  # noqa: BLE001
@@ -201,6 +214,10 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
 class CannotConnect(HomeAssistantError):
     """Verbindung zum Wattpilot nicht moeglich."""
+
+
+class InvalidAuth(HomeAssistantError):
+    """Der Wattpilot hat das Passwort abgelehnt."""
 
 
 class OptionsFlow(config_entries.OptionsFlow):

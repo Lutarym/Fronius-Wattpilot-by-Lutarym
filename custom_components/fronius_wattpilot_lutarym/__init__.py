@@ -6,8 +6,10 @@ import logging
 
 import voluptuous as vol
 
-from homeassistant.config_entries import ConfigEntry
+from homeassistant.config_entries import ConfigEntry, ConfigEntryState
+from homeassistant.const import Platform
 from homeassistant.core import HomeAssistant, ServiceCall
+from homeassistant.exceptions import HomeAssistantError, ServiceValidationError
 from homeassistant.helpers import config_validation as cv
 from homeassistant.helpers import device_registry as dr
 from homeassistant.helpers import entity_registry as er
@@ -25,14 +27,14 @@ from .coordinator import WattpilotCoordinator
 
 _LOGGER = logging.getLogger(__name__)
 
-PLATFORMS = [
-    "sensor",
-    "binary_sensor",
-    "number",
-    "select",
-    "switch",
-    "text",
-    "button",
+PLATFORMS: list[Platform] = [
+    Platform.BINARY_SENSOR,
+    Platform.BUTTON,
+    Platform.NUMBER,
+    Platform.SELECT,
+    Platform.SENSOR,
+    Platform.SWITCH,
+    Platform.TEXT,
 ]
 
 SET_PROPERTY_SCHEMA = vol.Schema({
@@ -55,6 +57,10 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     # angelegt werden. Home Assistant laesst sie sonst dauerhaft als
     # "Nicht verfuegbar" in der Liste stehen.
     _entfernte_altlasten(hass, entry, coordinator)
+
+    # Ab jetzt loest eine geaenderte Kartenliste ein Neuladen aus, damit
+    # neu angelernte RFID-Karten ihre Entitaeten bekommen.
+    coordinator.markiere_setup_abgeschlossen()
 
     # Wird die Einstellung geaendert, muss neu geladen werden, damit die
     # Entitaetenliste neu aufgebaut wird.
@@ -106,9 +112,25 @@ def _entfernte_altlasten(
 
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Entlaedt einen Konfigurationseintrag."""
-    coordinator: WattpilotCoordinator = entry.runtime_data
     unloaded = await hass.config_entries.async_unload_platforms(entry, PLATFORMS)
-    await coordinator.async_shutdown_connection()
+
+    coordinator: WattpilotCoordinator | None = getattr(
+        entry, "runtime_data", None
+    )
+    if coordinator is not None:
+        await coordinator.async_shutdown_connection()
+
+    # War das der letzte Wattpilot, wird auch der Dienst wieder
+    # abgemeldet. Sonst bliebe er in der Oberflaeche stehen und liefe
+    # beim Aufruf ins Leere.
+    uebrig = [
+        e
+        for e in hass.config_entries.async_entries(DOMAIN)
+        if e.entry_id != entry.entry_id
+    ]
+    if not uebrig and hass.services.has_service(DOMAIN, SERVICE_SET_PROPERTY):
+        hass.services.async_remove(DOMAIN, SERVICE_SET_PROPERTY)
+
     return unloaded
 
 
@@ -140,19 +162,31 @@ def _register_services(hass: HomeAssistant) -> None:
         registry = dr.async_get(hass)
         device = registry.async_get(device_id)
         if device is None:
-            raise ValueError(f"Unbekanntes Geraet: {device_id}")
+            raise ServiceValidationError(f"Unbekanntes Geraet: {device_id}")
 
         for entry_id in device.config_entries:
             entry = hass.config_entries.async_get_entry(entry_id)
             if entry is None or entry.domain != DOMAIN:
                 continue
+            if entry.state is not ConfigEntryState.LOADED:
+                raise ServiceValidationError(
+                    "Dieser Wattpilot ist gerade nicht geladen."
+                )
             coordinator: WattpilotCoordinator = entry.runtime_data
-            await coordinator.async_set_property(
-                call.data[ATTR_PROPERTY], call.data[ATTR_VALUE]
-            )
+            try:
+                await coordinator.async_set_property(
+                    call.data[ATTR_PROPERTY], call.data[ATTR_VALUE]
+                )
+            except Exception as err:  # noqa: BLE001
+                raise HomeAssistantError(
+                    f"Die Property {call.data[ATTR_PROPERTY]} konnte nicht "
+                    f"gesetzt werden: {err}"
+                ) from err
             return
 
-        raise ValueError(f"Geraet gehoert nicht zu {DOMAIN}: {device_id}")
+        raise ServiceValidationError(
+            f"Dieses Geraet gehoert nicht zu {DOMAIN}: {device_id}"
+        )
 
     hass.services.async_register(
         DOMAIN,

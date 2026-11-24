@@ -17,6 +17,26 @@ CATEGORY_MAP = {
 }
 
 
+def geraetekennung(coordinator: WattpilotCoordinator) -> str:
+    """Die dauerhafte Kennung dieses Wattpilot.
+
+    Sie geht in die eindeutige Kennung jeder Entitaet und in die
+    Geraetekennung ein und darf sich deshalb nie aendern.
+
+    Zuerst wird die Seriennummer des Geraets genommen. Meldet der
+    Wattpilot sie gerade nicht, wird auf die beim Einrichten
+    gespeicherte Kennung zurueckgegriffen und erst danach auf die
+    Kennung des Konfigurationseintrags. Ohne diesen Rueckfall wuerde
+    ein einziger Start ohne Seriennummer saemtliche Entitaeten und das
+    Geraet selbst ein zweites Mal anlegen.
+    """
+    return (
+        coordinator.api.serial
+        or coordinator.entry.unique_id
+        or coordinator.entry.entry_id
+    )
+
+
 class WattpilotEntity(CoordinatorEntity[WattpilotCoordinator]):
     """Basis fuer jede Entitaet, die einer Property entspricht."""
 
@@ -30,8 +50,7 @@ class WattpilotEntity(CoordinatorEntity[WattpilotCoordinator]):
         super().__init__(coordinator)
         self.entity_description_data = description
 
-        serial = coordinator.api.serial or coordinator.entry.entry_id
-        self._attr_unique_id = f"{serial}_{description.key}"
+        self._attr_unique_id = f"{geraetekennung(coordinator)}_{description.key}"
         # Der Anzeigename kommt aus den Sprachdateien unter translations/
         self._attr_translation_key = description.translation_key
         self._attr_entity_registry_enabled_default = description.enabled
@@ -44,12 +63,12 @@ class WattpilotEntity(CoordinatorEntity[WattpilotCoordinator]):
         if description.category:
             self._attr_entity_category = CATEGORY_MAP.get(description.category)
 
-    @property
-    def device_info(self) -> DeviceInfo:
-        api = self.coordinator.api
-        serial = api.serial or self.coordinator.entry.entry_id
-        return DeviceInfo(
-            identifiers={(DOMAIN, serial)},
+        # Einmal berechnen statt bei jedem Zugriff. Home Assistant fragt
+        # device_info haeufig ab, und die Angaben aendern sich innerhalb
+        # einer Sitzung nicht.
+        api = coordinator.api
+        self._attr_device_info = DeviceInfo(
+            identifiers={(DOMAIN, geraetekennung(coordinator))},
             name=api.name,
             manufacturer="Fronius",
             model=api.model or "Wattpilot",

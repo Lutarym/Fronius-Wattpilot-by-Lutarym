@@ -10,7 +10,7 @@ Die Integration kennt **254 Entitäten**. Angelegt werden davon nur die, die Ihr
 
 ### Standardmäßig aktiv
 
-Aktiv sind nur acht Entitäten, nämlich das, was man täglich braucht:
+Aktiv ist nur, was man täglich braucht. Acht feste Entitäten:
 
 | Entität | Art | Bedeutung |
 |---|---|---|
@@ -22,6 +22,8 @@ Aktiv sind nur acht Entitäten, nämlich das, was man täglich braucht:
 | Gesamtenergie | Sensor | Zählerstand, geeignet für das Energie-Dashboard |
 | Energie seit Anstecken | Sensor | Energie der laufenden Ladung |
 | Fehlerstatus | Sensor | Klartext, zum Beispiel Überstrom oder Übertemperatur |
+
+Dazu kommen die Entitäten für die RFID-Chips: eine je Chip für den Gesamtzähler, die letzte Ladung und den Ladevorgang, sowie einmalig die aktive Karte. Diese entstehen nur, wenn Chips im Gerät hinterlegt sind. Einzelheiten im Abschnitt zu den RFID-Chips.
 
 Alle übrigen Entitäten sind vorhanden, aber deaktiviert. Einschalten geht unter Einstellungen, Geräte und Dienste, Entitäten: Entität suchen, anklicken, Zahnrad, Aktiviert einschalten.
 
@@ -95,6 +97,66 @@ Fronius nennt die drei Lademodi in seiner Dokumentation **Standard**, **Eco Mode
 Die zugrunde liegende API-Definition verwendet dafür interne Bezeichnungen (Default, Awattar, AutomaticStop). Die werden hier auf die Namen aus der Fronius-App übersetzt, damit die Anzeige zu dem passt, was Sie vom Gerät kennen.
 
 Für das sofortige Starten oder Stoppen unabhängig vom Modus gibt es zusätzlich die Entität **Ladefreigabe erzwingen**. Sie ist standardmäßig deaktiviert.
+
+## RFID-Chips und Zuordnung zum Fahrzeug
+
+Wer mehrere Autos lädt, kann jedem einen NFC-Chip zuordnen. Der Wattpilot führt dann je Chip einen eigenen Energiezähler, und die Integration macht daraus Entitäten.
+
+### Was angelegt wird
+
+Je angelerntem Chip entstehen drei Entitäten. Der Chipname aus der Wattpilot-App steht im Namen, sodass die Werte unmittelbar dem Fahrzeug zugeordnet sind. Heißt der Chip in der App "Zoe", lauten sie:
+
+| Entität | Bedeutung |
+|---|---|
+| Zoe Energie gesamt | Zählerstand des Chips über alle Ladungen, vom Wattpilot geführt |
+| Zoe Energie letzte Ladung | Energie der laufenden oder zuletzt mit diesem Chip gefahrenen Ladung |
+| Zoe lädt | Ja, solange dieser Chip die Transaktion hält und tatsächlich Strom fließt |
+
+Dazu kommt einmalig **Aktive RFID-Karte**. Sie zeigt den Namen des Chips, der gerade vorgehalten wurde. Wird ohne Chip geladen oder läuft keine Ladung, bleibt sie leer, die Einzelheiten stehen dann in den Attributen.
+
+Alle diese Entitäten sind sofort aktiv.
+
+### Fürs Energie-Dashboard
+
+Geeignet ist **Energie gesamt** je Chip. Das ist der Zähler des Wattpilot selbst, er läuft über alle Ladungen weiter.
+
+**Energie letzte Ladung** bekommt bewusst keine Zustandsklasse und taucht daher nicht im Energie-Dashboard auf. Der Wert fällt zu Beginn jeder Ladung auf null zurück und taugt deshalb nicht als Zählerstand für die Langzeitstatistik.
+
+### Wie die Zuordnung funktioniert
+
+Der Wattpilot meldet nur zwei Dinge: die Liste der gespeicherten Chips und welcher davon gerade die Transaktion hält. Einen Zähler je Chip und Ladung gibt es nicht.
+
+Die Integration merkt sich deshalb selbst, wie viel Energie geflossen ist, solange ein bestimmter Chip die Transaktion hält. Nach dem Abstecken bleibt der Wert stehen, bis mit demselben Chip wieder geladen wird. Über Neustarts von Home Assistant hinweg bleibt er erhalten.
+
+Wird ohne Chip geladen, läuft die Energie in keinen Chipzähler. Das ist auch im Wattpilot so.
+
+### Wenn keine Chip-Entitäten erscheinen
+
+Der Wattpilot schickt seinen Zustand beim Verbinden in mehreren Teilnachrichten. Die zugrunde liegende Bibliothek meldet die Verbindung aber schon als fertig, sobald irgendeine Änderungsnachricht eintrifft, auch wenn noch Teilnachrichten unterwegs sind.
+
+Die Integration wartet deshalb, bis sich die Liste der gemeldeten Werte über mehrere Durchläufe hinweg nicht mehr ändert, längstens zwanzig Sekunden. Nachzügler wie die Chipliste gehen so nicht mehr verloren.
+
+Meldet der Wattpilot einen Wert erst später, etwa weil eine Funktion gerade erst eingeschaltet wurde, gilt er ab dann dauerhaft als vorhanden.
+
+Falls dennoch Entitäten fehlen, hilft die Diagnose weiter: Unter Einstellungen, Geräte und Dienste beim Gerät auf **Diagnose herunterladen**. Die Datei zeigt, welche Werte das Gerät gemeldet hat, wie die Chipliste aussieht und welche Entitäten mangels Meldung übersprungen wurden.
+
+### Neue Chips anlernen
+
+Chips werden in der Wattpilot-App angelernt, nicht in Home Assistant.
+
+Danach ist nichts weiter zu tun: Die Integration merkt, dass sich die Chipliste geändert hat, und lädt sich selbst neu, damit der neue Chip seine Entitäten bekommt. Dasselbe gilt beim Umbenennen und beim Löschen eines Chips.
+
+Beim Umbenennen ändert sich nur der Anzeigename. Die eindeutige Kennung richtet sich nach der Position des Chips im Gerät, der bisherige Verlauf bleibt also erhalten.
+
+### Freigeben ohne Chip
+
+Die Entität **Aktive Transaktion** kann die Transaktion auch ohne physisches Vorhalten setzen. Null bedeutet ohne Chip, eins steht für den ersten Chip, zwei für den zweiten. Sie ist standardmäßig deaktiviert und lässt sich in den Entitäten-Einstellungen einschalten.
+
+### Einheit der Chipzähler
+
+Die API-Definition nennt für den Zähler je Chip keine Einheit, und die Schlüsselliste der go-e-API, die dasselbe Protokoll beschreibt, ebenfalls nicht. Alle übrigen Energiewerte dieser Schnittstelle sind in Wh angegeben, deshalb wird das hier angenommen.
+
+Bitte einmal mit der Anzeige in der Wattpilot-App vergleichen. Falls es nicht passt, ist `CARD_ENERGY_UNIT` in `const.py` die Stelle zum Ändern.
 
 ## Was der Wattpilot nicht liefert
 
@@ -196,7 +258,9 @@ Die Integration prüft dabei, ob unter der neuen Adresse noch derselbe Wattpilot
 
 ### Passwort erneut abfragen
 
-Nimmt der Wattpilot das gespeicherte Passwort nicht mehr an, meldet Home Assistant das von selbst und fragt nur nach dem neuen Passwort. Die Adresse bleibt dabei unverändert.
+Lehnt der Wattpilot das gespeicherte Passwort ab, erkennt die Integration das als Anmeldefehler und nicht als Verbindungsproblem. Home Assistant fragt dann von selbst nach dem neuen Passwort. Die Adresse bleibt unverändert.
+
+Auch bei der Einrichtung wird unterschieden: Ein abgelehntes Passwort wird als solches gemeldet, nicht als nicht erreichbares Gerät.
 
 ### Einstellungen
 
@@ -222,6 +286,14 @@ Eine Sache bleibt: Bei jeder Anmeldung berechnet die Bibliothek das Passwort neu
 
 Die Dialoge selbst laden bewusst nicht zusätzlich neu. Seit Home Assistant 2026.6 wird die Kombination aus beidem beanstandet, weil sonst zweimal hintereinander neu geladen wird. Ab Fassung 2026.12 wäre das ein Fehler.
 
+## Zu den Energiezählern
+
+Der Wattpilot liefert zwei Gesamtzähler. **Gesamtenergie** ist ein hochgerechneter Live-Wert, **Gesamtenergie gespeichert** der tatsächlich gespeicherte Wert ohne diese Hochrechnung.
+
+Der Live-Wert kann deshalb gelegentlich um wenige Wattstunden zurückspringen, wenn der gespeicherte Wert nachzieht. Alle Energiezähler sind daher als **total** geführt und nicht als streng steigend. Genau das empfiehlt auch die API-Definition.
+
+Für das Energie-Dashboard ist das geeignet. Wer den ruhigeren Verlauf möchte, kann stattdessen **Gesamtenergie gespeichert** aktivieren.
+
 ## Hinweis zu den Leistungswerten
 
 Die Leistungswerte je Phase stammen aus dem Messwerte-Array `nrg` und werden unverändert in Watt angezeigt. Bitte einmal mit der Anzeige in der Wattpilot-App vergleichen. Die Bibliothek `wattpilot-api` skaliert diese Werte für ihre eigenen Eigenschaften mit dem Faktor 0,001, was auf eine abweichende Einheit hindeuten könnte. Die API-Definition macht dazu keine eindeutige Angabe.
@@ -231,6 +303,25 @@ Die Leistungswerte je Phase stammen aus dem Messwerte-Array `nrg` und werden unv
 Das lokale Wattpilot-Protokoll ist keine offizielle öffentliche Fronius-Schnittstelle. Dieses Projekt nutzt die quelloffene Umsetzung `wattpilot-api`.
 
 Der WebSocket-Zugang des Wattpilot sollte nicht aus dem Internet erreichbar sein.
+
+## Diagnose
+
+Unter Einstellungen, Geräte und Dienste beim Gerät gibt es **Diagnose herunterladen**. Die Datei enthält:
+
+- alle vom Wattpilot gemeldeten Werte samt der daraus abgeleiteten Einzelwerte
+- die vollständige Chipliste mit Namen, Zählerständen und der Angabe, ob eine Kennung hinterlegt ist
+- die laufende Transaktion und die Zugangsfreigabe
+- welche Entitäten mangels Meldung übersprungen wurden
+
+Zugangsdaten und Angaben, die das Gerät im Netz auffindbar machen, sind darin durch einen Platzhalter ersetzt.
+
+## Verhalten unter Last
+
+Die Bibliothek meldet jede geänderte Property einzeln. Eine Vollstatus-Nachricht des Wattpilot enthält rund 300 davon. Würde jede einzeln verarbeitet, schriebe jede Entität bei einer einzigen Nachricht dreihundertmal ihren Zustand neu.
+
+Die Integration sammelt deshalb die Änderungen und verarbeitet sie einmal am Ende des laufenden Durchlaufs. Aus einer Nachricht wird genau eine Aktualisierung, ohne spürbare Verzögerung.
+
+Die vollständigen Inhalte zusammengesetzter Werte, etwa die Chipliste oder die Liste gefundener WLAN-Netze, stehen in den Attributen, werden aber nicht in die Verlaufsdatenbank geschrieben.
 
 ## Fehlersuche
 
